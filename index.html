@@ -582,50 +582,6 @@ nav { flex: 1; padding: 8px; display: flex; flex-direction: column; gap: 2px; }
 mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius: 2px; padding: 0 2px; }
 
 /* ── CHARACTERS ── */
-.char-card {
-  background: var(--dark3);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 14px 16px;
-  margin-bottom: 10px;
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-.char-avatar {
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  background: var(--dark5);
-  border: 1px solid var(--border-gold);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display);
-  font-size: 16px;
-  color: var(--gold);
-  flex-shrink: 0;
-}
-.char-name { font-family: var(--font-display); font-size: 16px; color: var(--text-bright); letter-spacing: 0.04em; }
-.char-loc { font-size: 15px; color: var(--text-dim); font-style: italic; margin: 2px 0 6px; }
-.char-note { font-size: 16px; color: var(--text); line-height: 1.4; }
-.char-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
-.tag {
-  font-family: var(--font-display);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 2px 8px;
-  border-radius: 2px;
-  background: var(--dark5);
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-}
-.del-x {
-  background: none; border: none; cursor: pointer;
-  color: var(--text-dim); font-size: 17px;
-  transition: color 0.15s; padding: 0 4px;
-  margin-left: auto; flex-shrink: 0;
-}
-.del-x:hover { color: var(--red-light); }
-
 /* ── INVENTORY ── */
 /* ── ITEMS TAB ── */
 .inv-cards {
@@ -656,148 +612,6 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
 .inv-group-header { font-family: var(--font-display); font-size: 15px; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid var(--border-gold); display: flex; align-items: center; gap: 8px; }
 .inv-group-header .badge { font-family: var(--font-body); font-size: 12px; background: var(--dark3); border: 1px solid var(--border-gold); border-radius: 10px; padding: 1px 8px; color: var(--text-dim); font-style: normal; letter-spacing: 0; text-transform: none; }
 
-/* ── MAP NOTES ── */
-.map-note {
-  background: var(--dark3);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 12px 14px;
-  margin-bottom: 8px;
-}
-.map-note-loc { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 4px; }
-.map-note-text { font-size: 17px; color: var(--text); line-height: 1.5; }
-.map-note-links { font-size: 14px; color: var(--blue-light); font-style: italic; margin-top: 4px; }
-.map-note-footer { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
-
-/* ── MAP TAB ── */
-#map-canvas-wrap {
-  flex: 1;
-  overflow: hidden;
-  position: relative;
-  background: #0a0805;
-  cursor: crosshair;
-}
-
-#map-img {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: contain;
-  pointer-events: none;
-  opacity: 0.85;
-  user-select: none;
-}
-
-#map-svg {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-}
-
-.map-pin {
-  pointer-events: all;
-  cursor: pointer;
-}
-
-.map-pin circle { transition: r 0.15s; }
-.map-pin:hover circle { r: 10; }
-
-.map-controls {
-  position: absolute;
-  top: 12px; right: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  z-index: 10;
-}
-
-.map-ctrl-btn {
-  width: 32px; height: 32px;
-  background: var(--dark4);
-  border: 1px solid var(--border-gold);
-  border-radius: 3px;
-  color: var(--gold);
-  font-size: 17px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.15s;
-}
-.map-ctrl-btn:hover { background: var(--dark5); }
-
-.map-legend {
-  position: absolute;
-  bottom: 12px; left: 12px;
-  background: rgba(13,11,8,0.85);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 10px 14px;
-  font-size: 14px;
-  color: var(--text-dim);
-  z-index: 10;
-}
-.map-legend-title {
-  font-family: var(--font-display);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold-dim);
-  margin-bottom: 6px;
-}
-.legend-item { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-
-/* Pin popup */
-#pin-popup {
-  position: absolute;
-  background: var(--dark4);
-  border: 1px solid var(--border-gold);
-  border-radius: 4px;
-  padding: 14px 16px;
-  width: 240px;
-  z-index: 20;
-  display: none;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.6);
-}
-.popup-title { font-family: var(--font-display); font-size: 15px; color: var(--gold); letter-spacing: 0.06em; margin-bottom: 6px; }
-.popup-note { font-size: 16px; color: var(--text); line-height: 1.4; margin-bottom: 8px; font-style: italic; }
-.popup-links { font-size: 14px; color: var(--blue-light); margin-bottom: 8px; }
-.popup-close { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 15px; float: right; }
-
-/* Add-pin modal */
-#add-pin-modal {
-  position: absolute;
-  background: var(--dark4);
-  border: 1px solid var(--border-gold);
-  border-radius: 4px;
-  padding: 18px 20px;
-  width: 280px;
-  z-index: 30;
-  display: none;
-  box-shadow: 0 4px 30px rgba(0,0,0,0.7);
-}
-
-.empty-state {
-  text-align: center;
-  padding: 50px 20px;
-  font-size: 17px;
-  color: var(--text-dim);
-  font-style: italic;
-}
-
-.progress-bar-wrap {
-  height: 3px;
-  background: var(--dark5);
-  border-radius: 2px;
-  margin-top: 6px;
-  overflow: hidden;
-}
-.progress-bar-fill {
-  height: 100%;
-  background: var(--gold-dim);
-  border-radius: 2px;
-  transition: width 0.3s;
-}
 /* ── BOSS TRACKER ── */
 .boss-stats-card {
   background: var(--dark3);
@@ -914,9 +728,7 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
   <div class="rune-divider">⚜ ✦ ⚜</div>
   <nav>
     <button class="nav-btn active" onclick="showTab('quests',this)">Quest Log</button>
-    <button class="nav-btn" onclick="showTab('map',this)">The Map</button>
     <button class="nav-btn" onclick="showTab('dialogue',this)">Dialogue</button>
-    <button class="nav-btn" onclick="showTab('characters',this)">Characters</button>
     <button class="nav-btn" onclick="showTab('inventory',this)">Items</button>
     <button class="nav-btn" onclick="showTab('bosses',this)">Boss Tracker</button>
   </nav>
@@ -977,86 +789,6 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
   </div>
 </div>
 
-<!-- ══════════ MAP ══════════ -->
-<div id="tab-map" class="tab">
-  <div class="page-header" style="flex-shrink:0;flex-wrap:wrap;gap:8px">
-    <div>
-      <div class="page-title" id="map-page-title">Map — Lands Between</div>
-      <div class="page-sub">Click anywhere to drop a pin · Pins can link to quests &amp; NPCs</div>
-    </div>
-    <select class="er-select" id="map-layer-select" onchange="switchMapLayer()" style="align-self:center;min-width:200px">
-      <option value="overworld">Lands Between</option>
-      <option value="underground">Lands Between — Underground</option>
-    </select>
-  </div>
-  <div id="map-canvas-wrap">
-    <img id="map-img"
-      src="
-      alt="Elden Ring Map — Lands Between"
-      onerror="this.src=''; this.style.display='none'; document.getElementById('map-fallback').style.display='flex'">
-    <div id="map-fallback" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--text-dim)">
-      <div style="font-size: 40px">🗺</div>
-      <div style="font-family:var(--font-display);font-size: 17px;letter-spacing:0.1em;color:var(--gold)">Map image unavailable</div>
-      <div style="font-size: 16px;font-style:italic">Map image failed to load</div>
-    </div>
-    <svg id="map-svg"></svg>
-    <div id="pin-popup">
-      <button class="popup-close" onclick="closePinPopup()">✕</button>
-      <div class="popup-title" id="popup-title"></div>
-      <div class="popup-note" id="popup-note"></div>
-      <div class="popup-links" id="popup-links"></div>
-      <div style="display:flex;gap:6px">
-        <button class="btn" style="font-size: 12px;padding:5px 10px" onclick="editCurrentPin()">Edit</button>
-        <button class="btn btn-danger" style="font-size: 12px;padding:5px 10px" onclick="deleteCurrentPin()">Remove</button>
-      </div>
-    </div>
-    <div id="add-pin-modal">
-      <div class="form-title">Drop a Pin</div>
-      <div class="form-row">
-        <input class="er-input" id="pin-label" placeholder="Label (e.g. Ranni's Rise)" style="flex:1">
-      </div>
-      <div class="form-row">
-        <textarea class="er-input" id="pin-note" rows="3" placeholder="Notes about this location…" style="flex:1;resize:vertical"></textarea>
-      </div>
-      <div class="form-row">
-        <select class="er-select" id="pin-type" style="flex:1">
-          <option value="general">General</option>
-          <option value="quest">Quest location</option>
-          <option value="npc">NPC</option>
-          <option value="boss">Boss</option>
-          <option value="danger">Danger</option>
-          <option value="item">Item / treasure</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <select class="er-select" id="pin-quest-link" style="flex:1">
-          <option value="">— Link to quest (optional) —</option>
-        </select>
-        <select class="er-select" id="pin-char-link" style="flex:1">
-          <option value="">— Link to character (optional) —</option>
-        </select>
-      </div>
-      <div style="display:flex;gap:8px;margin-top:4px">
-        <button class="btn" onclick="savePin()">Place Pin</button>
-        <button class="btn btn-danger" onclick="cancelPin()">Cancel</button>
-      </div>
-    </div>
-    <div class="map-controls">
-      <button class="map-ctrl-btn" title="Zoom in" onclick="mapZoom(1.2)">+</button>
-      <button class="map-ctrl-btn" title="Zoom out" onclick="mapZoom(0.83)">−</button>
-      <button class="map-ctrl-btn" title="Reset view" onclick="mapReset()" style="font-size: 13px">⟲</button>
-    </div>
-    <div class="map-legend">
-      <div class="map-legend-title">Pin Types</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#c9a84c"></div>General</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#6a8ab0"></div>Quest</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#7ab07a"></div>NPC</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#c44"></div>Boss</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#e07070"></div>Danger</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#c9a84c"></div>Item</div>
-    </div>
-  </div>
-</div>
 <!-- ══════════ DIALOGUE ══════════ -->
 <div id="tab-dialogue" class="tab">
   <div class="page-header">
@@ -1116,37 +848,6 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
 </div>
 
 <!-- ══════════ CHARACTERS ══════════ -->
-<div id="tab-characters" class="tab">
-  <div class="page-header">
-    <div class="page-title">Characters</div>
-    <div class="page-sub">NPCs, allies, and souls encountered on your journey</div>
-  </div>
-  <div class="toolbar">
-    <input class="er-input" id="char-search" placeholder="Search characters…" oninput="renderChars()" style="flex:1">
-    <button class="btn" onclick="toggleForm('add-char-form')">+ Add Character</button>
-  </div>
-  <div class="content">
-    <div class="form-panel" id="add-char-form">
-      <div class="form-title">Record a Character</div>
-      <div class="form-row">
-        <input class="er-input" id="ch-name" placeholder="Name" style="flex:2">
-        <input class="er-input" id="ch-loc" placeholder="Where you met them" style="flex:2">
-      </div>
-      <div class="form-row">
-        <textarea class="er-input" id="ch-note" rows="3" placeholder="Notes about this character…" style="flex:1;resize:vertical"></textarea>
-      </div>
-      <div class="form-row">
-        <input class="er-input" id="ch-tags" placeholder="Tags — comma-separated: ally, merchant, boss, hostile…" style="flex:1">
-      </div>
-      <div style="display:flex;gap:8px">
-        <button class="btn" onclick="addChar()">Save</button>
-        <button class="btn btn-danger" onclick="toggleForm('add-char-form')">Cancel</button>
-      </div>
-    </div>
-    <div id="char-list"></div>
-  </div>
-</div>
-
 <!-- ══════════ INVENTORY ══════════ -->
 <div id="tab-inventory" class="tab">
   <div class="page-header">
@@ -1269,7 +970,7 @@ function loadData() {
 
 function saveData() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ quests, dialogues, characters, inventory, mapPins, bosses }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ quests, dialogues, inventory, bosses }));
   } catch(e) {}
 }
 
@@ -2354,19 +2055,10 @@ let dialogues = saved?.dialogues || [
 ]
 
 
-let characters = saved?.characters || [
-  {id:1,name:"Melina",location:"Sites of Grace, Limgrave onward",note:"Finger maiden surrogate. Burns herself to open the Erdtree. Rides Torrent with you. Crucial ally.",tags:["ally","npc","important"]},
-  {id:2,name:"Ranni the Witch",location:"Ranni's Rise, Three Sisters",note:"Empyrean who faked her own death. Wants to pursue her own destiny outside the Greater Will. Questgiver.",tags:["npc","questgiver","empyrean"]},
-  {id:3,name:"Blaidd the Half-Wolf",location:"Mistwood Ruins / Three Sisters",note:"Shadow of Lady Ranni. Half-wolf warrior. Loyal to a fault. Involved in Ranni's questline.",tags:["ally","npc","questgiver"]},
-];
 
 let inventory = saved?.inventory || {};
 
 
-let mapPins = saved?.mapPins || [
-  {id:1,x:48,y:62,label:"Ranni's Rise",note:"Start of Ranni's questline. Talk to Blaidd, Iji, Seluvis.",type:"quest",questId:1,charId:2},
-  {id:2,x:38,y:55,label:"Mistwood Ruins",note:"Where Blaidd howls. Snap fingers to summon him.",type:"npc",questId:2,charId:3},
-];
 
 let bosses = saved?.bosses || [
   {id:101,name:"Margit, the Fell Omen",region:"Limgrave",type:"Main",defeated:false,attempts:0,runes:12000,drop:"Talisman Pouch",note:"Weak to bleed and holy. Uses a phantom hammer in phase 2. Try Lone Wolf Ashes."},
@@ -2392,9 +2084,7 @@ function showTab(name, btn) {
   btn.classList.add('active');
   if (name === 'quests') renderQuests();
   if (name === 'dialogue') renderDialogue();
-  if (name === 'characters') renderChars();
   if (name === 'items' || name === 'inventory') renderInventory();
-  if (name === 'map') { renderMapPins(); setupMapClick(); }
   if (name === 'bosses') renderBosses();
 }
 
@@ -2777,42 +2467,6 @@ function deleteDialogue(id) {
   dialogues = dialogues.filter(d => d.id !== id); saveData(); renderDialogue();
 }
 
-// ─────────────────────────────────────────
-// CHARACTERS
-// ─────────────────────────────────────────
-function renderChars() {
-  const q = (document.getElementById('char-search').value || '').toLowerCase();
-  const list = document.getElementById('char-list');
-  const shown = characters.filter(c => !q || c.name.toLowerCase().includes(q) || c.location.toLowerCase().includes(q) || c.note.toLowerCase().includes(q));
-  if (!shown.length) { list.innerHTML = '<div class="empty-state">No characters recorded.</div>'; return; }
-  list.innerHTML = shown.map(c => `
-    <div class="char-card">
-      <div class="char-avatar">${c.name.split(' ').map(w=>w[0]).slice(0,2).join('')}</div>
-      <div style="flex:1">
-        <div class="char-name">${c.name}</div>
-        <div class="char-loc">${c.location}</div>
-        <div class="char-note">${c.note}</div>
-        <div class="char-tags">${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-      </div>
-      <button class="del-x" onclick="deleteChar(${c.id})">✕</button>
-    </div>`).join('');
-}
-
-function addChar() {
-  const name = document.getElementById('ch-name').value.trim();
-  const loc = document.getElementById('ch-loc').value.trim();
-  const note = document.getElementById('ch-note').value.trim();
-  const tags = document.getElementById('ch-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
-  if (!name) return;
-  characters.push({ id: uid(), name, location: loc || 'Unknown', note, tags });
-  ['ch-name','ch-loc','ch-note','ch-tags'].forEach(id => document.getElementById(id).value = '');
-  toggleForm('add-char-form');
-  saveData(); renderChars();
-}
-
-function deleteChar(id) {
-  characters = characters.filter(c => c.id !== id); saveData(); renderChars();
-}
 
 // ─────────────────────────────────────────
 // INVENTORY
@@ -2925,211 +2579,6 @@ function updateOwnedField(id, field, value) {
 
 
 // ─────────────────────────────────────────
-// MAP
-// ─────────────────────────────────────────
-const PIN_COLORS = {
-  general: '#c9a84c',
-  quest:   '#6a8ab0',
-  npc:     '#7ab07a',
-  boss:    '#c44',
-  danger:  '#e07070',
-  item:    '#c9a84c'
-};
-
-let pendingPinX = 0, pendingPinY = 0;
-let currentPinId = null;
-let mapScale = 1, mapOffX = 0, mapOffY = 0;
-let mapSetupDone = false;
-
-function setupMapClick() {
-  if (mapSetupDone) return;
-  mapSetupDone = true;
-  const wrap = document.getElementById('map-canvas-wrap');
-  wrap.addEventListener('click', function(e) {
-    if (e.target.closest('.map-pin') || e.target.closest('#add-pin-modal') || e.target.closest('#pin-popup') || e.target.closest('.map-controls')) return;
-    const rect = wrap.getBoundingClientRect();
-    const xPct = ((e.clientX - rect.left) / rect.width) * 100;
-    const yPct = ((e.clientY - rect.top) / rect.height) * 100;
-    pendingPinX = xPct;
-    pendingPinY = yPct;
-    closePinPopup();
-    openAddPinModal(e.clientX - rect.left, e.clientY - rect.top, rect);
-  });
-}
-
-function openAddPinModal(px, py, rect) {
-  const modal = document.getElementById('add-pin-modal');
-  // Populate quest and char dropdowns
-  const qs = document.getElementById('pin-quest-link');
-  qs.innerHTML = '<option value="">— Link to quest —</option>' + quests.map(q => `<option value="${q.id}">${q.name}</option>`).join('');
-  const cs = document.getElementById('pin-char-link');
-  cs.innerHTML = '<option value="">— Link to character —</option>' + characters.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-  // Position modal
-  let left = px + 10, top = py + 10;
-  if (left + 290 > rect.width) left = px - 300;
-  if (top + 280 > rect.height) top = py - 290;
-  modal.style.left = Math.max(0, left) + 'px';
-  modal.style.top = Math.max(0, top) + 'px';
-  modal.style.display = 'block';
-  document.getElementById('pin-label').value = '';
-  document.getElementById('pin-note').value = '';
-  document.getElementById('pin-type').value = 'general';
-}
-
-function cancelPin() {
-  document.getElementById('add-pin-modal').style.display = 'none';
-}
-
-function savePin() {
-  const label = document.getElementById('pin-label').value.trim();
-  const note = document.getElementById('pin-note').value.trim();
-  const type = document.getElementById('pin-type').value;
-  const questId = parseInt(document.getElementById('pin-quest-link').value) || null;
-  const charId = parseInt(document.getElementById('pin-char-link').value) || null;
-  if (!label) { document.getElementById('pin-label').focus(); return; }
-  mapPins.push({ id: uid(), x: pendingPinX, y: pendingPinY, label, note, type, questId, charId, layer: currentMapLayer || 'overworld' });
-  cancelPin();
-  saveData(); renderMapPins();
-}
-
-function renderMapPins() {
-  const svg = document.getElementById('map-svg');
-  svg.innerHTML = '';
-  const layerPins = mapPins.filter(p => (p.layer || 'overworld') === (currentMapLayer || 'overworld'));
-  layerPins.forEach(pin => {
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    g.setAttribute('class', 'map-pin');
-    g.setAttribute('transform', `translate(${pin.x}%,${pin.y}%)`);
-    g.onclick = (e) => { e.stopPropagation(); showPinPopup(pin.id, e); };
-
-    const outer = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    outer.setAttribute('r', '10');
-    outer.setAttribute('fill', PIN_COLORS[pin.type] || PIN_COLORS.general);
-    outer.setAttribute('fill-opacity', '0.25');
-    outer.setAttribute('stroke', PIN_COLORS[pin.type] || PIN_COLORS.general);
-    outer.setAttribute('stroke-width', '1');
-    g.appendChild(outer);
-
-    const inner = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    inner.setAttribute('r', '5');
-    inner.setAttribute('fill', PIN_COLORS[pin.type] || PIN_COLORS.general);
-    g.appendChild(inner);
-
-    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text.setAttribute('x', '12');
-    text.setAttribute('y', '4');
-    text.setAttribute('fill', '#ede0bb');
-    text.setAttribute('font-size', '14');
-    text.setAttribute('font-family', 'Cinzel, serif');
-    text.textContent = pin.label;
-    g.appendChild(text);
-
-    svg.appendChild(g);
-  });
-}
-
-function showPinPopup(id, e) {
-  const pin = mapPins.find(p => p.id === id);
-  if (!pin) return;
-  currentPinId = id;
-  document.getElementById('popup-title').textContent = pin.label;
-  document.getElementById('popup-note').textContent = pin.note || '';
-  const links = [];
-  if (pin.questId) { const q = quests.find(x => x.id === pin.questId); if (q) links.push('Quest: ' + q.name); }
-  if (pin.charId) { const c = characters.find(x => x.id === pin.charId); if (c) links.push('NPC: ' + c.name); }
-  document.getElementById('popup-links').textContent = links.join(' · ');
-  const popup = document.getElementById('pin-popup');
-  const wrap = document.getElementById('map-canvas-wrap');
-  const wrect = wrap.getBoundingClientRect();
-  let left = e.clientX - wrect.left + 10;
-  let top = e.clientY - wrect.top + 10;
-  if (left + 250 > wrect.width) left = e.clientX - wrect.left - 260;
-  if (top + 200 > wrect.height) top = e.clientY - wrect.top - 210;
-  popup.style.left = Math.max(0, left) + 'px';
-  popup.style.top = Math.max(0, top) + 'px';
-  popup.style.display = 'block';
-}
-
-function closePinPopup() {
-  document.getElementById('pin-popup').style.display = 'none';
-  currentPinId = null;
-}
-
-function editCurrentPin() {
-  const pin = mapPins.find(p => p.id === currentPinId);
-  if (!pin) return;
-  const newLabel = prompt('Edit label:', pin.label);
-  if (newLabel !== null) pin.label = newLabel.trim() || pin.label;
-  const newNote = prompt('Edit note:', pin.note);
-  if (newNote !== null) pin.note = newNote;
-  closePinPopup();
-  saveData(); renderMapPins();
-}
-
-function deleteCurrentPin() {
-  if (!currentPinId) return;
-  if (!confirm('Remove this pin?')) return;
-  mapPins = mapPins.filter(p => p.id !== currentPinId);
-  closePinPopup();
-  saveData(); renderMapPins();
-}
-
-function mapZoom(factor) {
-  const img = document.getElementById('map-img');
-  mapScale = Math.min(4, Math.max(0.5, mapScale * factor));
-  img.style.transform = `scale(${mapScale})`;
-  img.style.transformOrigin = 'center center';
-}
-
-function mapReset() {
-  mapScale = 1;
-  const img = document.getElementById('map-img');
-  img.style.transform = 'scale(1)';
-  img.style.transformOrigin = 'center center';
-}
-
-let currentMapLayer = 'overworld';
-
-
-function switchMapLayer() {
-  const sel = document.getElementById('map-layer-select');
-  currentMapLayer = sel.value;
-  const img = document.getElementById('map-img');
-  const title = document.getElementById('map-page-title');
-  const fallback = document.getElementById('map-fallback');
-
-  // Reset zoom
-  mapScale = 1;
-  img.style.transform = 'scale(1)';
-
-  // Close any open popup or modal
-  closePinPopup();
-  document.getElementById('add-pin-modal').style.display = 'none';
-  pendingPinX = null; pendingPinY = null;
-
-  if (currentMapLayer === 'overworld') {
-    img.src = MAP_OVERWORLD_URI;
-    img.alt = 'Elden Ring Map — Lands Between';
-    title.textContent = 'Map — Lands Between';
-  } else {
-    img.src = MAP_UNDERGROUND_URI;
-    img.alt = 'Elden Ring Map — Underground';
-    title.textContent = 'Map — Lands Between Underground';
-  }
-
-  // Show fallback reset on load
-  img.style.display = '';
-  fallback.style.display = 'none';
-  img.onerror = () => {
-    img.style.display = 'none';
-    fallback.style.display = 'flex';
-  };
-
-  // Re-render pins for current layer
-  renderMapPins();
-}
-
-// ─────────────────────────────────────────
 // BOSS TRACKER
 // ─────────────────────────────────────────
 function renderBosses() {
@@ -3233,7 +2682,7 @@ function addBoss() {
 }
 
 function resetQuests() {
-  if (!confirm('This will delete all your quest progress and reload the default quest list. Your map pins, characters, inventory, and boss data will be kept. Continue?')) return;
+  if (!confirm('This will delete all your quest progress and reload the default quest list. Your inventory and boss data will be kept. Continue?')) return;
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
 }
