@@ -781,7 +781,9 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
 
 .cs-title { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.55em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 8px; }
 .cs-heading { font-family: var(--font-display); font-size: 30px; font-weight: 600; color: var(--gold); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
-.cs-divider { color: var(--gold-dim); font-size: 18px; letter-spacing: 6px; margin-bottom: 36px; }
+.cs-divider { color: var(--gold-dim); font-size: 18px; letter-spacing: 6px; margin-bottom: 24px; }
+.cs-welcome { max-width: 520px; text-align: center; font-family: var(--font-body); font-size: 17px; color: var(--text); line-height: 1.7; margin-bottom: 120px; }
+.cs-welcome-wip { display: block; margin-top: 8px; font-style: italic; font-size: 15px; color: var(--text-dim); }
 
 .cs-slot-list { width: 540px; max-width: 94vw; display: flex; flex-direction: column; gap: 3px; margin-bottom: 4px; }
 
@@ -860,7 +862,12 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
 
 <!-- ══════════ CHARACTER SELECT ══════════ -->
 <div id="char-select-screen">
-  <div class="cs-title">Tarnished's Compendium</div>
+  <p class="cs-welcome">
+    Welcome to FromSoftCompanion — the complete resource for your journey through the Lands Between.
+    Track your quests, items, characters, points of interest and more, all in one easy-to-use website.
+    <span class="cs-welcome-wip">This is a work in progress and some features may not be complete.</span>
+  </p>
+
   <div class="cs-heading">Choose Your Tarnished</div>
   <div class="cs-divider">⚜ ✦ ⚜</div>
 
