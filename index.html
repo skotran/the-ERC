@@ -1756,85 +1756,246 @@ function addQuest() {
 // ─────────────────────────────────────────
 
 const QUEST_NPCS = {
-  1:  [
-    { name: "Melina", wiki: "Melina" },
-    { name: "White-Faced Varré", wiki: "White_Faced_Varre" },
-    { name: "Finger Reader Enia", wiki: "Finger_Reader_Enia" },
+
+  // ── BECOME ELDEN LORD ──
+  1: [
+    { name: "Melina",                          wiki: "Melina" },
+    { name: "White-Faced Varré",               wiki: "White_Faced_Varre" },
+    { name: "Finger Reader Enia",              wiki: "Finger_Reader_Enia" },
+    { name: "Margit, the Fell Omen",           wiki: "Margit,_the_Fell_Omen" },
+    { name: "Godrick the Grafted",             wiki: "Godrick_the_Grafted" },
+    { name: "Rennala, Queen of the Full Moon", wiki: "Rennala,_Queen_of_the_Full_Moon" },
+    { name: "Starscourge Radahn",              wiki: "Starscourge_Radahn" },
+    { name: "Morgott, the Omen King",          wiki: "Morgott,_the_Omen_King" },
+    { name: "Godfrey, First Elden Lord",       wiki: "Godfrey,_First_Elden_Lord_(Golden_Shade)" },
+    { name: "Maliketh, the Black Blade",       wiki: "Maliketh,_the_Black_Blade" },
+    { name: "Sir Gideon Ofnir",                wiki: "Sir_Gideon_Ofnir,_the_All-Knowing" },
+    { name: "Hoarah Loux, Warrior",            wiki: "Godfrey,_First_Elden_Lord" },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
+    { name: "Elden Beast",                     wiki: "Elden_Beast" },
+    { name: "Fractured Marika",                wiki: "Marika_the_Eternal" },
   ],
-  2:  [{ name: "Fractured Marika", wiki: "Marika_the_Eternal" }],
-  3:  [{ name: "Ranni the Witch", wiki: "Ranni_the_Witch" }],
-  4:  [{ name: "Fia, the Deathbed Companion", wiki: "Fia" }],
-  5:  [{ name: "Dung Eater", wiki: "Dung_Eater" }],
-  6:  [
-    { name: "Brother Corhyn", wiki: "Brother_Corhyn" },
-    { name: "Goldmask", wiki: "Goldmask" },
+
+  // ── ENDINGS ──
+  2: [
+    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
+    { name: "Elden Beast",                     wiki: "Elden_Beast" },
+    { name: "Fractured Marika",                wiki: "Marika_the_Eternal" },
   ],
-  7:  [
-    { name: "Three Fingers", wiki: "Three_Fingers" },
-    { name: "Hyetta", wiki: "Hyetta" },
+  3: [
+    { name: "Ranni the Witch",                 wiki: "Ranni_the_Witch" },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
+    { name: "Elden Beast",                     wiki: "Elden_Beast" },
   ],
+  4: [
+    { name: "Fia, the Deathbed Companion",     wiki: "Fia" },
+    { name: "Lichdragon Fortissax",            wiki: "Lichdragon_Fortissax" },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
+    { name: "Elden Beast",                     wiki: "Elden_Beast" },
+  ],
+  5: [
+    { name: "Dung Eater",                      wiki: "Dung_Eater" },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
+    { name: "Elden Beast",                     wiki: "Elden_Beast" },
+  ],
+  6: [
+    { name: "Brother Corhyn",                  wiki: "Brother_Corhyn" },
+    { name: "Goldmask",                        wiki: "Goldmask" },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
+    { name: "Elden Beast",                     wiki: "Elden_Beast" },
+  ],
+  7: [
+    { name: "Three Fingers",                   wiki: "Three_Fingers" },
+    { name: "Hyetta",                          wiki: "Hyetta" },
+    { name: "Melina",                          wiki: "Melina" },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
+    { name: "Elden Beast",                     wiki: "Elden_Beast" },
+  ],
+
+  // ── RANNI'S QUESTLINE ──
   10: [
-    { name: "Ranni the Witch", wiki: "Ranni_the_Witch" },
-    { name: "Blaidd the Half-Wolf", wiki: "Blaidd" },
-    { name: "War Counselor Iji", wiki: "War_Counselor_Iji" },
-    { name: "Preceptor Seluvis", wiki: "Preceptor_Seluvis" },
+    { name: "Ranni the Witch",                 wiki: "Ranni_the_Witch" },
+    { name: "Blaidd the Half-Wolf",            wiki: "Blaidd" },
+    { name: "War Counselor Iji",               wiki: "War_Counselor_Iji" },
+    { name: "Preceptor Seluvis",               wiki: "Preceptor_Seluvis" },
+    { name: "Starscourge Radahn",              wiki: "Starscourge_Radahn" },
+    { name: "Baleful Shadow",                  wiki: "Baleful_Shadow" },
+    { name: "Astel, Naturalborn of the Void",  wiki: "Astel,_Naturalborn_of_the_Void" },
+    { name: "Glintstone Dragon Adula",         wiki: "Glintstone_Dragon_Adula" },
   ],
-  11: [{ name: "Blaidd the Half-Wolf", wiki: "Blaidd" }],
+
+  // ── BLAIDD'S QUESTLINE ──
+  11: [
+    { name: "Blaidd the Half-Wolf",            wiki: "Blaidd" },
+    { name: "Bloodhound Knight Darriwil",      wiki: "Bloodhound_Knight_Darriwil" },
+    { name: "Starscourge Radahn",              wiki: "Starscourge_Radahn" },
+    { name: "War Counselor Iji",               wiki: "War_Counselor_Iji" },
+  ],
+
+  // ── FIA'S QUESTLINE ──
   12: [
-    { name: "Fia, the Deathbed Companion", wiki: "Fia" },
-    { name: "D, Hunter of the Dead", wiki: "D_Hunter_of_the_Dead" },
+    { name: "Fia, the Deathbed Companion",     wiki: "Fia" },
+    { name: "D, Hunter of the Dead",           wiki: "D_Hunter_of_the_Dead" },
+    { name: "Lichdragon Fortissax",            wiki: "Lichdragon_Fortissax" },
   ],
-  13: [{ name: "White-Faced Varré", wiki: "White_Faced_Varre" }],
+
+  // ── VARRE'S QUESTLINE ──
+  13: [
+    { name: "White-Faced Varré",               wiki: "White_Faced_Varre" },
+    { name: "Mohg, Lord of Blood",             wiki: "Mohg,_Lord_of_Blood" },
+  ],
+
+  // ── MILLICENT'S QUESTLINE ──
   14: [
-    { name: "Millicent", wiki: "Millicent" },
-    { name: "Sage Gowry", wiki: "Sage_Gowry" },
+    { name: "Millicent",                       wiki: "Millicent" },
+    { name: "Sage Gowry",                      wiki: "Sage_Gowry" },
+    { name: "Commander O'Neil",                wiki: "Commander_O%27Neil" },
+    { name: "Malenia, Blade of Miquella",      wiki: "Malenia,_Blade_of_Miquella" },
   ],
+
+  // ── NEPHELI LOUX'S QUESTLINE ──
   15: [
-    { name: "Nepheli Loux", wiki: "Nepheli_Loux" },
-    { name: "Kenneth Haight", wiki: "Kenneth_Haight" },
+    { name: "Nepheli Loux",                    wiki: "Nepheli_Loux" },
+    { name: "Kenneth Haight",                  wiki: "Kenneth_Haight" },
+    { name: "Godrick the Grafted",             wiki: "Godrick_the_Grafted" },
   ],
+
+  // ── BROTHER CORHYN & GOLDMASK ──
   16: [
-    { name: "Brother Corhyn", wiki: "Brother_Corhyn" },
-    { name: "Goldmask", wiki: "Goldmask" },
+    { name: "Brother Corhyn",                  wiki: "Brother_Corhyn" },
+    { name: "Goldmask",                        wiki: "Goldmask" },
   ],
-  17: [{ name: "Dung Eater", wiki: "Dung_Eater" }],
+
+  // ── DUNG EATER'S QUESTLINE ──
+  17: [
+    { name: "Dung Eater",                      wiki: "Dung_Eater" },
+  ],
+
+  // ── VOLCANO MANOR QUESTLINE ──
   18: [
-    { name: "Lady Tanith", wiki: "Lady_Tanith" },
-    { name: "Rya", wiki: "Rya" },
-    { name: "Knight Bernahl", wiki: "Knight_Bernahl" },
+    { name: "Lady Tanith",                     wiki: "Lady_Tanith" },
+    { name: "Rya",                             wiki: "Rya" },
+    { name: "Knight Bernahl",                  wiki: "Knight_Bernahl" },
+    { name: "Patches",                         wiki: "Patches" },
+    { name: "Old Knight Istvan",               wiki: "Old_Knight_Istvan" },
+    { name: "Rileigh the Idle",                wiki: "Rileigh_the_Idle" },
+    { name: "Juno Hoslow",                     wiki: "Juno_Hoslow,_Knight_of_Blood" },
+    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard,_Lord_of_Blasphemy" },
   ],
-  19: [{ name: "Patches", wiki: "Patches" }],
-  20: [{ name: "Alexander the Iron Fist", wiki: "Iron_Fist_Alexander" }],
+
+  // ── PATCHES' QUESTLINE ──
+  19: [
+    { name: "Patches",                         wiki: "Patches" },
+    { name: "Lady Tanith",                     wiki: "Lady_Tanith" },
+  ],
+
+  // ── ALEXANDER QUESTLINE ──
+  20: [
+    { name: "Alexander the Iron Fist",         wiki: "Iron_Fist_Alexander" },
+    { name: "Starscourge Radahn",              wiki: "Starscourge_Radahn" },
+  ],
+
+  // ── SELLEN'S QUESTLINE ──
   21: [
-    { name: "Sorceress Sellen", wiki: "Sorceress_Sellen" },
-    { name: "Witch-Hunter Jerren", wiki: "Witch-Hunter_Jerren" },
+    { name: "Sorceress Sellen",                wiki: "Sorceress_Sellen" },
+    { name: "Witch-Hunter Jerren",             wiki: "Witch-Hunter_Jerren" },
+    { name: "Master Azur",                     wiki: "Master_Azur" },
+    { name: "Master Lusat",                    wiki: "Master_Lusat" },
   ],
-  22: [{ name: "Hunter Yura", wiki: "Bloody_Hunter_Yura" }],
-  23: [{ name: "Rya", wiki: "Rya" }],
-  24: [{ name: "Latenna the Albinauric", wiki: "Latenna" }],
+
+  // ── YURA'S QUESTLINE ──
+  22: [
+    { name: "Hunter Yura",                     wiki: "Bloody_Hunter_Yura" },
+    { name: "Bloody Finger Nerijus",           wiki: "Bloody_Finger_Nerijus" },
+  ],
+
+  // ── RYA'S QUESTLINE ──
+  23: [
+    { name: "Rya",                             wiki: "Rya" },
+    { name: "Lady Tanith",                     wiki: "Lady_Tanith" },
+    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard,_Lord_of_Blasphemy" },
+  ],
+
+  // ── LATENNA'S QUESTLINE ──
+  24: [
+    { name: "Latenna the Albinauric",          wiki: "Latenna" },
+    { name: "Albus",                           wiki: "Albus" },
+  ],
+
+  // ── DIALLOS' QUESTLINE ──
   25: [
-    { name: "Diallos", wiki: "Diallos" },
-    { name: "Jar-Bairn", wiki: "Jar-Bairn" },
+    { name: "Diallos",                         wiki: "Diallos" },
+    { name: "Jar-Bairn",                       wiki: "Jar-Bairn" },
+    { name: "Lady Tanith",                     wiki: "Lady_Tanith" },
   ],
-  26: [{ name: "Hyetta", wiki: "Hyetta" }],
+
+  // ── HYETTA'S QUESTLINE ──
+  26: [
+    { name: "Hyetta",                          wiki: "Hyetta" },
+    { name: "Three Fingers",                   wiki: "Three_Fingers" },
+  ],
+
+  // ── IRINA & EDGAR'S QUESTLINE ──
   27: [
-    { name: "Irina", wiki: "Irina" },
-    { name: "Edgar", wiki: "Edgar" },
+    { name: "Irina",                           wiki: "Irina" },
+    { name: "Edgar",                           wiki: "Edgar" },
+    { name: "Leonine Misbegotten",             wiki: "Leonine_Misbegotten" },
   ],
+
+  // ── KENNETH HAIGHT'S QUESTLINE ──
   28: [
-    { name: "Kenneth Haight", wiki: "Kenneth_Haight" },
-    { name: "Nepheli Loux", wiki: "Nepheli_Loux" },
+    { name: "Kenneth Haight",                  wiki: "Kenneth_Haight" },
+    { name: "Nepheli Loux",                    wiki: "Nepheli_Loux" },
+    { name: "Godrick the Grafted",             wiki: "Godrick_the_Grafted" },
   ],
-  29: [{ name: "Boc the Seamster", wiki: "Boc_the_Seamster" }],
-  30: [{ name: "D, Hunter of the Dead", wiki: "D_Hunter_of_the_Dead" }],
+
+  // ── BOC THE SEAMSTER'S QUESTLINE ──
+  29: [
+    { name: "Boc the Seamster",                wiki: "Boc_the_Seamster" },
+    { name: "Rennala, Queen of the Full Moon", wiki: "Rennala,_Queen_of_the_Full_Moon" },
+  ],
+
+  // ── D, HUNTER OF THE DEAD'S QUESTLINE ──
+  30: [
+    { name: "D, Hunter of the Dead",           wiki: "D_Hunter_of_the_Dead" },
+    { name: "Fia, the Deathbed Companion",     wiki: "Fia" },
+  ],
+
+  // ── GOWRY & MILLICENT (CAELID ARC) ──
   31: [
-    { name: "Sage Gowry", wiki: "Sage_Gowry" },
-    { name: "Millicent", wiki: "Millicent" },
+    { name: "Sage Gowry",                      wiki: "Sage_Gowry" },
+    { name: "Millicent",                       wiki: "Millicent" },
+    { name: "Commander O'Neil",                wiki: "Commander_O%27Neil" },
   ],
-  32: [{ name: "Preceptor Seluvis", wiki: "Preceptor_Seluvis" }],
-  33: [{ name: "Knight Bernahl", wiki: "Knight_Bernahl" }],
-  34: [{ name: "Gurranq, Beast Clergyman", wiki: "Gurranq_Beast_Clergyman" }],
-  35: [{ name: "Finger Reader Enia", wiki: "Finger_Reader_Enia" }],
+
+  // ── SELUVIS'S QUESTLINE ──
+  32: [
+    { name: "Preceptor Seluvis",               wiki: "Preceptor_Seluvis" },
+    { name: "Nepheli Loux",                    wiki: "Nepheli_Loux" },
+    { name: "Ranni the Witch",                 wiki: "Ranni_the_Witch" },
+  ],
+
+  // ── BERNAHL'S QUESTLINE ──
+  33: [
+    { name: "Knight Bernahl",                  wiki: "Knight_Bernahl" },
+    { name: "Lady Tanith",                     wiki: "Lady_Tanith" },
+  ],
+
+  // ── GURRANQ (BEAST CLERGYMAN) QUESTLINE ──
+  34: [
+    { name: "Gurranq, Beast Clergyman",        wiki: "Gurranq_Beast_Clergyman" },
+    { name: "D, Hunter of the Dead",           wiki: "D_Hunter_of_the_Dead" },
+  ],
+
+  // ── ENIA & GREAT RUNES ──
+  35: [
+    { name: "Finger Reader Enia",              wiki: "Finger_Reader_Enia" },
+    { name: "Godrick the Grafted",             wiki: "Godrick_the_Grafted" },
+    { name: "Starscourge Radahn",              wiki: "Starscourge_Radahn" },
+    { name: "Morgott, the Omen King",          wiki: "Morgott,_the_Omen_King" },
+    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard,_Lord_of_Blasphemy" },
+    { name: "Malenia, Blade of Miquella",      wiki: "Malenia,_Blade_of_Miquella" },
+  ],
 };
 
 const NPC_PORTRAITS_KEY = 'erc_npc_portraits_v1';
