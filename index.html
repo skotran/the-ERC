@@ -398,45 +398,35 @@ nav { flex: 1; padding: 8px; display: flex; flex-direction: column; gap: 2px; }
 .status-menu-item:last-child { border-bottom: none; }
 .status-menu-item:hover { background: var(--dark5); color: var(--gold); }
 
-/* ── DIALOGUE ARCHIVE ── */
-.dialogue-context-label {
-  font-family: var(--font-display);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--gold-dim);
-  margin: 10px 0 4px;
-}
-.npc-quest-tag {
-  font-family: var(--font-display);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  border: 1px solid var(--border);
+/* ── PROGRESS BAR ── */
+.progress-bar-wrap {
+  height: 3px;
+  background: var(--dark5);
   border-radius: 2px;
-  padding: 2px 8px;
-  display: inline-block;
-  margin-bottom: 8px;
+  margin-top: 6px;
+  overflow: hidden;
 }
-.dialogue-search-wrap {
-  position: relative;
-  flex: 1;
+.progress-bar-fill {
+  height: 100%;
+  background: var(--gold-dim);
+  border-radius: 2px;
+  transition: width 0.3s;
 }
-.dialogue-search-wrap .er-input { width: 100%; }
-#dialogue-suggestions {
-  display: none;
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0; right: 0;
-  background: var(--dark4);
-  border: 1px solid var(--border-gold);
-  border-radius: 4px;
-  z-index: 100;
-  max-height: 260px;
-  overflow-y: auto;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.6);
+
+/* ── DELETE BUTTON ── */
+.del-x {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 4px;
+  transition: color 0.15s;
 }
+.del-x:hover { color: var(--red-light); }
+
+/* ── NPC PORTRAIT UPLOAD INPUT ── */
+.char-upload-input { display: none; }
 
 .step-next {
   background: rgba(201,168,76,0.06);
@@ -558,37 +548,79 @@ nav { flex: 1; padding: 8px; display: flex; flex-direction: column; gap: 2px; }
   line-height: 1.5;
 }
 
-/* ── DIALOGUE ── */
-.npc-block {
+/* ── CHARACTERS ── */
+.char-quest-group { margin-bottom: 28px; }
+.char-quest-label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--border-gold);
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+}
+.char-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+}
+.char-card {
   background: var(--dark3);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 16px;
-  margin-bottom: 10px;
+  border-radius: 5px;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.15s;
 }
-.npc-name {
+.char-card:hover { border-color: var(--border-gold); }
+.char-portrait-wrap {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  border: 2px solid var(--border-gold);
+  overflow: hidden;
+  background: var(--dark5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+}
+.char-portrait-wrap:hover { border-color: var(--gold); }
+.char-portrait-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.char-name {
   font-family: var(--font-display);
-  font-size: 16px;
-  color: var(--gold);
-  letter-spacing: 0.06em;
-  margin-bottom: 2px;
+  font-size: 13px;
+  color: var(--text-bright);
+  letter-spacing: 0.04em;
+  text-align: center;
 }
-.npc-loc {
-  font-size: 15px;
+.char-quest-tag {
+  font-size: 12px;
   color: var(--text-dim);
   font-style: italic;
-  margin-bottom: 10px;
+  text-align: center;
+  line-height: 1.3;
 }
-.dialogue-line {
-  font-size: 17px;
-  color: var(--text);
-  font-style: italic;
-  line-height: 1.6;
-  padding: 6px 0 6px 14px;
-  border-left: 2px solid var(--gold-dim);
-  margin-bottom: 6px;
+.char-wiki-btn {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid var(--border-gold);
+  background: var(--dark4);
+  color: var(--gold);
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-block;
 }
-.dialogue-line:last-child { margin-bottom: 0; }
+.char-wiki-btn:hover { background: var(--dark5); color: var(--gold-light); }
 mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius: 2px; padding: 0 2px; }
 
 /* ── CHARACTERS ── */
@@ -876,7 +908,7 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
   <div class="rune-divider">⚜ ✦ ⚜</div>
   <nav>
     <button class="nav-btn active" onclick="showTab('quests',this)">Quest Log</button>
-    <button class="nav-btn" onclick="showTab('dialogue',this)">Dialogue</button>
+    <button class="nav-btn" onclick="showTab('characters',this)">Characters</button>
     <button class="nav-btn" onclick="showTab('inventory',this)">Items</button>
     <button class="nav-btn" onclick="showTab('bosses',this)">Boss Tracker</button>
   </nav>
@@ -949,65 +981,18 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
   </div>
 </div>
 
-<!-- ══════════ DIALOGUE ══════════ -->
-<div id="tab-dialogue" class="tab">
+<!-- ══════════ CHARACTERS ══════════ -->
+<div id="tab-characters" class="tab">
   <div class="page-header">
-    <div class="page-title">Dialogue Archive</div>
-    <div class="page-sub">All major NPC dialogue, organized by character and quest</div>
+    <div class="page-title">Characters</div>
+    <div class="page-sub">NPCs from your active quests · Click a portrait to upload a photo · Visit their wiki page</div>
   </div>
-  <div class="toolbar">
-    <select class="er-select" id="dialogue-quest-filter" onchange="renderDialogue()" style="min-width:170px">
-      <option value="all">All Quests</option>
-      <option value="Main Story">Main Story</option>
-      <option value="Ranni">Ranni's Questline</option>
-      <option value="Blaidd">Blaidd's Questline</option>
-      <option value="Fia">Fia's Questline</option>
-      <option value="Millicent">Millicent's Questline</option>
-      <option value="Volcano Manor">Volcano Manor</option>
-      <option value="Nepheli">Nepheli's Questline</option>
-      <option value="Corhyn">Corhyn &amp; Goldmask</option>
-      <option value="Dung Eater">Dung Eater</option>
-      <option value="Patches">Patches</option>
-      <option value="Alexander">Alexander</option>
-      <option value="Sellen">Sellen's Questline</option>
-      <option value="Varre">Varré's Questline</option>
-      <option value="Yura">Yura's Questline</option>
-      <option value="Boc">Boc's Questline</option>
-      <option value="Other">Other NPCs</option>
-      <option value="death">Death / Defeat</option>
-    </select>
-    <select class="er-select" id="dialogue-search-mode" onchange="onDialogueSearchModeChange()" style="min-width:150px">
-      <option value="npc">Search by NPC</option>
-      <option value="keyword">Search by keyword</option>
-      <option value="location">Search by location</option>
-    </select>
-    <div class="dialogue-search-wrap">
-      <input class="er-input" id="dialogue-search" placeholder="Type an NPC name…" oninput="onDialogueSearch()" onkeydown="onDialogueSearchKey(event)" autocomplete="off" style="width:100%">
-      <div id="dialogue-suggestions"></div>
-    </div>
-    <button class="btn" onclick="toggleForm('add-dialogue-form')">+ Add NPC</button>
+  <div class="content" id="characters-content">
+    <div class="empty-state">Activate a quest in the Quest Log to see its characters here.</div>
   </div>
-  <div class="content">
-    <div class="form-panel" id="add-dialogue-form">
-      <div class="form-title">Add NPC Dialogue</div>
-      <div class="form-row">
-        <input class="er-input" id="d-npc" placeholder="NPC name" style="flex:1">
-        <input class="er-input" id="d-loc" placeholder="Location" style="flex:1">
-        <input class="er-input" id="d-quest" placeholder="Quest / category" style="flex:1">
-      </div>
-      <div class="form-row">
-        <textarea class="er-input" id="d-lines" rows="4" placeholder="Paste dialogue lines — one per line" style="flex:1;resize:vertical"></textarea>
-      </div>
-      <div style="display:flex;gap:8px">
-        <button class="btn" onclick="addDialogue()">Save</button>
-        <button class="btn btn-danger" onclick="toggleForm('add-dialogue-form')">Cancel</button>
-      </div>
-    </div>
-    <div id="dialogue-results"></div>
-  </div>
+  <input type="file" id="char-portrait-upload" class="char-upload-input" accept="image/*">
 </div>
 
-<!-- ══════════ CHARACTERS ══════════ -->
 <!-- ══════════ INVENTORY ══════════ -->
 <div id="tab-inventory" class="tab">
   <div class="page-header">
@@ -1031,7 +1016,7 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
   </div>
 </div>
 
-<!-- ══════════ BOSSES <!-- ══════════ BOSSES ══════════ -->
+<!-- ══════════ BOSSES ══════════ -->
 <div id="tab-bosses" class="tab">
   <div class="page-header">
     <div class="page-title">Boss Tracker</div>
@@ -1141,7 +1126,7 @@ function csLoadData(id) {
 function saveData() {
   if (!activeCharId) return;
   try {
-    localStorage.setItem(DATA_PREFIX + activeCharId, JSON.stringify({ quests, dialogues, inventory, bosses }));
+    localStorage.setItem(DATA_PREFIX + activeCharId, JSON.stringify({ quests, inventory, bosses }));
     const aq = quests.find(q => q.status === 'active');
     const ch = allChars.find(c => c.id === activeCharId);
     if (ch) { ch.latestQuest = aq ? aq.name : null; csSaveAll(); }
@@ -1153,7 +1138,6 @@ function csActivate(charId) {
   activeCharId = charId;
   const saved = csLoadData(charId) || {};
   quests     = saved.quests     ? JSON.parse(JSON.stringify(saved.quests))     : JSON.parse(JSON.stringify(DEFAULT_QUESTS));
-  dialogues  = saved.dialogues  ? JSON.parse(JSON.stringify(saved.dialogues))  : JSON.parse(JSON.stringify(DEFAULT_DIALOGUES));
   inventory  = saved.inventory  ? JSON.parse(JSON.stringify(saved.inventory))  : {};
   bosses     = saved.bosses     ? JSON.parse(JSON.stringify(saved.bosses))     : JSON.parse(JSON.stringify(DEFAULT_BOSSES));
   const ch = allChars.find(c => c.id === charId);
@@ -1162,7 +1146,7 @@ function csActivate(charId) {
     const p = document.getElementById('sb-portrait');
     p.innerHTML = ch.portrait ? `<img src="${ch.portrait}" alt="">` : '⚔';
   }
-  renderQuests(); updateSpoilerBtn();
+  renderQuests(); updateSpoilerBtn(); renderCharacters();
 }
 
 // ── Character Select UI ──
@@ -1288,7 +1272,7 @@ requestAnimationFrame(() => requestAnimationFrame(() => {
 // ─────────────────────────────────────────
 // DATA — stored as constants so each character gets a fresh copy
 // ─────────────────────────────────────────
-let quests = [], dialogues = [], inventory = {}, bosses = [];
+let quests = [], inventory = {}, bosses = [];
 
 const DEFAULT_QUESTS = [
 
@@ -1536,838 +1520,6 @@ const DEFAULT_QUESTS = [
   ]},
 ];
 
-const DEFAULT_DIALOGUES = [
-
-  // ══════════════════════════════════════════════════════
-  // MARGIT, THE FELL OMEN
-  // ══════════════════════════════════════════════════════
-  {id:1,npc:"Margit, the Fell Omen",quest:"Main Story",location:"Stormhill Gate — intro cutscene (player enters fog gate)",lines:[
-    "Foul Tarnished, in search of the Elden Ring. Emboldened by the flame of ambition. Hrah! Someone must extinguish thy flame. Let it be Margit the Fell!",
-  ]},
-  {id:2,npc:"Margit, the Fell Omen",quest:"Main Story",location:"Stormhill Gate — at ~60% health (mid-fight taunt)",lines:[
-    "Well, thou art of passing skill. Warrior blood must truly run in thy veins, Tarnished.",
-    "As I thought, thou'rt of passing valour... but the dark of night is yet to lift. The hands of the Fell Omen shall brook thee no quarter.",
-  ]},
-  {id:3,npc:"Margit, the Fell Omen",quest:"Main Story",location:"Stormhill Gate — mid-fight combat taunts",lines:[
-    "I see thee, little Tarnished. Smould'ring with that wretched flame of ambition. Tremble now, with fear. For the hands of the Fell Omen will soon be upon thee. To put out thy little flame.",
-    "I'll remember thee, Tarnished. The flame of ambition leadeth thee astray. Come, hands of the Fell Omen. Snuff out this wretch's flame.",
-  ]},
-  {id:4,npc:"Margit, the Fell Omen",quest:"Main Story",location:"Stormhill Gate — Margit defeats the player",lines:[
-    "Foul Tarnished. Put these foolish ambitions to rest. The Erdtree is firmly rooted, always.",
-    "May the curse seep to thy very soul. An apt reward for thy brash ambition.",
-  ]},
-  {id:5,npc:"Margit, the Fell Omen",quest:"Main Story",location:"Stormhill Gate — player defeats Margit",lines:[
-    "I shall remember thee, Tarnished. Smould'ring with thy meagre flame. Cower in fear. Of the night. The hands of the Fell Omen shall brook thee no quarter.",
-  ]},
-  {id:6,npc:"Margit, the Fell Omen",quest:"Main Story",location:"Capital Outskirts — reappears outside Leyndell, intro",lines:[
-    "Graceless Tarnished. What is thy business with these thrones? Ahh... Godrick the Golden. The twin prodigies, Miquella and Malenia. General Radahn. Praetor Rykard. Lunar Princess Ranni. Wilful traitors, all.",
-    "Thy kind are all of a piece. Pillagers. Emboldened by the flame of ambition. Ngh! Have it writ upon thy meagre grave: Felled by King Morgott! Last of all kings.",
-  ]},
-  {id:7,npc:"Margit, the Fell Omen",quest:"Main Story",location:"Capital Outskirts — player defeats Margit (second fight)",lines:[
-    "... Tarnished, thou art mistaken. The Erdtree welcometh no man. No one will be Elden Lord again. Not even I.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // GODRICK THE GRAFTED
-  // ══════════════════════════════════════════════════════
-  {id:10,npc:"Godrick the Grafted",quest:"Main Story",location:"Stormveil Castle — intro cutscene",lines:[
-    "Mighty dragon, thou'rt a trueborn heir. Lend me thy strength, o kindred. Deliver me unto greater heights.",
-    "...Well. A lowly Tarnished, playing as a lord. I command thee, kneel! I am the lord of all that is golden!",
-  ]},
-  {id:11,npc:"Godrick the Grafted",quest:"Main Story",location:"Stormveil Castle — phase 2, grafting the dragon arm",lines:[
-    "Ahh, truest of dragons. Lend me thy strength... Nnngh! Forefathers, one and all... Great King Godfrey... Bear witness!",
-  ]},
-  {id:12,npc:"Godrick the Grafted",quest:"Main Story",location:"Stormveil Castle — mid-fight song (Godrick's men patrol)",lines:[
-    "One day, we'll return together. To our home, bathed in rays of gold. There is only one tree, and only its branches. That bathe in true rays of gold. Not the fool Omen King. Nor the rank malformed twins. O, we are the Golden Ones. The true and rightful heirs.",
-    "Hear me, my knights! Proud warriors and true. Let the hunt begin! Fetch me a mighty branch to make mine own! A fresh offering to graft!",
-  ]},
-  {id:13,npc:"Godrick the Grafted",quest:"Main Story",location:"Stormveil Castle — Godrick defeats the player",lines:[
-    "Lowly Tarnished... Thou'rt unfit even to graft...",
-  ]},
-  {id:14,npc:"Godrick the Grafted",quest:"Main Story",location:"Stormveil Castle — player defeats Godrick",lines:[
-    "...I am the Lord of all that is Golden... ...And one day, we'll return together... ...To our home, bathed in rays of gold...",
-    "Great Godfrey, didst thou witness?",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // RENNALA, QUEEN OF THE FULL MOON
-  // ══════════════════════════════════════════════════════
-  {id:20,npc:"Rennala, Queen of the Full Moon",quest:"Main Story",location:"Raya Lucaria Grand Library — phase 1 (carried by students)",lines:[
-    "Come, sweetings, become what ye desire. Come, sweetings, time to be born, anew.",
-    "Be not afeard, little culver. Hush, little culver. I'll soon birth thee anew, a sweeting fresh and pure...",
-    "Come, Oath-sworn giant! Come, Oath-sworn dragon! Come, Oath-sworn beasts! Come, Blaidd, my child!",
-  ]},
-  {id:21,npc:"Rennala, Queen of the Full Moon",quest:"Main Story",location:"Raya Lucaria Grand Library — Rennala defeats the player",lines:[
-    "Thy fate lieth under my moon.",
-    "Ahh, my beloved... Have no fear, I will hold thee. Patience... Ye will be countless born, forever and ever.",
-    "Hush, little culver. Hush, fair maid. I'll soon birth thee anew, a sweeting fresh and pure...",
-  ]},
-  {id:22,npc:"Rennala, Queen of the Full Moon",quest:"Main Story",location:"Raya Lucaria Grand Library — player defeats Rennala",lines:[
-    "Guide thy moon as thou wishest. Ranni, my little baby... I thank thee... Oh little Ranni, my dear daughter. Weave thy night into being...",
-  ]},
-  {id:23,npc:"Rennala, Queen of the Full Moon",quest:"Main Story",location:"After defeat — rebirth service at Grand Library",lines:[
-    "Ah...thou... Is it thy wish to be born anew? To become a sweeting, reborn of my beloved egg?",
-    "Where did ye flee, my sweetings? Come out, from whence ye hide. Of the dark, be not afeard. My beloved egg is with us. Come out, I prithee.",
-    "Art thou now assured of thy want, to be born anew?",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // STARSCOURGE RADAHN
-  // ══════════════════════════════════════════════════════
-  {id:30,npc:"Starscourge Radahn",quest:"Main Story",location:"Redmane Castle — Witch-Hunter Jerren introduces the festival",lines:[
-    "General Radahn is cursed ever to wander. Before we begin, allow me to paint you the full picture. Eaten from the inside, by Malenia's scarlet rot, his wits are long gone. Now he gathers the corpses of former friends and foes alike, gorging on them, like a dog. Howling at the sky.",
-  ]},
-  {id:31,npc:"Starscourge Radahn",quest:"Main Story",location:"Wailing Dunes — Radahn has no spoken dialogue",lines:[
-    "[Radahn speaks no words during his battle. The scarlet rot has consumed his mind entirely.]",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // MORGOTT, THE OMEN KING
-  // ══════════════════════════════════════════════════════
-  {id:40,npc:"Morgott, the Omen King",quest:"Main Story",location:"Leyndell, Royal Capital — intro cutscene",lines:[
-    "O, Death. O Destined Death... Become my blade, once more.",
-    "Foul Tarnished. Graceless Tarnished. What is thy business with these thrones? Ahh... Godrick the Golden. The twin prodigies, Miquella and Malenia. General Radahn. Praetor Rykard. Lunar Princess Ranni. Wilful traitors, all.",
-    "Thy kind are all of a piece. Pillagers. Emboldened by the flame of ambition. Ngh! Have it writ upon thy meagre grave: Felled by King Morgott! Last of all kings.",
-  ]},
-  {id:41,npc:"Morgott, the Omen King",quest:"Main Story",location:"Leyndell — at ~60% health (phase 2 transition)",lines:[
-    "Hrghraah! The thrones...stained by my curse... Such shame I cannot bear. Thy part in this shall not be forgiven.",
-  ]},
-  {id:42,npc:"Morgott, the Omen King",quest:"Main Story",location:"Leyndell — Morgott defeats the player",lines:[
-    "Have it writ upon thy meagre grave: Felled by King Morgott! Last of all kings.",
-    "Have it writ upon thy meagre grave: Felled by King Morgott! Elden Lord!",
-    "May the curse seep to thy very soul.",
-  ]},
-  {id:43,npc:"Morgott, the Omen King",quest:"Main Story",location:"Leyndell — player defeats Morgott",lines:[
-    "The thrones...",
-    "Tarnished, thou'rt but a fool. The Erdtree wards off all who deign approach. We are...we are all forsaken.",
-    "None may claim the title of Elden Lord. Thy deeds shall be met with failure, just as I.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // FIRE GIANT
-  // ══════════════════════════════════════════════════════
-  {id:50,npc:"Fire Giant",quest:"Main Story",location:"Forge of the Giants — player defeats Fire Giant",lines:[
-    "Formless... Mother...",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // RYKARD, LORD OF BLASPHEMY
-  // ══════════════════════════════════════════════════════
-  {id:60,npc:"Rykard, Lord of Blasphemy",quest:"Volcano Manor",location:"Volcano Manor — intro, phase 1 (God-Devouring Serpent)",lines:[
-    "A fine sacrifice indeed. Let us devour the gods, together!",
-  ]},
-  {id:61,npc:"Rykard, Lord of Blasphemy",quest:"Volcano Manor",location:"Volcano Manor — phase 2 intro (Rykard revealed)",lines:[
-    "Now, we can devour the gods, together!",
-    "O shapers of gods, meddlers in fortune. I do not abide! By your suffocating Order.",
-  ]},
-  {id:62,npc:"Rykard, Lord of Blasphemy",quest:"Volcano Manor",location:"Volcano Manor — Rykard defeats the player",lines:[
-    "Join the Serpent King, as family... And devour the gods with me! Together, we will devour the very gods!",
-    "So must it be. ...to devour the gods.",
-  ]},
-  {id:63,npc:"Rykard, Lord of Blasphemy",quest:"Volcano Manor",location:"Volcano Manor — player defeats Rykard",lines:[
-    "No one will hold me captive. A serpent never dies. Ha ha ha...",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // MALIKETH, THE BLACK BLADE
-  // ══════════════════════════════════════════════════════
-  {id:70,npc:"Maliketh, the Black Blade",quest:"Main Story",location:"Crumbling Farum Azula — phase 1 (Beast Clergyman)",lines:[
-    "I shall not part with it again.",
-    "Stay away from Destined Death.",
-  ]},
-  {id:71,npc:"Maliketh, the Black Blade",quest:"Main Story",location:"Crumbling Farum Azula — phase 2 intro (Maliketh revealed)",lines:[
-    "Cower. Before Maliketh, the Black Blade.",
-    "Cower. Before Maliketh, Marika's Black Blade.",
-  ]},
-  {id:72,npc:"Maliketh, the Black Blade",quest:"Main Story",location:"Crumbling Farum Azula — Maliketh defeats the player",lines:[
-    "Witless Tarnished... Why covet Destined Death? To kill what? To destroy what?",
-    "I must consume more...",
-    "Marika...why... wouldst thou...gull me? Why...shatter...",
-  ]},
-  {id:73,npc:"Maliketh, the Black Blade",quest:"Main Story",location:"Crumbling Farum Azula — player defeats Maliketh",lines:[
-    "Witless Tarnished... Why covet Destined Death? To kill what? To destroy what?",
-    "Forgive me, Marika... The Golden Order...cannot be restored.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // SIR GIDEON OFNIR (BOSS FIGHT)
-  // ══════════════════════════════════════════════════════
-  {id:80,npc:"Sir Gideon Ofnir",quest:"Main Story",location:"Leyndell Ashen Capital — boss intro speech",lines:[
-    "Ahh, I knew you'd come. To stand before the Elden Ring. To become Elden Lord. What a sad state of affairs. I commend your spirit, but alas, none shall take the throne. Queen Marika has high hopes for us. That we continue to struggle. Unto eternity.",
-  ]},
-  {id:81,npc:"Sir Gideon Ofnir",quest:"Main Story",location:"Leyndell Ashen Capital — player defeats Gideon",lines:[
-    "My fellow, you've fought well, until now.",
-    "I know...in my bones... A Tarnished cannot become a Lord. Not even you. A man cannot kill a god...",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // GODFREY, FIRST ELDEN LORD / HOARAH LOUX
-  // ══════════════════════════════════════════════════════
-  {id:90,npc:"Godfrey, First Elden Lord",quest:"Main Story",location:"Leyndell — golden shade intro",lines:[
-    "It's been a long while, Morgott. Long and hard didst thou fight. Tarnished Warrior. Spurned by the grace of gold. Be assured, the Elden Ring resteth close at hand. Alas, I am returned. To be granted audience once more. Upon my name as Godfrey, The first Elden Lord!",
-  ]},
-  {id:91,npc:"Godfrey, First Elden Lord",quest:"Main Story",location:"Leyndell — player defeats golden shade",lines:[
-    "Tarnished Warrior. 'Twas nobly fought.",
-    "A crown is warranted with strength!",
-    "Brave Tarnished... Thy strength befits a crown.",
-  ]},
-  {id:92,npc:"Godfrey, First Elden Lord",quest:"Main Story",location:"Elden Throne — phase 2, Hoarah Loux revealed",lines:[
-    "That will be all. Thou didst me good service, Serosh. I've given thee courtesy enough. Rrraaargh! Now I fight as Hoarah Loux! Warrior!",
-  ]},
-  {id:93,npc:"Godfrey, First Elden Lord",quest:"Main Story",location:"Elden Throne — mid-fight taunts (Hoarah Loux)",lines:[
-    "Forefathers, one and all... Great King Godfrey... Bear witness!",
-    "O Marika! I will take thee in mine arms once more!",
-  ]},
-  {id:94,npc:"Godfrey, First Elden Lord",quest:"Main Story",location:"Elden Throne — player defeats Godfrey / Hoarah Loux",lines:[
-    "Brave Tarnished, thy strength befits a crown.",
-    "Brave Tarnished... Thy strength befits a crown.",
-    "Dearest Marika... I am returned.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // MALENIA, BLADE OF MIQUELLA
-  // ══════════════════════════════════════════════════════
-  {id:100,npc:"Malenia, Blade of Miquella",quest:"Main Story",location:"Elphael, Brace of the Haligtree — intro cutscene",lines:[
-    "I dreamt for so long. My flesh was dull gold...and my blood, rotted. Corpse after corpse, left in my wake... As I awaited...his return. ...Heed my words. I am Malenia. Blade of Miquella. And I have never known defeat.",
-  ]},
-  {id:101,npc:"Malenia, Blade of Miquella",quest:"Main Story",location:"Haligtree — phase 1, Malenia defeats the player",lines:[
-    "I am Malenia. Blade of Miquella.",
-    "Let your flesh be consumed. By the scarlet rot.",
-  ]},
-  {id:102,npc:"Malenia, Blade of Miquella",quest:"Main Story",location:"Haligtree — phase 2 transition (Goddess of Rot bloom)",lines:[
-    "Wait. The scarlet bloom flowers once more. You will witness true horror. Now, rot!",
-  ]},
-  {id:103,npc:"Malenia, Blade of Miquella",quest:"Main Story",location:"Haligtree — player defeats Malenia",lines:[
-    "Your strength, extraordinary... The mark...of a true Lord... O, dear Miquella... O, dearest Miquella, my brother... I'm sorry. I finally met my match...",
-    "Is this...my first...defeat? Bravely fought. But remember... One day, the scarlet bloom will flower again...",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // MOHG, LORD OF BLOOD
-  // ══════════════════════════════════════════════════════
-  {id:110,npc:"Mohg, Lord of Blood",quest:"Main Story",location:"Mohgwyn Dynasty Mausoleum — intro",lines:[
-    "Dearest Miquella. You must abide alone a while. No one else will take you. Never again, I swear!",
-    "Welcome, honoured guest. To the birthplace of our dynasty!",
-  ]},
-  {id:111,npc:"Mohg, Lord of Blood",quest:"Main Story",location:"Mohgwyn Dynasty Mausoleum — phase 2, ritual blood vow",lines:[
-    "sex quīnque quattuor trēs duo ūnus nihil nihil nihil",
-  ]},
-  {id:112,npc:"Mohg, Lord of Blood",quest:"Main Story",location:"Mohgwyn Dynasty Mausoleum — mid-fight",lines:[
-    "Miquella is mine and mine alone.",
-    "Now, surrender yourself. To my blood, to our coming dynasty.",
-    "Ahh, I can see it, as clear as day! The coming of our dynasty! Mohgwyn!",
-  ]},
-  {id:113,npc:"Mohg, Lord of Blood",quest:"Main Story",location:"Mohgwyn Dynasty Mausoleum — player defeats Mohg",lines:[
-    "Ahh, Miquella... Why do you abandon me?",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // ASIMI, THE SILVER TEAR
-  // ══════════════════════════════════════════════════════
-  {id:120,npc:"Asimi, the Silver Tear",quest:"Other",location:"Nokron, Eternal City — first encounter in boss room",lines:[
-    "Please, wait! Proud Tarnished warrior. Before you kill me, let me speak. I can aid you. Please, just hear me out.",
-    "Thank you for listening. I am Asimi. My true form is that of a silver tear. I am a simple being who can assume the shapes of other living things. But now, I've gained knowledge. I speak, and ponder, and...live in fear of death.",
-    "O, mighty Tarnished warrior, I beg of you. Let me keep the life I've been granted. In exchange, I offer you power.",
-  ]},
-  {id:121,npc:"Asimi, the Silver Tear",quest:"Other",location:"If player accepts Asimi",lines:[
-    "Ahh, thank you. Now, set your lips upon me, and breathe in deep. I will live inside of you, and grant you strength untold.",
-    "Onward, to our glorious future, my host...",
-    "My lord host, do you hear that? The sound of water. The river that flows in my home, the Eternal City. Good lord host, I beg you, we must see the Eternal City. To discover the ancient wonders of the stars. A wellspring of strength.",
-  ]},
-  {id:122,npc:"Asimi, the Silver Tear",quest:"Other",location:"If player defeats Asimi",lines:[
-    "You won't listen to me, will you? It's such a pity...",
-    "Ahh, how could you... I was you, and only you. We were one...together. Please, I only want to live... I only wanted you... to become Lord... Gah...",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // MELINA
-  // ══════════════════════════════════════════════════════
-  {id:200,npc:"Melina",quest:"Main Story",location:"First Site of Grace in Limgrave — first meeting (offer of accord)",lines:[
-    "Have you heard of the Finger Maidens? They serve the Two Fingers, offering guidance, and aid, to the Tarnished. But you, I am afraid, are maidenless.",
-    "I can play the role of maiden. Turning runes into strength. To aid you in your search for the Elden Ring. You need only take me with you. To the foot of the Erdtree.",
-    "I understand. I'm asking you to put faith in but a stranger. Yet I'm certain that we can reach an understanding. Summon me by grace if you should reconsider.",
-  ]},
-  {id:201,npc:"Melina",quest:"Main Story",location:"On accepting her accord",lines:[
-    "Then it's settled. Summon me by grace to turn runes into strength.",
-    "I bequeath to you this ring. It will summon a spectral steed named Torrent. Torrent has chosen you. Treat him with respect.",
-  ]},
-  {id:202,npc:"Melina",quest:"Main Story",location:"Sites of Grace, Limgrave — optional conversations (grace & purpose)",lines:[
-    "This tiny golden aura is the grace of the Erdtree. This light once shone in the eyes of your Tarnished brethren. But now it is all that guides you. Or so I hear. You can see them, can't you? The rays of grace, that guide you through your burden.",
-    "Me? I'm searching. For my purpose, given to me by my mother inside the Erdtree, long ago. For the reason that I yet live, burned and bodiless.",
-    "There is something for which I must apologise. I've acted the Finger Maiden, yet can offer no guidance. I am no maiden. My purpose…was long ago lost.",
-  ]},
-  {id:203,npc:"Melina",quest:"Main Story",location:"Sites of Grace, before Stormveil — shardbearer hint",lines:[
-    "Upon the cliff, in Castle Stormveil, is a shardbearer. A demigod who inherited a fragment of the shattered Elden Ring. If the rays of grace signal the castle, then the Elden Ring beckons you. As an ally by pact, ...I pray that you are fit... To face the challenge presented by the Ring.",
-  ]},
-  {id:204,npc:"Melina",quest:"Main Story",location:"Sites of Grace — Marika's spoken echoes (various locations)",lines:[
-    "My Lord, and thy warriors. I divest each of thee of thy grace. With thine eyes dimmed, ye will be driven from the Lands Between. Ye will wage war in a land afar, where ye will live, and die.",
-    "Then, after thy death, I will give back what I once claimed. Return to the Lands Between, wage war, and brandish the Elden Ring. Grow strong in the face of death. Warriors of my lord. Lord Godfrey.",
-    "The Erdtree governs all. The choice is thine. Become one with the Order. Or divest thyself of it. To wallow at the fringes; a powerless upstart.",
-    "Hear me, Demigods. My children beloved. Make of thyselves that which ye desire. Be it a Lord. Be it a God. But should ye fail to become aught at all, ye will be forsaken. Amounting only to sacrifices...",
-    "O Radagon, leal hound of the Golden Order. Thou'rt yet to become me. Thou'rt yet to become a god. Let us be shattered, both. Mine other self.",
-    "I declare mine intent, to search the depths of the Golden Order. Through understanding of the proper way, our faith, our grace, is increased. Those blissful early days of blind belief are long past. My comrades; why must ye falter?",
-    "Hark, brave warriors. Hark, my lord Godfrey. We commend your deeds. Guidance hath delivered ye through each ordeal, to the place ye stand. Put the Giants to the sword, and confine the flame atop the mount. Let a new epoch begin. An epoch glistening with life. Brandish the Elden Ring, for the Age of the Erdtree!",
-  ]},
-  {id:205,npc:"Melina",quest:"Main Story",location:"Roundtable Hold invitation — after first major grace",lines:[
-    "Forgive me. I've been...testing you. To see whether or not grace truly does guide you. And...whether you are fit to face the challenge that entails. It seems my worries were unfounded. Torrent had your measure from the very start. Whereas I merely pretended.",
-    "There is but one other thing I can do to offer you guidance. I can take you to the Roundtable Hold... Gathering place of Tarnished champions, guided by Grace...",
-  ]},
-  {id:206,npc:"Melina",quest:"Main Story",location:"Altus Plateau — Boc optional dialogue",lines:[
-    "Your seamster, Boc... He is always eager to see your return. Please, will you talk to him, when you can? I'm sure he would be much contented.",
-    "Your seamster, Boc... I see him crying, from time to time. I think he misses his mother. He wants someone to tell him he's beautiful. Does being born of a mother... Mean one behaves in such a manner?",
-  ]},
-  {id:207,npc:"Melina",quest:"Main Story",location:"Leyndell, Royal Capital — farewell at Erdtree base",lines:[
-    "My utmost thanks. For bringing me to the base of the Erdtree. Here, I can govern my own movement. And thus, the accord is fulfilled. I shall depart to ascertain the purpose I was given. Farewell.",
-    "I shall leave Torrent, and the power to turn runes into strength, here with you. I wish you luck, in realising your ambition. You have fought long and hard. I have no doubt you will become Elden Lord. May you take the throne.",
-  ]},
-  {id:208,npc:"Melina",quest:"Main Story",location:"Elden Throne Site of Grace — new accord after Morgott",lines:[
-    "Hello again, old friend. It's me, Melina. Your travelling companion. Allow me a moment to converse with you.",
-    "You were unable to enter the Erdtree, no? Prevented by the mantle of barbs. The thorns are impenetrable. A husk of the Erdtree's being; that spurns all that exists without.",
-    "The only way to stand before the Elden Ring...and become the Elden Lord...is to pass the thorns. My purpose serves to aid in that very act. So I'd like you to undertake a new journey, with me. To the flame of ruin, far above the clouds, upon the snowy mountaintops of the giants. Then I can set the Erdtree aflame. And guide you. Down the path to becoming Elden Lord.",
-  ]},
-  {id:209,npc:"Melina",quest:"Lord of Frenzied Flame",location:"Frenzied Flame Proscription — if player inherits the Frenzied Flame",lines:[
-    "There's something I'd like to say. My purpose was given to me by my mother. But now I act of my own volition. I have set my heart upon the world that I would have. Regardless of my mother's designs. I won't allow anyone to speak ill of that. Not even you.",
-    "You... have inherited the Frenzied Flame. A pity. You are no longer fit. Our journey together ends here. And remember... should you rise as Lord of Chaos, I will kill you. As sure as night follows day. Such is my duty, for allowing you the strength of runes. Goodbye, my companion. Goodbye, Torrent.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // FINGER READER ENIA
-  // ══════════════════════════════════════════════════════
-  {id:210,npc:"Finger Reader Enia",quest:"Main Story",location:"Roundtable Hold — first meeting",lines:[
-    "Are you that new Tarnished? You've done well. I am Enia, the Finger Reader. I interpret the words of the Fingers, envoys to the Greater Will. Look there. The Fingers tremble. To welcome you, shardbearer.",
-    "\"Great Elden Ring, root of the Golden Order. Anchor of all lands, giver of grace, wellspring of all joy. Until it was shattered. The tragic corruption of the Order has taken its toll. Across the realm, life lies in ruin.\"",
-    "\"But the Greater Will has not abandoned the realm, nor the life that inhabits it. So it is that the Tarnished are guided by grace. Called to act. Brave Tarnished, your Great Rune is a handsome shard of the Elden Ring. Seek another of its kind. To become Elden Lord, and restore the Golden Order.\"",
-    "Let the words of the Fingers guide you.",
-  ]},
-  {id:211,npc:"Finger Reader Enia",quest:"Main Story",location:"Roundtable Hold — on delivering a Remembrance",lines:[
-    "Ahh, Great Runes are the stuff of demigods; the children of the goddess, Queen Marika. She who is vessel of the Elden Ring. Tainted by the strength of their runes, her children warred, but none could become Elden Lord. And so grace was extended, to your kind, the Tarnished.",
-    "\"The Greater Will has long renounced the demigods. Tarnished, show no mercy. Have their heads. Take all they have left. The Fingers have willed it so.\"",
-    "The demigods are each and all the direct offspring of Queen Marika. Godrick the Grafted was but a distant relation... The runt of the litter, his divine blood sorely diluted.",
-  ]},
-  {id:212,npc:"Finger Reader Enia",quest:"Main Story",location:"Roundtable Hold — after acquiring two Great Runes",lines:[
-    "I had my doubts, but...my, look at you. Only once before have I seen two Great Runes together. Look there. The Fingers shudder with exuberance.",
-    "\"Fine work, brave Tarnished. The Greater Will is pleased. You have earned the right to become Elden Lord. Now, seek the Erdtree, and an audience with Queen Marika. To become Elden Lord, and restore the Golden Order.\"",
-    "The Fingers expect... As much from you as they do young Gideon.",
-  ]},
-  {id:213,npc:"Finger Reader Enia",quest:"Main Story",location:"After Maliketh is slain — Enia's farewell",lines:[
-    "The Rune of Death is unbound, and the Lands Between are shrouded by Death's dark fate. But the flames will also burn the impenetrable thorns. Farewell it is, then... You'll be Elden Lord yet.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // RANNI THE WITCH / RENNA
-  // ══════════════════════════════════════════════════════
-  {id:220,npc:"Ranni the Witch",quest:"Ranni",location:"Church of Elleh, Limgrave — as Renna (first meeting)",lines:[
-    "I am the witch Renna. I'd heard tell of a Tarnished hurtling about atop a spectral steed. And upon looking into the matter, the talk, I surmise, is of thee. Thou'rt possessed of the power, no? To call forth the spectral steed named Torrent.",
-    "I was entrusted this, for thee. By Torrent's former master. 'Tis a bell for calling forth spirits. Summon them with it, from ash unreturned to the Erdtree. The spirits will obey thine command but briefly, as they recall battles past.",
-    "Forgive mine intrusion, Tarnished. I doubt we shall again meet. But all the same, learn well the Lands Between. How long will it be, I wonder... Before the Tarnished tire of obeisance to the Two Fingers?",
-  ]},
-  {id:221,npc:"Ranni the Witch",quest:"Ranni",location:"Ranni's Rise, Three Sisters — identity revealed",lines:[
-    "Indeed, I am the witch Ranni. I stole a fragment of the Rune of Death, and used it to forge the godslaying black knives through fearsome rite. I did it all. But sadly for thee, the cursemark thou seekest is not to be found here. I have slain the body I was born into, and cast it away.",
-  ]},
-  {id:222,npc:"Ranni the Witch",quest:"Ranni",location:"Ranni's Rise — entering her service",lines:[
-    "Wilt thou enter into my service? I am the witch Ranni. I stole Death long ago, and search now for the dark path. That I might one day upend the whole of it, and rid the world of all that came before. Well? Has that roused thy interest?",
-    "I see. A choice well made. Thou'rt a rare sort. Not many would have accepted the offer. But I require as much of those under my command. I anticipate good work from thee.",
-    "Good, then I ask we proceed with haste. There is, in my service, a half-wolven warrior by the name of Blaidd. I would have thee join him in searching for the hidden treasure of Nokron, the Eternal City. I have called for Blaidd to greet thee below. Take from him the particulars. Ah, and there wilt thou find Iji, my war counselor, and Seluvis, preceptor in the sorcerous arts, also.",
-  ]},
-  {id:223,npc:"Ranni the Witch",quest:"Ranni",location:"Ranni's Rise — backstory as Empyrean",lines:[
-    "I was once an Empyrean. Of the demigods, only I, Miquella, and Malenia could claim that title. Each of us was chosen by our own Two Fingers, as a candidate to succeed Queen Marika, to become the new god of the coming age.",
-    "But I would not acquiesce to the Two Fingers. I stole the Rune of Death, slew mine own Empyrean flesh, casting it away. I would not be controlled by that thing. The Two Fingers and I have been cursing each other ever since... And the Baleful Shadows...are their assassins.",
-  ]},
-  {id:224,npc:"Ranni the Witch",quest:"Ranni",location:"Ranni's Rise — after entering service, going to sleep",lines:[
-    "I am the witch Ranni. I stole Death long ago, and search now for the dark path. That I might one day upend the whole of it, and rid the world of all that came before.",
-    "Blaidd remained my loyal ally. Blaidd, and Iji both... Art willing to give too much to me.",
-    "Tell Blaidd, and Iji...",
-  ]},
-  {id:225,npc:"Ranni the Witch",quest:"Age of Stars",location:"After Elden Beast — Age of Stars ending",lines:[
-    "...The battle is over, I see. I do solemnly swear. To every living being, and every living soul. Now cometh the age of the stars. A thousand year voyage under the wisdom of the Moon. Here beginneth the chill night that encompasses all, reaching the great beyond. Into fear, doubt, and loneliness... As the path stretcheth into darkness... Well then. Shall we? My fair consort, eternal.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // BLAIDD THE HALF-WOLF
-  // ══════════════════════════════════════════════════════
-  {id:230,npc:"Blaidd the Half-Wolf",quest:"Blaidd",location:"Mistwood Ruins, Limgrave — first meeting (after Kale's snap)",lines:[
-    "Kalé sent you, did he? Ever the bloody busybody. Hmm. Maybe to him, you don't seem so strange. The name's Blaidd. I'm looking for a man who goes by \"Darriwil\". He fled somewhere nearby. Or so I've heard. Come tell me if you find him before I do. I can offer you ample reward.",
-    "Darriwil is nothing but a traitor. And in need of a fitting end to his tale.",
-  ]},
-  {id:231,npc:"Blaidd the Half-Wolf",quest:"Blaidd",location:"Forlorn Hound Evergaol — after defeating Darriwil",lines:[
-    "Darriwil... Rotting in a cell is no true justice. No, this is where it ends for you.",
-    "...Right. There you are. Had to work for it, but it's done. Don't say I'm not a man of my word. Here's your prize.",
-    "If you venture north to Raya Lucaria, and come across a venerable blacksmith who's a little on the large side... Tell him I sent you. And he'll be sure to treat you right. I owe you one, I reckon.",
-  ]},
-  {id:232,npc:"Blaidd the Half-Wolf",quest:"Ranni",location:"Ranni's Rise — spectral projection",lines:[
-    "Glad to have you in the service of mistress Ranni. I'm still in Limgrave. The eternal city of Nokron lies somewhere at the bottom of this land. I'm planning to go below through the well in the Mistwood. See if I can't find the road to Nokron from there...",
-  ]},
-  {id:233,npc:"Blaidd the Half-Wolf",quest:"Ranni",location:"Siofra River Bank — searching for Nokron",lines:[
-    "Apologies mate, but I don't have much to report. I can see bloody Nokron, right above me, but I'm absolutely stumped. I've tried all the gateways, to no avail...",
-    "...Perhaps it's time to ask Seluvis? I recall that spiteful little rat acting like he knew something... Let's give him a squeeze. Show him just how sharp my teeth are... I jest, I wouldn't go that far.",
-  ]},
-  {id:234,npc:"Blaidd the Half-Wolf",quest:"Ranni",location:"Redmane Castle / Wailing Dunes — Radahn Festival",lines:[
-    "So Ranni's fate is kept in stasis by Starscourge Radahn... That reminds me of something I heard. There's a festival being held at the castle on the southern edge of the Caelid Wilds, east of Limgrave. It's a festival of combat. And I heard...that you can fight Radahn himself. He who was once called the strongest of all the demigods...",
-    "I'll be on my way to this festival of Radahn then... I'll meet you at Redmane Castle in Caelid. Now, we find ourselves at a festival of combat, pitted against Radahn, once the strongest of the demigods. The glory of the clash is shared, by Radahn and you.",
-  ]},
-  {id:235,npc:"Blaidd the Half-Wolf",quest:"Ranni",location:"Outside Ranni's Rise — after Ranni's quest ends, gone mad",lines:[
-    "You're... you're strong of arm. But ask yourself... What harm can be done... to a shadow?",
-    "I'm her shadow... her shadow... eternally...",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // FIA, DEATHBED COMPANION
-  // ══════════════════════════════════════════════════════
-  {id:240,npc:"Fia, Deathbed Companion",quest:"Fia",location:"Roundtable Hold — first meeting and embrace",lines:[
-    "Greetings, great champion called by grace. I am Fia. Circumstances have compelled my stay at the Roundtable Hold.",
-    "Great champion, would you allow me to hold you, but briefly? Perhaps you might share with me some of your lifely vigour, and your stout-heartedness. Doing so will grant me the warmth of a champion. And you, I am sure, will bear a baldachin's blessing.",
-    "Ah, my thanks, great champion. You are...very warm... What you felt light up inside you was a baldachin's blessing. Though it is but a fleeting thing, I am afraid. Come back to me, should you require another. I will take you in my arms as often as you need.",
-  ]},
-  {id:241,npc:"Fia, Deathbed Companion",quest:"Fia",location:"Roundtable Hold — her backstory",lines:[
-    "I was known as a Deathbed Companion, where I come from. After I received the warmth and lifely vigour from a number of champions, I lay with the remains of an exalted noble, to grant him another chance at life. To do so is the purpose of my being.",
-    "But before I could bear the noble into new life, I was awakened by the guidance of grace, and chased from my birthplace.",
-  ]},
-  {id:242,npc:"Fia, Deathbed Companion",quest:"Fia",location:"Roundtable Hold — Weathered Dagger request",lines:[
-    "Might I ask something of you? Could you please find the owner of this dagger, and return it to them? A certain person gave it to me, as a gift. It's a very precious thing. It must have a special place in the owner's heart. So I would like for the original owner to have it back, if you wouldn't mind.",
-  ]},
-  {id:243,npc:"Fia, Deathbed Companion",quest:"Fia",location:"Roundtable Hold — about Rogier's black knife research",lines:[
-    "My dear... Might I ask something of you? Dear Rogier likes to talk of the black knifeprints when abed. And the ancient plot, in which the first of the Demigods was slain. The black knives wielded by the assassins who committed the act, along with the impressions they made, somehow hide the truth of the conspiracy.",
-    "Dear Rogier began to weep as he spoke...",
-  ]},
-  {id:244,npc:"Fia, Deathbed Companion",quest:"Fia",location:"Deeproot Depths — asking for the Cursemark of Death",lines:[
-    "She will then ask you to bring her the Cursemark of Death, a key item from Ranni's questline, so she may complete her purpose and bring Godwyn the Golden into proper death.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // WHITE MASK VARRÉ
-  // ══════════════════════════════════════════════════════
-  {id:250,npc:"White Mask Varré",quest:"Varre",location:"The First Step, Limgrave — first encounter",lines:[
-    "Oh, yes... Tarnished, are we? Come to the Lands Between for the Elden Ring, hmm? Of course you have. No shame in it. But I'm afraid you're plumb out of luck. You are maidenless.",
-    "Feel free to go off and die in a ditch somewhere.",
-    "If you must have a go at it, maidenless as you are, you'll require an education. On the ways of the learned Tarnished. Are you familiar with grace? The golden light that gives life to you Tarnished. That is the guidance of grace. The path that a Tarnished must travel.",
-    "Grace's guidance will reveal the path forward, most certainly. To Castle Stormveil, over on the cliff. The home of the decrepit demigod, Godrick the Grafted. Although I'm afraid you'll never make it that far, hmm. Rest assured, I sympathise, deeply. There's no worse fate than to be maidenless.",
-  ]},
-  {id:251,npc:"White Mask Varré",quest:"Varre",location:"Rose Church, Liurnia — questline continuation",lines:[
-    "Ohh, well done, well done indeed. You made it through that entire mess, all the way to Stormveil. And off you trotted to the Roundtable Hold… My sincerest congratulations.",
-    "But, how did you find the Roundtable? Oh, you don't have to say it. Before, the Roundtable was chock full of venerated warriors, but now... A sorry rabble, led by a fool who fancies himself 'All-knowing'.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // PRECEPTOR SELUVIS
-  // ══════════════════════════════════════════════════════
-  {id:260,npc:"Preceptor Seluvis",quest:"Ranni",location:"Seluvis's Rise, Three Sisters — first meeting",lines:[
-    "I see... You must be Ranni's new hireling. Yes, yes, I've heard all about you. I am Seluvis, preceptor in the sorcerous arts. I don't know what it is the mistress sees in a provincial Tarnished like you, but since we have the misfortune of serving the same Lady, I ask that you kindly try not to drag us all down with you.",
-    "I reside...in another tower, close by. Come and pay me a visit... Should you wish to be of actual service to Mistress Ranni. If it were up to me, I wouldn't waste my time on the likes of you. But who am I to stand against the wishes of my Lady?",
-  ]},
-  {id:261,npc:"Preceptor Seluvis",quest:"Ranni",location:"Seluvis's Rise — the puppet potion task",lines:[
-    "I'd like you to find a woman called Nepheli, to administer a potion. Even you can do that much, can't you?",
-    "Good, good. Now I shall hand over the potion in question. Find Nepheli, and ensure she drinks it. I expect glad tidings. And soon.",
-    "I don't know what it is the mistress sees in a provincial Tarnished like you, but since we have the misfortune of serving the same Lady, I ask that you kindly try not to drag us all down with you.",
-  ]},
-  {id:262,npc:"Preceptor Seluvis",quest:"Ranni",location:"Seluvis's Rise — if Nepheli drinks the potion",lines:[
-    "Ahh, so you made Nepheli drink the potion? Well done. You are a touch more useful than I had thought. Very well. Then you shall have your gift. Knowledge of the sorcerous arts, under the tutelage of the great Preceptor Seluvis.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // PATCHES
-  // ══════════════════════════════════════════════════════
-  {id:270,npc:"Patches",quest:"Patches",location:"Murkwater Cave, Limgrave — first encounter (chest trap)",lines:[
-    "Well, well, well? Thought you'd just help yourself to a man's personal belongings? You scheming little thief. The gods demand repentance! Cough up your coin, all of it!",
-    "Wait, wait, please! I surrender! White flag and all!",
-    "For Pete's sake! I concede! No one likes a bull-headed brute, you know! I yield, yield! You can't harm a yielding man!",
-  ]},
-  {id:271,npc:"Patches",quest:"Patches",location:"Murkwater Cave — after he yields",lines:[
-    "Ahhh... Well, what do you know? You're Tarnished, like me. Now, how did I get that wrong? I took you for a demi-human, or some such. An innocent mistake, I assure you. Well, water under the bridge. Now we're squared up, how about we play nice from now on?",
-    "I'm Patches. Patches the Untethered. Tarnished, like you, only, free-spirited. Nomadic, you might say. Only for now, those retired-soldiers-turned-bandits they're paying for my gruel. In exchange for my, well, showing them the ropes. But honestly... this looting racket is bloody terrifying. Frankly, I'm ready to wash my hands clean. Maybe set up a legitimate shop. So, don't be a stranger, eh? I'll be ready to wheel and deal, come next time. Ha ha ha...",
-  ]},
-  {id:272,npc:"Patches",quest:"Patches",location:"Patches shop — various locations",lines:[
-    "Don't forget to pop back for another visit, friend. I'll be ready to wheel and deal, come next time. Ha ha ha...",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // ALEXANDER THE IRON FIST
-  // ══════════════════════════════════════════════════════
-  {id:280,npc:"Alexander the Iron Fist",quest:"Alexander",location:"Stormhill, Limgrave — stuck in the ground",lines:[
-    "Hello-o? Can you hear me? Help me! I'm stuck! Hello? Hellooo! Anyone?",
-    "Oh my stars I'm so happy to see you! I am Alexander, also known as the Iron Fist. And as you can see, I'm stuck here. Please, can you help me out of this?",
-    "Just give me a good smack from the rear, with something nice and big. And I'll pop clean out. I'm sure! Don't dally. No no, there's no need to fret, I'm very well trained. Give it your all, I say!",
-    "Ahh! Well played! Though that mighty wallop of yours almost spelt the end of me! Ha ha ha ha! Well, I'm out now, and that's what counts.",
-    "Once again, the pleasure is mine. I am the warrior jar known as Alexander. Iron Fist Alexander, in fact. I journey to the east, where I intend to further my education in the ways of war. There is Redmane Castle, in which a festival of combat is being held. Doesn't the notion set your breast aflutter! Ha ha ha ha!",
-  ]},
-  {id:281,npc:"Alexander the Iron Fist",quest:"Alexander",location:"Redmane Castle — Radahn Festival",lines:[
-    "Oh, I hadn't expected to see your face again. Are you heading to the festival of combat, too?",
-    "The mere thought of such a festival gets the blood pumping, eh!",
-  ]},
-  {id:282,npc:"Alexander the Iron Fist",quest:"Alexander",location:"Wailing Dunes — after Radahn",lines:[
-    "Don't worry about my wound sustained at the festival. I've stuffed it with some warriors and it's coming along nicely. Ha ha ha ha!",
-  ]},
-  {id:283,npc:"Alexander the Iron Fist",quest:"Alexander",location:"Crumbling Farum Azula — final duel",lines:[
-    "I've reached my limits. I don't think I can get any stronger. So I'd like you to help me make a fine end of things, by fighting me, warrior-to-warrior. What do you say? Will you fight me?",
-  ]},
-  {id:284,npc:"Alexander the Iron Fist",quest:"Alexander",location:"Crumbling Farum Azula — player defeats Alexander",lines:[
-    "Glorious... truly glorious. You've bested me, warrior.",
-    "Take what's inside me. The warriors within will be honoured.",
-    "I was filled... to the brim...",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // BOC THE SEAMSTER
-  // ══════════════════════════════════════════════════════
-  {id:290,npc:"Boc the Seamster",quest:"Boc",location:"Agheel Lake North, Limgrave — turned into a tree",lines:[
-    "Oi! You there! Could you help us out, cully? You, yeah, you there! Stop pretending you can't see me! Why won't anyone look me in the eye?",
-    "What'd you go and do that for! ...Oh, yes, I remember. Some clod turned me into a tree. You were just breaking the spell, weren't you. Thank you. The name's Boc.",
-    "I was pushed out of the cave. Told not to come back, not ever. Then I ended up as a tree. Lucky you came along, really.",
-  ]},
-  {id:291,npc:"Boc the Seamster",quest:"Boc",location:"Outside Coastal Cave — sewing needle",lines:[
-    "Oh, what are you doing here? You must leave this place at once. They'll rush in and beat you to a pulp.",
-    "Wait, is that what I think it is? You got it back for me? My sewing needle! My mum was a seamstress...and that sewing kit was all I had to remember her by. I always wanted to be just like sweet old Mum. Then, I suppose I-I can't just curl up and die, can I.",
-  ]},
-  {id:292,npc:"Boc the Seamster",quest:"Boc",location:"Various Sites of Grace — as your seamster",lines:[
-    "Good to see you! Master. Do you remember me? Boc, the demi-human. You helped me before, and retrieved my sewing needle. Please, master. Allow me to serve you, as your seamster. I can't make nothing from scratch, but I'm happy to make adjustments to your garments.",
-    "Boc the seamster, at your service, Master. Ready to make adjustments to your garments.",
-    "Master, my apologies. Your wardrobe includes the garb of old demigods, and I'm afraid I can't make adjustments to them. My mum told me once. That a royal seamster would do them up in a jiffy. Just wait, master. Before long, I'll be that good, too!",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // WAR COUNSELOR IJI
-  // ══════════════════════════════════════════════════════
-  {id:300,npc:"War Counselor Iji",quest:"Ranni",location:"Carian Manor Road, Liurnia — first meeting",lines:[
-    "Well, look at you. We don't receive many visitors. I presume you are a Tarnished. What brings you here?",
-    "I am Iji. A blacksmith who once served the Carian royals… An old codger who refuses to retire his rusty hammer. So, here I am, still quietly plying my trade, on this spot.",
-    "This territory once belonged to the Carian royal family. When the Raya Lucaria Academy turned on the Carians, the Knights of the Cuckoo descended on this tract. After leveling it, they carried on to the manor. The Carians were taken off guard, but their strength had not waned, and they repelled the knights' onslaught... By conjuring an enchanted snare that remains potent to this day. That is why I say, Tarnished. Don't go near the manor. Unless you wish to lie with the corpses of the heedless Knights of the Cuckoo.",
-  ]},
-  {id:301,npc:"War Counselor Iji",quest:"Ranni",location:"After joining Ranni's service",lines:[
-    "Oh, so you were the one. Lady Ranni has explained everything. Again, I am Iji. The Carian royal family's dedicated blacksmith, and Lady Ranni's war counsellor.",
-    "I am told that you are searching for Nokron with Blaidd. I will give you whatever guidance I can. And pray, for your success.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // NEPHELI LOUX
-  // ══════════════════════════════════════════════════════
-  {id:310,npc:"Nepheli Loux",quest:"Nepheli",location:"Stormveil Castle — outside Godrick's fog gate",lines:[
-    "I am Nepheli Loux. Tarnished and warrior, like you. I'm here by decree of my father. How utterly repellant this is. This \"grafting\" of Godrick's ill befits a Lord. He's tainted the very winds.",
-    "If you intend to challenge Godrick, I ask you call upon me. The winds run foul with his deeds.",
-  ]},
-  {id:311,npc:"Nepheli Loux",quest:"Nepheli",location:"Roundtable Hold — after Godrick",lines:[
-    "I found it in Godrick's grafting grounds. You defeated him. You should have it. Make good use of it. I don't intend to make a habit of scavenging corpses.",
-    "I wonder if you've met my foster father? He's in his study. If you haven't already, I advise you introduce yourself. Father is leader of the Roundtable.",
-  ]},
-  {id:312,npc:"Nepheli Loux",quest:"Nepheli",location:"Village of the Albinaurics — encountering the massacre",lines:[
-    "Oh, it's you... What do you make of it? What's happened to this village? I witnessed a sight much the same, in my infancy. The oppression of the weak. Murder and pillage unchecked. A waking nightmare, made by men.",
-    "But this time, I'm a woman grown. And though the suffering cannot be undone, I can still mete out justice. Justice to the oppressors. Let the scars I carve remind them. I am Nepheli Loux. Warrior.",
-  ]},
-  {id:313,npc:"Nepheli Loux",quest:"Nepheli",location:"Near Godrick's grace — after being given the Storm Hawk Talon",lines:[
-    "Oh, it's you... Please, leave me be. It's pathetic, I know, but... I feel I've lost the winds. Father... what would you have me do?",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // SIR GIDEON OFNIR (NPC)
-  // ══════════════════════════════════════════════════════
-  {id:320,npc:"Sir Gideon Ofnir",quest:"Main Story",location:"Roundtable Hold — first meeting",lines:[
-    "Oh, this is a rare occasion. I can't remember the last time a new Tarnished made their way to the Roundtable. Very well. As your senior, I bid you welcome. It is safe here. You may let down your guard.",
-    "Allow me a word of advice, as your senior. You are a mere visitor to the Roundtable, nothing more. A house guest, yet to earn their keep. Remember your place, newcomer.",
-  ]},
-  {id:321,npc:"Sir Gideon Ofnir",quest:"Main Story",location:"Roundtable Hold — after receiving the Two Fingers' wisdom",lines:[
-    "You've received the wisdom of the Two Fingers, have you not? Then just as promised, I bid you welcome, as a true member of the Roundtable. I am known as Gideon Ofnir. As a Tarnished who wishes to stand before the Elden Ring and become Elden Lord, I am accumulating knowledge. To be all-knowing.",
-  ]},
-  {id:322,npc:"Sir Gideon Ofnir",quest:"Main Story",location:"Roundtable Hold — shardbearer locations",lines:[
-    "The inheritors of the Great Runes; the shardbearers. We of the Roundtable know the location of five of them, including the one you defeated. Godrick the Grafted, Lord of Stormveil. General Radahn, who fought Malenia and her rot to a standstill in the Caelid Wilds. Praetor Rykard, Lord of the Volcano Manor of Mt. Gelmir. Morgott the Grace-Given, Veiled Monarch and Lord of Leyndell. And Rennala, Queen of the Full Moon, ruler of Raya Lucaria's Academy.",
-  ]},
-  {id:323,npc:"Sir Gideon Ofnir",quest:"Main Story",location:"Roundtable Hold — after acquiring two Great Runes",lines:[
-    "Well. I see you've found another Great Rune. Wonderful. You are a worthy fellow Tarnished, indeed. Make the journey. To the capital Leyndell, that lies to the east of the Altus Plateau, at the foot of the Erdtree. The Two Fingers will deny your passage no longer. You may be our best hope. Find your way to the Elden Ring.",
-  ]},
-  {id:324,npc:"Sir Gideon Ofnir",quest:"Main Story",location:"Roundtable Hold — before burning Erdtree",lines:[
-    "You...burned the Erdtree, didn't you? Then the Roundtable is soon to follow. Ah, no need to fret about that. The Roundtable Hold served to put a Tarnished upon the throne of Elden Lord. And if the Erdtree needed to burn for that to happen, then the Roundtable must go, as well.",
-    "The pursuit of knowledge is without end, for knowledge is never a thing complete. Thus, I maintain the mantle of All-Knowing. Perhaps the same could be said of guidance. Who's to say whether we'll remain who we are, once the fight is finished? What do you think, as one who aspires to become Elden Lord?",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // SCRIBE CORHYN
-  // ══════════════════════════════════════════════════════
-  {id:330,npc:"Scribe Corhyn",quest:"Corhyn",location:"Roundtable Hold — first meeting",lines:[
-    "Welcome to the Roundtable Hold. I'm Corhyn, a man of the cloth. I teach incantations, the strength granted us by the Two Fingers, and explore the secrets of the Golden Order. So that one day, if a Tarnished of the Roundtable Hold should become Elden Lord, I might counsel them, ensuring order regains its proper form, righting rule over men.",
-  ]},
-  {id:331,npc:"Scribe Corhyn",quest:"Corhyn",location:"Roundtable Hold — deciding to seek Goldmask",lines:[
-    "There's something I should mention to you, as well. I'm thinking of leaving the Roundtable Hold. Do you know of the noble Goldmask? Though he was but a Tarnished, living outside the Lands Between, he was a great scholar, who foresaw the coming guidance of grace. And now, I hear he has come to the Lands Between alone, to contemplate the Golden Order... I wish nothing more than to seek his instruction.",
-  ]},
-  {id:332,npc:"Scribe Corhyn",quest:"Corhyn",location:"Altus Plateau / Mountaintops — travelling with Goldmask",lines:[
-    "Ah, look who we have here. How delightful, to meet a familiar face, even after departing the Roundtable Hold. I've been doing some learning of my own since then, actually. And will happily pass it along to you.",
-    "I'm yet to find the noble Goldmask. I suppose he'll be closer to the Erdtree. The path ahead might be perilous, but tread it I shall. Since departing the Roundtable Hold, I've come to understand, in my solitude, How little it is I truly know...",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // DUNG EATER
-  // ══════════════════════════════════════════════════════
-  {id:340,npc:"Dung Eater",quest:"Dung Eater",location:"Roundtable Hold — phantom in corridor",lines:[
-    "Have you ever felt the curse, with your whole being? The pox upon life itself, feared and despised by all. The reviled blessing.",
-    "Apparently not. You are but a lamb. A stranger to defilement. Ignorant of your own ignorance. You no longer interest me. I've been long without peace. Don't spoil my quietude.",
-  ]},
-  {id:341,npc:"Dung Eater",quest:"Dung Eater",location:"Roundtable Hold — after he smells the curse on you",lines:[
-    "No, wait. ... You have felt the curse. I can smell it on you. The pox, yet tender. Apparently my seedbed is ripe and waiting. Twas a brief respite, I must say. Go, and unshackle my corporeal flesh. Trapped in the sewer gaol, below the capital.",
-  ]},
-  {id:342,npc:"Dung Eater",quest:"Dung Eater",location:"Subterranean Shunning-Grounds — imprisoned body",lines:[
-    "Let me out! Let me out of here! Must eat more! Defile more! Everything that matters to you! For generations to come! I am the Dung Eater! A scourge upon the living!",
-    "I will kill again. And defile each corpse with care. Just to be sure. That when they're reborn… They'll be cursed. Along with their children, and their children's children, for all time to come…",
-  ]},
-  {id:343,npc:"Dung Eater",quest:"Dung Eater",location:"Leyndell outer moat — with Seedbed Curses",lines:[
-    "There you are. You warded off my blessing. Despite the curse stirring within you. No one has succeeded in that before. How? I thought. Then it hit me. That you are, in fact, me. And I...am the Dung Eater.",
-    "Give me your blessing. Defile my flesh with the seedbed curse. Again and again. Until it is done. Until a cursed ring coalesces, that may one day defile Order itself.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // D, HUNTER OF THE DEAD
-  // ══════════════════════════════════════════════════════
-  {id:350,npc:"D, Hunter of the Dead",quest:"Fia",location:"Summonwater Village, Limgrave",lines:[
-    "There's no mistake, is there? Death has left its mark once again. I'm sorry, I cannot give you your proper rites... But at least you did not join Those Who Live in Death.",
-    "Ah, a Tarnished, are you? I'm known as D. I hunt down Those Who Live in Death, and weed their Deathroot. Heed my warning. The village here has been touched by Death. And worse yet, it is home to a mariner. If you value your life, then go no further.",
-  ]},
-  {id:351,npc:"D, Hunter of the Dead",quest:"Fia",location:"Roundtable Hold — Gurranq introduction",lines:[
-    "Another fool who won't listen to reason, eh? But with a prowess for weeding Deathroot. How would you like to earn the strength of beasts? If you're inclined to hunt more of Those Who Live in Death, and weed their Deathroot, then I'll introduce you to Gurranq, the beast clergyman. I have a matter of my own to attend to.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // GURRANQ, BEAST CLERGYMAN
-  // ══════════════════════════════════════════════════════
-  {id:360,npc:"Gurranq, Beast Clergyman",quest:"Other",location:"Bestial Sanctum, Dragonbarrow — first words",lines:[
-    "...I smell it... Death... Feed it me... Tarnished...bring more...Death... I shall grant thee... eye...and claw. Feed me...more.",
-  ]},
-  {id:361,npc:"Gurranq, Beast Clergyman",quest:"Other",location:"Bestial Sanctum — on each Deathroot delivery",lines:[
-    "More... I am not...sated. Feed me more...Death.",
-    "..My thanks...Tarnished... Death... My sin... Should not be touched...by the hand of man... I shall grant thee...my claws... Feed me...more.",
-  ]},
-  {id:362,npc:"Gurranq, Beast Clergyman",quest:"Other",location:"Bestial Sanctum — after consuming all Deathroots",lines:[
-    "It is... It is all...consumed. Still, I am not sated... Not nearly sated... Rrarrgh! Marika... Is this...what it is...to sin? Will things...never be the same...again?",
-    "Tarnished...my thanks...for thy long...labour. But I have done...all I can...in this land... Henceforth, mine appetite shall be my sole companion. Farewell.",
-  ]},
-  {id:363,npc:"Gurranq, Beast Clergyman",quest:"Other",location:"Bestial Sanctum — if Gurranq attacks player (too many Deathroots)",lines:[
-    "Thou, who approacheth Destined Death. I will not have it stolen from me again.",
-    "O Marika... What...happened? Was I...myself the fool? Or was I tricked...by thee? O Marika... Why wouldst thou...relinquish... Why...",
-  ]},
-  {id:364,npc:"Gurranq, Beast Clergyman",quest:"Other",location:"Bestial Sanctum — after calming down",lines:[
-    "Tarnished. Why wouldst thou... Why... Tis no matter. I hereby vow, that Destined Death shall not be stolen again.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // TANITH
-  // ══════════════════════════════════════════════════════
-  {id:380,npc:"Tanith",quest:"Volcano Manor",location:"Volcano Manor — invitation to join",lines:[
-    "Brave Tarnished, welcome to the Volcano Manor. I am Tanith, the proprietress of this house. Rya spoke well of you. \"A warrior of promise,\" I believe she said.",
-    "Will you join us here at the Volcano Manor, and resist the tide? Why accept the burden of their grace, or be fooled by the dogmatic ramblings of the Fingers? Rise with us, against the Erdtree.",
-    "Interesting. Your decision is most welcome. Now you belong to the Volcano Manor family. The drawing room lies down the hall. Make yourself comfortable. But be sure to earn your keep.",
-  ]},
-  {id:381,npc:"Tanith",quest:"Volcano Manor",location:"Volcano Manor — after assassination contracts",lines:[
-    "You've completed your task. I am pleased. Now you are a recusant true, and a full-fledged member of the Volcano Manor.",
-    "The Erdtree blessed the Tarnished with grace. But it was all too meagre, in the face of the enormity of their task. The Tarnished were forced to scavenge, squabbling for crumbs. Our Lord, indignant, had refused. If the Erdtree, and indeed the very gods, would debase us so, then we are willing to raise the banner of resistance, even if it means heresy. We at the Volcano Manor, under Lord Rykard, have sworn no rest until it is done.",
-  ]},
-  {id:382,npc:"Tanith",quest:"Volcano Manor",location:"Volcano Manor — after Rykard is defeated (eating his corpse)",lines:[
-    "Oh, you... Allow me some time. Our lord's carcass is vast and not easily consumed. Dear Rykard, please find purchase within me, I wish to be your serpent; your family. One day, let us devour the gods together.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // RYA THE SCOUT
-  // ══════════════════════════════════════════════════════
-  {id:390,npc:"Rya the Scout",quest:"Volcano Manor",location:"Liurnia of the Lakes — lost necklace",lines:[
-    "Hello. It's rather chilly here, isn't it? My mistress sent me off on an errand... But I was accosted by a ruffian, and now I'm in a bind. Could I ask you lend a hand, perhaps? That thug made off with a precious necklace.",
-    "Oh, yes, that is my missing necklace. Thank you kindly. I am in your debt. I am Rya, in the service of Lady Tanith of the Volcano Manor. I seek stalwart Tarnished who might join our house.",
-    "You are very brave yourself. Not only a steady hand, but a steady heart, merciless, even to your own kind. Such strength is precisely what my mistress seeks. Please, take this. Brave Tarnished, seek the Altus Plateau, the realm of the Erdtree.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // POTENTATE DIALLOS
-  // ══════════════════════════════════════════════════════
-  {id:400,npc:"Potentate Diallos",quest:"Other",location:"Roundtable Hold — looking for Lanya",lines:[
-    "Ah, hello. You must be new here. I'm... Well, just call me Diallos. The honor of one's house holds little import in these lands.",
-    "By the way, have you met a young woman named Lanya on your travels? She's my servant, but fickle as the wind. Take your eyes off her for but a moment and she's good as gone. If you find her, please be sure to tell me.",
-  ]},
-  {id:401,npc:"Potentate Diallos",quest:"Other",location:"Liurnia — after learning of recusants / Lanya's fate",lines:[
-    "Can you believe they invited me to join them? Now! After what they did... I can scarcely believe it myself. Do they think me a fool? You might be surprised to learn I took them up on the offer. Then I only had to ask. The location of the recusant hideout.",
-    "Just you wait, wretched recusants. You'll rue the day you insulted my name by laying hands on Lanya. \"The tale of House Hoslow is told in blood\" after all.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // IRINA OF MORNE & EDGAR
-  // ══════════════════════════════════════════════════════
-  {id:420,npc:"Irina of Morne",quest:"Other",location:"Road to Weeping Peninsula — first encounter",lines:[
-    "Hello? Is somebody there? Might I bend your ear for a moment, please. My name is Irina. I've escaped from Castle Morne, to the south. The servants there...have rebelled.",
-    "My good father secreted me out the castle, but decided himself to stay. He says it's his duty, as commander.",
-    "Would you mind taking a letter to my father, at the castle? My sole wish is that he escape, even if his honour should be the price. Please...I just need him to be safe...",
-  ]},
-  {id:421,npc:"Edgar the Revenger",quest:"Other",location:"Castle Morne — Edgar as warden",lines:[
-    "I see, from Irina... Thank you. I'm in your debt. But I can't leave yet. Even if the castle should fall, as commander, I must remain. To ensure the treasured sword of Morne does not fall into the wrong hands.",
-    "If you see Irina, do tell her. That her father will come for her, once he's fulfilled his duty.",
-  ]},
-  {id:422,npc:"Edgar the Revenger",quest:"Other",location:"After the Leonine Misbegotten boss — freed",lines:[
-    "I'm in your debt. For keeping the sword from those fallen creatures. I'm no longer bound by duty. Once I've rescued Irina, I will spend my remaining days with her.",
-  ]},
-  {id:423,npc:"Edgar the Revenger",quest:"Other",location:"Road to Weeping Peninsula — finding Irina dead",lines:[
-    "Irina... How could this be… My daughter deserved better… The fault lies...with me. I chose duty over my daughter's safety. And that is how fate has answered…",
-    "I'll find them. The foul wretches responsible for this. I'll hunt them down, and exterminate every last one of them. Rest assured, Irina. It will be done.",
-  ]},
-  {id:424,npc:"Edgar the Revenger",quest:"Other",location:"Revenger's Shack, Liurnia — player defeats Edgar",lines:[
-    "Irina... I... I avenged thee...",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // KENNETH HAIGHT
-  // ══════════════════════════════════════════════════════
-  {id:430,npc:"Kenneth Haight",quest:"Nepheli",location:"East Limgrave — stranded on a rock",lines:[
-    "Hello? Is anybody there? Someone who might be interested in rescuing the great Kenneth Haight? Servant to the true Order, and celebrated repudiator of the false! O Erdtree! Grant me succour!",
-    "What are you waiting for? A kiss goodbye? My fort lies to the south, beyond the Mistwood. Take it back for me.",
-    "I would take great care to avoid Godrick's Tarnished hunts, were I in your shoes. That depraved lot are obsessed with sacrificing Tarnished like you for the sake of \"grafting\". Honestly, Godrick's nothing more than a jumped up country bumpkin. Lord? Don't make me laugh.",
-    "First he hid himself amongst the womenfolk to flee the capital, then hid from Radahn in that castle... Then he insulted Malenia, lost to her in battle, only to lick her boots rather than die like a man. Has he no shame, the big girl's blouse? And to think, he's the blood of Godfrey! Last of the golden lineage, though you almost wouldn't know it to look at him.",
-  ]},
-  {id:431,npc:"Kenneth Haight",quest:"Nepheli",location:"After taking back the fort",lines:[
-    "Ah-ha! I've been waiting for you with baited breath! Did you manage to recapture my fort? Oh excellent news, just wonderful. And the knight's dead to boot! Well done my friend, well done indeed!",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // SORCERER ROGIER
-  // ══════════════════════════════════════════════════════
-  {id:440,npc:"Sorcerer Rogier",quest:"Main Story",location:"Stormveil Castle — first meeting",lines:[
-    "The pleasure's mine. Rogier's the name. A sorcerer, as you might have guessed. I'm looking for a little something, here in the castle.",
-    "This place is bristling with Tarnished hunters, you know. They sacrifice our kind, for grafting. Not exactly a place I'd stroll into without a purpose in mind...",
-    "I see. Here to challenge Godrick, and lay your hands upon a Great Rune, are you? You can see it then, I take it? The guidance of grace. Well, enjoy it while you can. I'm Tarnished, like you. But unlike you, I've seen neither hide nor hair of this guidance for the longest time.",
-  ]},
-  {id:441,npc:"Sorcerer Rogier",quest:"Main Story",location:"Roundtable Hold — black knife plot",lines:[
-    "The misshapen corpse under Stormveil? That is a sacred relic. Of the black knives plot. As that famed night of assassination is known. It happened during the Golden Age of the Erdtree, long before the shattering of the Elden Ring.",
-    "Someone stole a fragment of the Rune of Death from Maliketh, the Black Blade. And on a bitter night, murdered Godwyn the Golden. That was the first recorded Death of a demigod in all history. And it became the catalyst. Soon, the Elden Ring was smashed, and thus sprang forth the war known as the Shattering.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // SORCERESS SELLEN
-  // ══════════════════════════════════════════════════════
-  {id:450,npc:"Sorceress Sellen",quest:"Sellen",location:"Waypoint Ruins, Limgrave — first meeting",lines:[
-    "Tarnished, are we? A wonder you should turn up here. I am Sellen, a sorcerer, quite plainly.",
-    "I was exiled from the Academy of Raya Lucaria, as a reviled, apostate witch. Do you still wish to learn from me?",
-    "Well, you are a piece of work. Very well. You are now my protégé in glintstone sorcery. But I refuse to coddle. Or cast kind words. Never. Anticipate grievances, young apprentice.",
-  ]},
-  {id:451,npc:"Sorceress Sellen",quest:"Sellen",location:"Waypoint Ruins — sorcery lesson on glintstone",lines:[
-    "Glintstone is the amber of the cosmos. Glintstone contains residual life, and thus the vitality of the stars. It should not be forgotten, that glintstone sorcery is the study of the stars, and the life therein. A fact lost on most sorcerers, these days...",
-  ]},
-  {id:452,npc:"Sorceress Sellen",quest:"Sellen",location:"Waypoint Ruins — Seluvis and Radahn",lines:[
-    "The stars alter the fate of the Carian royal family. And the fate of your mistress, Ranni. But long ago, General Radahn challenged the swirling constellations, and in a crushing victory, arrested their cycles. Now, he is the force that repulses the stars. If General Radahn were to die, the stars would resume their movement. And so, too, would Ranni's destiny.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // HUNTER YURA / SHABRIRI
-  // ══════════════════════════════════════════════════════
-  {id:460,npc:"Hunter Yura",quest:"Yura",location:"Under bridge south of Agheel Lake — first meeting",lines:[
-    "I am Yura. Hunter of Bloody Fingers. Tarnished held in thrall by cessblood. Zealots who stalk their own. If you stay the path, you are certain to face more of them. Just remember. No kinship with their ilk remains. Their madness precludes it. Don't let your emotions stay your blade.",
-    "Oh, one other thing... There are other Tarnished, like me, who hunt the Bloody Fingers. If a Bloody Finger threatens you, use this ring. If fortune takes your side, a hunter will come to your aid.",
-    "Well, one last word of warning. Stay clear of Agheel Lake. A great dragon roosts there. Be on your way. Perhaps we will meet again, if fate permits.",
-  ]},
-  {id:461,npc:"Shabriri",quest:"Lord of Frenzied Flame",location:"Mountaintops of the Giants — in Yura's body",lines:[
-    "Finally, we meet. The Tarnished, who would be Lord. Oh my, why the long face? I fear you were previously acquainted with this vessel. Well, that is most unfortunate. For he is dead. As for his flesh, he gave it to me, Shabriri. I hope you can make your peace with that. You are about to sacrifice something precious.",
-    "If you inherit the flame of frenzy, your flesh will serve as kindling and the girl can be spared... setting you on the righteous path of lordship. The path of the Lord of Chaos. Burn the Erdtree to the ground, and incinerate all that divides and distinguishes.",
-  ]},
-  {id:462,npc:"Shabriri",quest:"Lord of Frenzied Flame",location:"Mountaintops — if Shabriri is killed",lines:[
-    "Shabriri... is chaos... incarnate. I cannot... die. Ahh, may chaos... take... the world.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // WITCH-HUNTER JERREN
-  // ══════════════════════════════════════════════════════
-  {id:470,npc:"Witch-Hunter Jerren",quest:"Sellen",location:"Redmane Castle — before Radahn Festival",lines:[
-    "Oh, Tarnished, are you? How did you slip inside, with the gate closed? Hmph. No matter. If you can fell one of them, you're a champion, in my book. I am Jerren. Foolish old warrior, and witness.",
-    "Incidentally, do you like a good festival, from time to time? When the stars align, we celebrate. A war festival honoring the last battle and death of General Radahn, the mightiest demigod of the Shattering, and bearer of a Great Rune.",
-    "General Radahn is there, even now. Divested of his wits, devouring corpses… And howling at the sky...",
-  ]},
-  {id:471,npc:"Witch-Hunter Jerren",quest:"Sellen",location:"Redmane Castle — opening the festival",lines:[
-    "Champions, welcome! The stars have aligned! The festival is nigh! General Radahn, mightiest demigod of the Shattering, awaits you! Champions, prepare for battle! Defeat the General, claim glory, and grab that Great Rune! A celebration of war! The Radahn Festival!",
-  ]},
-  {id:472,npc:"Witch-Hunter Jerren",quest:"Sellen",location:"Wailing Dunes — after Radahn is defeated",lines:[
-    "At last, the war festival has ended. Brave champion, you have our gratitude. The celebration was spectacular. General Radahn is surely pleased. Festering with rot, and crippled by madness, all he wanted was an honourable death. Finally, my work is done.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // MILLICENT
-  // ══════════════════════════════════════════════════════
-  {id:480,npc:"Millicent",quest:"Millicent",location:"Church of the Plague, Caelid — first meeting",lines:[
-    "Ngh... W-who's there? Well, it matters not. If you are wise, you will leave, immediately. My flesh writhes with scarlet rot. It is a curse. Not to be meddled with by man.",
-    "You ask that I stab myself with the needle... To quell the scarlet rot? But...how? ... Never mind. I've decided. I would rather trust you, than simply continue to spoil from within.",
-    "Would you mind...averting your eyes for a moment? Well. That was easier than expected. But...why do I feel so... ...",
-  ]},
-  {id:481,npc:"Millicent",quest:"Millicent",location:"Erdtree-Gazing Hill, Altus Plateau — after the needle",lines:[
-    "I...hoped to see you again. My apologies, for when last we met. I fainted before I could even thank you. Everything is as you said. Since inserting the needle, the scarlet rot has ceased to writhe. Even the nightmares have abated...",
-    "I'm considering leaving. On a journey. With the needle buried in my flesh, I've started to recall, but dimly... My destiny... My name is Millicent. I pray fate permits us meet again.",
-  ]},
-  {id:482,npc:"Millicent",quest:"Millicent",location:"Various — tracing Malenia's path",lines:[
-    "Now, I'm tracing the path Malenia took, after unleashing the power of the scarlet rot, during her battle with General Radahn, in the Caelid Wilds. I should like to meet her, this vanished woman.",
-    "The arm you gave me truly is a thing of wonder. It feels just like my own. If the arm serves well enough, it might be possible for me to wield a sword again. Perhaps, then, I can aid you in battle.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // SAGE GOWRY
-  // ══════════════════════════════════════════════════════
-  {id:490,npc:"Sage Gowry",quest:"Millicent",location:"Gowry's Shack, Caelid — first meeting",lines:[
-    "Oh, a pleasure to see you, a pleasure indeed. I am Gowry. A great sage, in my day, anyway. I'd hoped to ask a favour, when one of your ilk came along.",
-    "I need your help to heal a certain young girl. Her name is Millicent. You will find her beyond Sellia, resting at the church atop the cliff, stricken by the rotting sickness.",
-    "The rotting sickness that afflicts Millicent has no cure. But Millicent's suffering can be ameliorated. For this, you are to find a certain needle. Seek the deep scarlet swamp of Aeonia. The needle, made from unalloyed gold, is lost somewhere there.",
-  ]},
-  {id:491,npc:"Sage Gowry",quest:"Millicent",location:"Gowry's Shack — needle repaired",lines:[
-    "I have awaited your return. The needle is repaired. Now it will forestall the rotting sickness, I'm sure. Will you give it to the girl, Millicent?",
-    "Do you find it peculiar? That I would show such concern for the girl. Well, I'm the one that found her. A mere babe, in the swamp of Aeonia. She is one of my dear daughters. But the rotting sickness erodes one's memory. I doubt that she remembers the first thing about me.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // RODERIKA
-  // ══════════════════════════════════════════════════════
-  {id:495,npc:"Roderika",quest:"Other",location:"Stormhill Shack — first meeting",lines:[
-    "Everyone's...been grafted. Everyone who came with me. They crossed the sea for me. They fought, for me. Heh... Only to have their arms taken. Their legs taken. Even their heads...taken. Taken and stuck to the spider.",
-    "You're all on your own, are you? And heading to Stormveil Castle? Oh, you've come to be one with the spider? Well, that makes us two peas in a pod. But I don't have your courage. It's scary, you know. Having your arms cut off. Or legs. Or your head. I want to be like everyone else, but I'm just too scared. I'm nothing but a craven.",
-    "Oh, I know. Can you take this little one along with you? The poor thing deserves someone braver than myself… And the spirits look rather fondly upon you.",
-  ]},
-  {id:496,npc:"Roderika",quest:"Other",location:"Roundtable Hold — becoming a spirit tuner",lines:[
-    "You're telling me I possess some kind of gift? I don't believe you. But... If I do have this talent, and goodness knows it would be my first... I suppose I should try to hone it. Shouldn't I? I'll ask Master Hewg to teach me.",
-    "Certainly, he does appear intimidating, and holds no love for us Tarnished... But I know he's trapped here, at the Roundtable Hold... So... I can tell. He's a gentle soul, underneath it all.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // SMITHING MASTER HEWG
-  // ══════════════════════════════════════════════════════
-  {id:500,npc:"Smithing Master Hewg",quest:"Other",location:"Roundtable Hold — first meeting",lines:[
-    "You're a new face. No matter, it's all the same. Lay out your arms. Let's get smithing.",
-  ]},
-  {id:501,npc:"Smithing Master Hewg",quest:"Other",location:"Roundtable Hold — about his chains",lines:[
-    "I see you've noticed the chains. Nothing special. I'm a prisoner, and these are my chains. I'm trapped by the Hold, undying, smithing for you fools. That's all there is to it.",
-    "Nah, don't read too much into it. I've no grudge against you. My being a prisoner is no fault of yours. Besides, I don't mind smithing. Despite my differences, the weapons get stronger, all the same. Given time, technique never fails. Besides, it helps me forget. The sheer terror of her...",
-  ]},
-  {id:502,npc:"Smithing Master Hewg",quest:"Other",location:"Roundtable Hold — praying to Marika",lines:[
-    "Your divinity, have mercy, and grant me forgiveness. The road is yet long. A god is not easily felled. But one day, without fail, you will have your wish. So please, grant me forgiveness, Queen Marika...",
-  ]},
-  {id:503,npc:"Smithing Master Hewg",quest:"Other",location:"Roundtable Hold — about Roderika",lines:[
-    "The girl you brought here... She's crestfallen, and can scarcely swing a blade, but she has a gift for spirit tuning. I saw another one like her, long ago. Their eyes share the same hue.",
-    "Are you out of your mind? Who'd stay with an ugly brute who only knows how to smith? Absurd. And besides, she'd never agree to it.",
-  ]},
-  {id:504,npc:"Smithing Master Hewg",quest:"Other",location:"Roundtable Hold — his vow to forge a god-slaying weapon",lines:[
-    "No, no, no, no... I need to do better than this! This'll never kill a god. I can do better than this! It needs to slay a bloody god!",
-    "Your kind are meant to challenge them. To slay them. The demigods. And their god. If you remain loyal to your calling, then no matter what you do, no matter what happens to me, I will never cease to smith your weapons. Until you have one to slay a god.",
-  ]},
-  {id:505,npc:"Smithing Master Hewg",quest:"Other",location:"Roundtable Hold — near the end",lines:[
-    "I can't hold on much longer. I'm going the way of the Roundtable... It was a great honor to smith your weapons during my time here. Allow me to call you this, just once, before it ends. My lord, for that is what you are.",
-  ]},
-
-  // ══════════════════════════════════════════════════════
-  // ENDINGS NARRATION (section 0204)
-  // ══════════════════════════════════════════════════════
-  {id:600,npc:"Narrator",quest:"Age of Fracture",location:"Age of Fracture ending",lines:[
-    "Now wilt ye serve, each and all. The Elden Lord is crowned. The new Elden Lord, steward of a fracturing world. And so beginneth the age of fracture...",
-    "The fallen leaves tell a story. Of how a Tarnished, of no renown, became Elden Lord. In our home, across the fog, the Lands Between.",
-    "Our seed will look back upon us, and recall. An Age of Fracture.",
-  ]},
-  {id:601,npc:"Narrator",quest:"Age of Stars",location:"Age of Stars ending (Ranni's oath)",lines:[
-    "...The battle is over, I see. I do solemnly swear. To every living being, and every living soul. Now cometh the age of the stars. A thousand year voyage under the wisdom of the Moon. Here beginneth the chill night that encompasses all, reaching the great beyond. Into fear, doubt, and loneliness... As the path stretcheth into darkness... Well then. Shall we? My fair consort, eternal.",
-  ]},
-  {id:602,npc:"Narrator",quest:"Age of Order",location:"Age of Order / Absolute ending",lines:[
-    "Our seed will look back upon us, and recall. The Age of Order. The Age Absolute.",
-  ]},
-  {id:603,npc:"Narrator",quest:"Age of Duskborn",location:"Age of Duskborn ending (Fia)",lines:[
-    "Our seed will look back upon us, and recall. The Age of the Duskborn.",
-  ]},
-  {id:604,npc:"Narrator",quest:"Blessing of Despair",location:"Blessing of Despair ending (Dung Eater)",lines:[
-    "Our seed will look back upon us, and recall. The reviled curse that defined our age. The Blessing of Despair.",
-  ]},
-  {id:605,npc:"Melina",quest:"Lord of Frenzied Flame",location:"Burning of the Erdtree — Melina's farewell before the flame",lines:[
-    "O Erdtree, you shall burn. Burn, for the sake of the new Lord. Thank you. For guiding me here. The one who walks alongside flame, Shall one day meet the road of Destined Death. Good-bye. I hope you will become Lord. Lord of each and all.",
-  ]},
-
-];
-
 const DEFAULT_BOSSES = [
   {id:101,name:"Margit, the Fell Omen",region:"Limgrave",type:"Main",defeated:false,attempts:0,runes:12000,drop:"Talisman Pouch",note:"Weak to bleed and holy. Uses a phantom hammer in phase 2. Try Lone Wolf Ashes."},
   {id:102,name:"Godrick the Grafted",region:"Stormveil Castle",type:"Remembrance",defeated:false,attempts:0,runes:20000,drop:"Godrick's Great Rune, Remembrance of the Grafted",note:"Phase 2 he grafts a dragon arm. Stay close and dodge the breath attack sideways."},
@@ -2391,7 +1543,7 @@ function showTab(name, btn) {
   document.getElementById('tab-' + name).classList.add('active');
   btn.classList.add('active');
   if (name === 'quests') renderQuests();
-  if (name === 'dialogue') renderDialogue();
+  if (name === 'characters') renderCharacters();
   if (name === 'items' || name === 'inventory') renderInventory();
   if (name === 'bosses') renderBosses();
 }
@@ -2600,180 +1752,173 @@ function addQuest() {
 }
 
 // ─────────────────────────────────────────
-// DIALOGUE
+// CHARACTERS
 // ─────────────────────────────────────────
-let activeDialogueNpc = null; // set when user selects from autocomplete
 
-function onDialogueSearchModeChange() {
-  activeDialogueNpc = null;
-  document.getElementById('dialogue-search').value = '';
-  document.getElementById('dialogue-suggestions').style.display = 'none';
-  const mode = document.getElementById('dialogue-search-mode').value;
-  const placeholders = { npc: 'Type an NPC name…', keyword: 'Type a keyword or phrase…', location: 'Type a location name…' };
-  document.getElementById('dialogue-search').placeholder = placeholders[mode];
-  renderDialogue();
+const QUEST_NPCS = {
+  1:  [
+    { name: "Melina", wiki: "Melina" },
+    { name: "White-Faced Varré", wiki: "White_Faced_Varre" },
+    { name: "Finger Reader Enia", wiki: "Finger_Reader_Enia" },
+  ],
+  2:  [{ name: "Fractured Marika", wiki: "Marika_the_Eternal" }],
+  3:  [{ name: "Ranni the Witch", wiki: "Ranni_the_Witch" }],
+  4:  [{ name: "Fia, the Deathbed Companion", wiki: "Fia" }],
+  5:  [{ name: "Dung Eater", wiki: "Dung_Eater" }],
+  6:  [
+    { name: "Brother Corhyn", wiki: "Brother_Corhyn" },
+    { name: "Goldmask", wiki: "Goldmask" },
+  ],
+  7:  [
+    { name: "Three Fingers", wiki: "Three_Fingers" },
+    { name: "Hyetta", wiki: "Hyetta" },
+  ],
+  10: [
+    { name: "Ranni the Witch", wiki: "Ranni_the_Witch" },
+    { name: "Blaidd the Half-Wolf", wiki: "Blaidd" },
+    { name: "War Counselor Iji", wiki: "War_Counselor_Iji" },
+    { name: "Preceptor Seluvis", wiki: "Preceptor_Seluvis" },
+  ],
+  11: [{ name: "Blaidd the Half-Wolf", wiki: "Blaidd" }],
+  12: [
+    { name: "Fia, the Deathbed Companion", wiki: "Fia" },
+    { name: "D, Hunter of the Dead", wiki: "D_Hunter_of_the_Dead" },
+  ],
+  13: [{ name: "White-Faced Varré", wiki: "White_Faced_Varre" }],
+  14: [
+    { name: "Millicent", wiki: "Millicent" },
+    { name: "Sage Gowry", wiki: "Sage_Gowry" },
+  ],
+  15: [
+    { name: "Nepheli Loux", wiki: "Nepheli_Loux" },
+    { name: "Kenneth Haight", wiki: "Kenneth_Haight" },
+  ],
+  16: [
+    { name: "Brother Corhyn", wiki: "Brother_Corhyn" },
+    { name: "Goldmask", wiki: "Goldmask" },
+  ],
+  17: [{ name: "Dung Eater", wiki: "Dung_Eater" }],
+  18: [
+    { name: "Lady Tanith", wiki: "Lady_Tanith" },
+    { name: "Rya", wiki: "Rya" },
+    { name: "Knight Bernahl", wiki: "Knight_Bernahl" },
+  ],
+  19: [{ name: "Patches", wiki: "Patches" }],
+  20: [{ name: "Alexander the Iron Fist", wiki: "Iron_Fist_Alexander" }],
+  21: [
+    { name: "Sorceress Sellen", wiki: "Sorceress_Sellen" },
+    { name: "Witch-Hunter Jerren", wiki: "Witch-Hunter_Jerren" },
+  ],
+  22: [{ name: "Hunter Yura", wiki: "Bloody_Hunter_Yura" }],
+  23: [{ name: "Rya", wiki: "Rya" }],
+  24: [{ name: "Latenna the Albinauric", wiki: "Latenna" }],
+  25: [
+    { name: "Diallos", wiki: "Diallos" },
+    { name: "Jar-Bairn", wiki: "Jar-Bairn" },
+  ],
+  26: [{ name: "Hyetta", wiki: "Hyetta" }],
+  27: [
+    { name: "Irina", wiki: "Irina" },
+    { name: "Edgar", wiki: "Edgar" },
+  ],
+  28: [
+    { name: "Kenneth Haight", wiki: "Kenneth_Haight" },
+    { name: "Nepheli Loux", wiki: "Nepheli_Loux" },
+  ],
+  29: [{ name: "Boc the Seamster", wiki: "Boc_the_Seamster" }],
+  30: [{ name: "D, Hunter of the Dead", wiki: "D_Hunter_of_the_Dead" }],
+  31: [
+    { name: "Sage Gowry", wiki: "Sage_Gowry" },
+    { name: "Millicent", wiki: "Millicent" },
+  ],
+  32: [{ name: "Preceptor Seluvis", wiki: "Preceptor_Seluvis" }],
+  33: [{ name: "Knight Bernahl", wiki: "Knight_Bernahl" }],
+  34: [{ name: "Gurranq, Beast Clergyman", wiki: "Gurranq_Beast_Clergyman" }],
+  35: [{ name: "Finger Reader Enia", wiki: "Finger_Reader_Enia" }],
+};
+
+const NPC_PORTRAITS_KEY = 'erc_npc_portraits_v1';
+let npcPortraits = {};
+let pendingNpcKey = null;
+
+function loadNpcPortraits() {
+  try { const r = localStorage.getItem(NPC_PORTRAITS_KEY); if (r) npcPortraits = JSON.parse(r); } catch(e) { npcPortraits = {}; }
+}
+function saveNpcPortraits() {
+  try { localStorage.setItem(NPC_PORTRAITS_KEY, JSON.stringify(npcPortraits)); } catch(e) {}
 }
 
-function renderDialogue() {
-  const q = (document.getElementById('dialogue-search').value || '').toLowerCase().trim();
-  const questFilter = document.getElementById('dialogue-quest-filter').value;
-  const mode = document.getElementById('dialogue-search-mode').value;
-  const results = document.getElementById('dialogue-results');
+function renderCharacters() {
+  loadNpcPortraits();
+  const content = document.getElementById('characters-content');
+  if (!content) return;
 
-  let filtered = dialogues.filter(d => {
-    // NPC selection overrides all other filters — show everything for that character
-    if (activeDialogueNpc) return d.npc === activeDialogueNpc;
-    if (questFilter !== 'all' && d.quest !== questFilter) return false;
-    if (!q) return true;
-    if (mode === 'npc') return d.npc.toLowerCase().includes(q);
-    if (mode === 'location') return d.location.toLowerCase().includes(q);
-    if (mode === 'keyword') return d.lines.some(l => l.toLowerCase().includes(q));
-    return true;
-  });
+  const activeQuests = quests.filter(q => q.status === 'active');
+  if (!activeQuests.length) {
+    content.innerHTML = '<div class="empty-state">Activate a quest in the Quest Log to see its characters here.</div>';
+    return;
+  }
 
-  if (!filtered.length) { results.innerHTML = '<div class="empty-state">No dialogue found.</div>'; return; }
-
-  const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-  const hl = t => (!activeDialogueNpc && q) ? t.replace(new RegExp(`(${esc(q)})`, 'gi'), '<mark>$1</mark>') : t;
-
-  const byNpc = {};
-  filtered.forEach(d => {
-    if (!byNpc[d.npc]) byNpc[d.npc] = [];
-    byNpc[d.npc].push(d);
-  });
-
-  results.innerHTML = Object.entries(byNpc).map(([npcName, blocks]) => {
-    const blocksHtml = blocks.map(d => {
-      // Only filter individual lines when doing a keyword search
-      const matchLines = (!activeDialogueNpc && q && mode === 'keyword')
-        ? d.lines.filter(l => l.toLowerCase().includes(q))
-        : d.lines;
-      return `<div class="dialogue-context-label">${hl(d.location)}</div>
-        ${matchLines.map(l => `<div class="dialogue-line">${hl(l)}</div>`).join('')}
-        `;
+  let html = '';
+  for (const quest of activeQuests) {
+    const npcs = QUEST_NPCS[quest.id];
+    if (!npcs || !npcs.length) continue;
+    const npcCards = npcs.map(npc => {
+      const key = npc.name;
+      const portrait = npcPortraits[key];
+      const portraitHtml = portrait ? `<img src="${portrait}" alt="${npc.name}">` : '⚔';
+      const wikiUrl = `https://eldenring.wiki.fextralife.com/${npc.wiki}`;
+      return `<div class="char-card">
+        <div class="char-portrait-wrap" onclick="triggerNpcPortrait('${key.replace(/'/g,"\\'")}')" title="Click to upload portrait">
+          ${portraitHtml}
+        </div>
+        <div class="char-name">${npc.name}</div>
+        <div class="char-quest-tag">${quest.name}</div>
+        <a class="char-wiki-btn" href="${wikiUrl}" target="_blank" rel="noopener">Wiki ↗</a>
+      </div>`;
     }).join('');
-    return `<div class="npc-block">
-      <div class="npc-name">${hl(npcName)}</div>
-      <div class="npc-quest-tag">${blocks[0].quest || ''}</div>
-      ${blocksHtml}
-    </div>`;
-  }).join('');
+    if (npcCards) {
+      html += `<div class="char-quest-group">
+        <div class="char-quest-label">${quest.name}</div>
+        <div class="char-cards">${npcCards}</div>
+      </div>`;
+    }
+  }
+
+  content.innerHTML = html || '<div class="empty-state">No character data found for your active quests.</div>';
 }
 
-let dlgSuggHighlight = -1;
+function triggerNpcPortrait(npcKey) {
+  pendingNpcKey = npcKey;
+  const input = document.getElementById('char-portrait-upload');
+  if (input) input.click();
+}
 
-function onDialogueSearch() {
-  activeDialogueNpc = null;
-  renderDialogue();
-  const q = document.getElementById('dialogue-search').value.trim();
-  const mode = document.getElementById('dialogue-search-mode').value;
-  const box = document.getElementById('dialogue-suggestions');
-  dlgSuggHighlight = -1;
-  if (!q) { box.style.display = 'none'; return; }
-  const ql = q.toLowerCase();
-  const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-  const hl = t => t.replace(new RegExp(`(${esc(q)})`, 'gi'), '<mark>$1</mark>');
-
-  if (mode === 'npc') {
-    // Always search ALL dialogues for NPC suggestions — ignore quest filter
-    const matchNpcs = [...new Set(
-      dialogues.filter(d => d.npc.toLowerCase().includes(ql)).map(d => d.npc)
-    )].slice(0, 8);
-    if (!matchNpcs.length) { box.innerHTML = `<div class="suggestion-empty">No NPCs found</div>`; box.style.display = 'block'; return; }
-    box.innerHTML = matchNpcs.map(npc => {
-      const count = dialogues.filter(d => d.npc === npc).reduce((s,d)=>s+d.lines.length,0);
-      const hasDeathDlg = dialogues.some(d => d.npc === npc && d.quest === 'death');
-      return `<div class="suggestion-item" onmousedown="selectDialogueSuggestion('${npc.replace(/'/g,"\\'")}')">
-        <div class="suggestion-name">${hl(npc)}</div>
-        <div class="suggestion-meta">${count} line${count===1?'':'s'}${hasDeathDlg ? ' · includes defeat dialogue' : ''}</div>
-      </div>`;
-    }).join('');
-
-  } else if (mode === 'location') {
-    const matchLocs = [...new Set(
-      dialogues.filter(d => d.location.toLowerCase().includes(ql)).map(d => d.location)
-    )].slice(0, 8);
-    if (!matchLocs.length) { box.innerHTML = `<div class="suggestion-empty">No locations found</div>`; box.style.display = 'block'; return; }
-    box.innerHTML = matchLocs.map(loc => {
-      const npcs = [...new Set(dialogues.filter(d => d.location === loc).map(d => d.npc))];
-      return `<div class="suggestion-item" onmousedown="selectDialogueLocation('${loc.replace(/'/g,"\\'")}')">
-        <div class="suggestion-name">${hl(loc)}</div>
-        <div class="suggestion-meta">${npcs.slice(0,3).join(', ')}${npcs.length>3?' +more':''}</div>
-      </div>`;
-    }).join('');
-
+// Wire up the portrait file input
+(function() {
+  function setupPortraitUpload() {
+    const input = document.getElementById('char-portrait-upload');
+    if (!input) return;
+    input.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file || !pendingNpcKey) return;
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        npcPortraits[pendingNpcKey] = ev.target.result;
+        saveNpcPortraits();
+        renderCharacters();
+        input.value = '';
+        pendingNpcKey = null;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupPortraitUpload);
   } else {
-    // keyword mode — show matching NPCs with a preview of the matching line
-    const matches = dialogues.filter(d => d.lines.some(l => l.toLowerCase().includes(ql)));
-    const byNpc = [...new Set(matches.map(d => d.npc))].slice(0, 8);
-    if (!byNpc.length) { box.innerHTML = `<div class="suggestion-empty">No matches found</div>`; box.style.display = 'block'; return; }
-    box.innerHTML = byNpc.map(npc => {
-      const preview = matches.find(d => d.npc === npc).lines.find(l => l.toLowerCase().includes(ql));
-      const shortPreview = preview.length > 60 ? preview.slice(0, 60) + '…' : preview;
-      return `<div class="suggestion-item" onmousedown="selectDialogueKeyword('${ql.replace(/'/g,"\\'")}')">
-        <div class="suggestion-name">${npc}</div>
-        <div class="suggestion-meta" style="font-style:italic">${hl(shortPreview)}</div>
-      </div>`;
-    }).join('');
+    setupPortraitUpload();
   }
-  box.style.display = 'block';
-}
-
-function selectDialogueSuggestion(npc) {
-  activeDialogueNpc = npc;
-  document.getElementById('dialogue-search').value = npc;
-  document.getElementById('dialogue-suggestions').style.display = 'none';
-  document.getElementById('dialogue-quest-filter').value = 'all';
-  renderDialogue();
-}
-
-function selectDialogueLocation(loc) {
-  activeDialogueNpc = null;
-  document.getElementById('dialogue-search').value = loc;
-  document.getElementById('dialogue-suggestions').style.display = 'none';
-  renderDialogue();
-}
-
-function selectDialogueKeyword(keyword) {
-  activeDialogueNpc = null;
-  document.getElementById('dialogue-search').value = keyword;
-  document.getElementById('dialogue-suggestions').style.display = 'none';
-  renderDialogue();
-}
-
-function onDialogueSearchKey(e) {
-  const box = document.getElementById('dialogue-suggestions');
-  const items = box.querySelectorAll('.suggestion-item');
-  if (!items.length) return;
-  if (e.key === 'ArrowDown') { e.preventDefault(); dlgSuggHighlight = Math.min(dlgSuggHighlight+1,items.length-1); items.forEach((el,i)=>el.classList.toggle('highlighted',i===dlgSuggHighlight)); }
-  else if (e.key === 'ArrowUp') { e.preventDefault(); dlgSuggHighlight = Math.max(dlgSuggHighlight-1,0); items.forEach((el,i)=>el.classList.toggle('highlighted',i===dlgSuggHighlight)); }
-  else if (e.key === 'Enter' && dlgSuggHighlight >= 0) { e.preventDefault(); items[dlgSuggHighlight].dispatchEvent(new MouseEvent('mousedown')); }
-  else if (e.key === 'Escape') { box.style.display='none'; dlgSuggHighlight=-1; }
-}
-
-document.addEventListener('click', e => {
-  if (!e.target.closest('.dialogue-search-wrap')) {
-    const box = document.getElementById('dialogue-suggestions');
-    if (box) box.style.display = 'none';
-  }
-});
-
-function addDialogue() {
-  const npc = document.getElementById('d-npc').value.trim();
-  const loc = document.getElementById('d-loc').value.trim();
-  const quest = document.getElementById('d-quest').value.trim();
-  const raw = document.getElementById('d-lines').value.trim();
-  if (!npc || !raw) return;
-  const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
-  dialogues.push({ id: uid(), npc, quest: quest || 'Other', location: loc || 'Unknown', lines });
-  ['d-npc','d-loc','d-quest','d-lines'].forEach(id => document.getElementById(id).value = '');
-  toggleForm('add-dialogue-form');
-  saveData(); renderDialogue();
-}
-
-function deleteDialogue(id) {
-  dialogues = dialogues.filter(d => d.id !== id); saveData(); renderDialogue();
-}
+})();
 
 
 // ─────────────────────────────────────────
@@ -2990,9 +2135,15 @@ function addBoss() {
 }
 
 function resetQuests() {
-  if (!confirm('This will delete all your quest progress and reload the default quest list. Your inventory and boss data will be kept. Continue?')) return;
-  localStorage.removeItem(STORAGE_KEY);
-  location.reload();
+  if (!confirm('This will reset ALL data for this character (quests, bosses, items). This cannot be undone. Continue?')) return;
+  if (!activeCharId) return;
+  localStorage.removeItem(DATA_PREFIX + activeCharId);
+  quests = JSON.parse(JSON.stringify(DEFAULT_QUESTS));
+  inventory = {};
+  bosses = JSON.parse(JSON.stringify(DEFAULT_BOSSES));
+  saveData();
+  renderQuests();
+  renderBosses();
 }
 
 // ─────────────────────────────────────────
