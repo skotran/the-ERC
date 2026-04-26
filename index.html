@@ -1660,6 +1660,7 @@ function toggleStep(qid, idx) {
   if (!q) return;
   q.steps[idx].done = !q.steps[idx].done;
   saveData();
+  renderCharacters();
   // Re-render only the steps body in-place, keeping the card open
   const stepsEl = document.getElementById('steps-' + qid);
   if (!stepsEl) { renderQuests(); return; }
@@ -1758,243 +1759,244 @@ function addQuest() {
 const QUEST_NPCS = {
 
   // ── BECOME ELDEN LORD ──
+  // step 0: Speak to Varré | step 1: Get Torrent from Melina | step 2: Defeat two Shardbearers
+  // step 3: Reach Roundtable/Enia | step 5: Godfrey golden shade | step 6: Morgott
+  // step 9: Maliketh | step 10: Sir Gideon | step 11: Hoarah Loux | step 12: Radagon+Elden Beast | step 13: Marika
   1: [
-    { name: "Melina",                          wiki: "Melina" },
-    { name: "White-Faced Varré",               wiki: "White_Faced_Varre" },
-    { name: "Finger Reader Enia",              wiki: "Finger_Reader_Enia" },
-    { name: "Margit, the Fell Omen",           wiki: "Margit,_the_Fell_Omen" },
-    { name: "Godrick the Grafted",             wiki: "Godrick_the_Grafted" },
-    { name: "Rennala, Queen of the Full Moon", wiki: "Rennala,_Queen_of_the_Full_Moon" },
-    { name: "Starscourge Radahn",              wiki: "Starscourge_Radahn" },
-    { name: "Morgott, the Omen King",          wiki: "Morgott,_the_Omen_King" },
-    { name: "Godfrey, First Elden Lord",       wiki: "Godfrey,_First_Elden_Lord_(Golden_Shade)" },
-    { name: "Maliketh, the Black Blade",       wiki: "Maliketh,_the_Black_Blade" },
-    { name: "Sir Gideon Ofnir",                wiki: "Sir_Gideon_Ofnir,_the_All-Knowing" },
-    { name: "Hoarah Loux, Warrior",            wiki: "Godfrey,_First_Elden_Lord" },
-    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
-    { name: "Elden Beast",                     wiki: "Elden_Beast" },
-    { name: "Fractured Marika",                wiki: "Marika_the_Eternal" },
+    { name: "White-Faced Varré",               wiki: "White+Faced+Varre",                        step: 0 },
+    { name: "Melina",                          wiki: "Melina",                                   step: 1 },
+    { name: "Margit, the Fell Omen",           wiki: "Margit+the+Fell+Omen",                    step: 2 },
+    { name: "Godrick the Grafted",             wiki: "Godrick+the+Grafted",                      step: 2 },
+    { name: "Rennala, Queen of the Full Moon", wiki: "Rennala+Queen+of+the+Full+Moon",           step: 2 },
+    { name: "Starscourge Radahn",              wiki: "Starscourge+Radahn",                       step: 2 },
+    { name: "Finger Reader Enia",              wiki: "Finger+Reader+Enia",                       step: 3 },
+    { name: "Godfrey, First Elden Lord",       wiki: "Godfrey+First+Elden+Lord+Golden+Shade", step: 5 },
+    { name: "Morgott, the Omen King",          wiki: "Morgott+the+Omen+King",                   step: 6 },
+    { name: "Maliketh, the Black Blade",       wiki: "Maliketh+the+Black+Blade",                step: 9 },
+    { name: "Sir Gideon Ofnir",                wiki: "Sir+Gideon+Ofnir+the+All-Knowing",        step: 10 },
+    { name: "Hoarah Loux, Warrior",            wiki: "Godfrey+First+Elden+Lord",                step: 11 },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon+of+the+Golden+Order",              step: 12 },
+    { name: "Elden Beast",                     wiki: "Elden+Beast",                              step: 12 },
+    { name: "Fractured Marika",                wiki: "Marika+the+Eternal",                       step: 13 },
   ],
 
   // ── ENDINGS ──
   2: [
-    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
-    { name: "Elden Beast",                     wiki: "Elden_Beast" },
-    { name: "Fractured Marika",                wiki: "Marika_the_Eternal" },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon+of+the+Golden+Order",  step: 0 },
+    { name: "Elden Beast",                     wiki: "Elden+Beast",                  step: 0 },
+    { name: "Fractured Marika",                wiki: "Marika+the+Eternal",           step: 2 },
   ],
   3: [
-    { name: "Ranni the Witch",                 wiki: "Ranni_the_Witch" },
-    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
-    { name: "Elden Beast",                     wiki: "Elden_Beast" },
+    { name: "Ranni the Witch",                 wiki: "Ranni+the+Witch",              step: 0 },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon+of+the+Golden+Order",  step: 1 },
+    { name: "Elden Beast",                     wiki: "Elden+Beast",                  step: 1 },
   ],
   4: [
-    { name: "Fia, the Deathbed Companion",     wiki: "Fia" },
-    { name: "Lichdragon Fortissax",            wiki: "Lichdragon_Fortissax" },
-    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
-    { name: "Elden Beast",                     wiki: "Elden_Beast" },
+    { name: "Fia, the Deathbed Companion",     wiki: "Fia",                          step: 0 },
+    { name: "Lichdragon Fortissax",            wiki: "Lichdragon+Fortissax",         step: 0 },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon+of+the+Golden+Order",  step: 1 },
+    { name: "Elden Beast",                     wiki: "Elden+Beast",                  step: 1 },
   ],
   5: [
-    { name: "Dung Eater",                      wiki: "Dung_Eater" },
-    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
-    { name: "Elden Beast",                     wiki: "Elden_Beast" },
+    { name: "Dung Eater",                      wiki: "Dung+Eater",                   step: 0 },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon+of+the+Golden+Order",  step: 1 },
+    { name: "Elden Beast",                     wiki: "Elden+Beast",                  step: 1 },
   ],
   6: [
-    { name: "Brother Corhyn",                  wiki: "Brother_Corhyn" },
-    { name: "Goldmask",                        wiki: "Goldmask" },
-    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
-    { name: "Elden Beast",                     wiki: "Elden_Beast" },
+    { name: "Brother Corhyn",                  wiki: "Brother+Corhyn",               step: 0 },
+    { name: "Goldmask",                        wiki: "Goldmask",                     step: 0 },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon+of+the+Golden+Order",  step: 1 },
+    { name: "Elden Beast",                     wiki: "Elden+Beast",                  step: 1 },
   ],
   7: [
-    { name: "Three Fingers",                   wiki: "Three_Fingers" },
-    { name: "Hyetta",                          wiki: "Hyetta" },
-    { name: "Melina",                          wiki: "Melina" },
-    { name: "Radagon of the Golden Order",     wiki: "Radagon_of_the_Golden_Order" },
-    { name: "Elden Beast",                     wiki: "Elden_Beast" },
+    { name: "Three Fingers",                   wiki: "Three+Fingers",                step: 2 },
+    { name: "Hyetta",                          wiki: "Hyetta",                       step: 2 },
+    { name: "Melina",                          wiki: "Melina",                       step: 3 },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon+of+the+Golden+Order",  step: 3 },
+    { name: "Elden Beast",                     wiki: "Elden+Beast",                  step: 3 },
   ],
 
   // ── RANNI'S QUESTLINE ──
   10: [
-    { name: "Ranni the Witch",                 wiki: "Ranni_the_Witch" },
-    { name: "Blaidd the Half-Wolf",            wiki: "Blaidd" },
-    { name: "War Counselor Iji",               wiki: "War_Counselor_Iji" },
-    { name: "Preceptor Seluvis",               wiki: "Preceptor_Seluvis" },
-    { name: "Starscourge Radahn",              wiki: "Starscourge_Radahn" },
-    { name: "Baleful Shadow",                  wiki: "Baleful_Shadow" },
-    { name: "Astel, Naturalborn of the Void",  wiki: "Astel,_Naturalborn_of_the_Void" },
-    { name: "Glintstone Dragon Adula",         wiki: "Glintstone_Dragon_Adula" },
+    { name: "Ranni the Witch",                 wiki: "Ranni+the+Witch",              step: 0 },
+    { name: "Blaidd the Half-Wolf",            wiki: "Blaidd",                       step: 1 },
+    { name: "War Counselor Iji",               wiki: "War+Counselor+Iji",            step: 1 },
+    { name: "Preceptor Seluvis",               wiki: "Preceptor+Seluvis",            step: 1 },
+    { name: "Starscourge Radahn",              wiki: "Starscourge+Radahn",           step: 2 },
+    { name: "Baleful Shadow",                  wiki: "Baleful+Shadow",               step: 8 },
+    { name: "Astel, Naturalborn of the Void",  wiki: "Astel+Naturalborn+of+the+Void", step: 10 },
+    { name: "Glintstone Dragon Adula",         wiki: "Glintstone+Dragon+Adula",      step: 11 },
   ],
 
   // ── BLAIDD'S QUESTLINE ──
   11: [
-    { name: "Blaidd the Half-Wolf",            wiki: "Blaidd" },
-    { name: "Bloodhound Knight Darriwil",      wiki: "Bloodhound_Knight_Darriwil" },
-    { name: "Starscourge Radahn",              wiki: "Starscourge_Radahn" },
-    { name: "War Counselor Iji",               wiki: "War_Counselor_Iji" },
+    { name: "Blaidd the Half-Wolf",            wiki: "Blaidd",                       step: 0 },
+    { name: "Bloodhound Knight Darriwil",      wiki: "Bloodhound+Knight+Darriwil",   step: 1 },
+    { name: "Starscourge Radahn",              wiki: "Starscourge+Radahn",           step: 2 },
   ],
 
   // ── FIA'S QUESTLINE ──
   12: [
-    { name: "Fia, the Deathbed Companion",     wiki: "Fia" },
-    { name: "D, Hunter of the Dead",           wiki: "D_Hunter_of_the_Dead" },
-    { name: "Lichdragon Fortissax",            wiki: "Lichdragon_Fortissax" },
+    { name: "Fia, the Deathbed Companion",     wiki: "Fia",                          step: 0 },
+    { name: "D, Hunter of the Dead",           wiki: "D+Hunter+of+the+Dead",         step: 1 },
+    { name: "Lichdragon Fortissax",            wiki: "Lichdragon+Fortissax",         step: 4 },
   ],
 
   // ── VARRE'S QUESTLINE ──
   13: [
-    { name: "White-Faced Varré",               wiki: "White_Faced_Varre" },
-    { name: "Mohg, Lord of Blood",             wiki: "Mohg,_Lord_of_Blood" },
+    { name: "White-Faced Varré",               wiki: "White+Faced+Varre",            step: 0 },
+    { name: "Mohg, Lord of Blood",             wiki: "Mohg+Lord+of+Blood",          step: 4 },
   ],
 
   // ── MILLICENT'S QUESTLINE ──
   14: [
-    { name: "Millicent",                       wiki: "Millicent" },
-    { name: "Sage Gowry",                      wiki: "Sage_Gowry" },
-    { name: "Commander O'Neil",                wiki: "Commander_O%27Neil" },
-    { name: "Malenia, Blade of Miquella",      wiki: "Malenia,_Blade_of_Miquella" },
+    { name: "Sage Gowry",                      wiki: "Sage+Gowry",                   step: 0 },
+    { name: "Commander O'Neil",               wiki: "Commander+O%27Neil",            step: 1 },
+    { name: "Millicent",                       wiki: "Millicent",                    step: 2 },
+    { name: "Malenia, Blade of Miquella",      wiki: "Malenia+Blade+of+Miquella",   step: 6 },
   ],
 
   // ── NEPHELI LOUX'S QUESTLINE ──
   15: [
-    { name: "Nepheli Loux",                    wiki: "Nepheli_Loux" },
-    { name: "Kenneth Haight",                  wiki: "Kenneth_Haight" },
-    { name: "Godrick the Grafted",             wiki: "Godrick_the_Grafted" },
+    { name: "Nepheli Loux",                    wiki: "Nepheli+Loux",                 step: 0 },
+    { name: "Godrick the Grafted",             wiki: "Godrick+the+Grafted",          step: 0 },
+    { name: "Kenneth Haight",                  wiki: "Kenneth+Haight",               step: 4 },
   ],
 
   // ── BROTHER CORHYN & GOLDMASK ──
   16: [
-    { name: "Brother Corhyn",                  wiki: "Brother_Corhyn" },
-    { name: "Goldmask",                        wiki: "Goldmask" },
+    { name: "Brother Corhyn",                  wiki: "Brother+Corhyn",               step: 0 },
+    { name: "Goldmask",                        wiki: "Goldmask",                     step: 1 },
   ],
 
   // ── DUNG EATER'S QUESTLINE ──
   17: [
-    { name: "Dung Eater",                      wiki: "Dung_Eater" },
+    { name: "Dung Eater",                      wiki: "Dung+Eater",                   step: 0 },
   ],
 
   // ── VOLCANO MANOR QUESTLINE ──
   18: [
-    { name: "Lady Tanith",                     wiki: "Lady_Tanith" },
-    { name: "Rya",                             wiki: "Rya" },
-    { name: "Knight Bernahl",                  wiki: "Knight_Bernahl" },
-    { name: "Patches",                         wiki: "Patches" },
-    { name: "Old Knight Istvan",               wiki: "Old_Knight_Istvan" },
-    { name: "Rileigh the Idle",                wiki: "Rileigh_the_Idle" },
-    { name: "Juno Hoslow",                     wiki: "Juno_Hoslow,_Knight_of_Blood" },
-    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard,_Lord_of_Blasphemy" },
+    { name: "Lady Tanith",                     wiki: "Lady+Tanith",                  step: 0 },
+    { name: "Rya",                             wiki: "Rya",                          step: 0 },
+    { name: "Knight Bernahl",                  wiki: "Knight+Bernahl",               step: 0 },
+    { name: "Old Knight Istvan",               wiki: "Old+Knight+Istvan",            step: 2 },
+    { name: "Rileigh the Idle",                wiki: "Rileigh+the+Idle",             step: 3 },
+    { name: "Juno Hoslow",                     wiki: "Juno+Hoslow+Knight+of+Blood", step: 4 },
+    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard+Lord+of+Blasphemy",    step: 5 },
   ],
 
   // ── PATCHES' QUESTLINE ──
   19: [
-    { name: "Patches",                         wiki: "Patches" },
-    { name: "Lady Tanith",                     wiki: "Lady_Tanith" },
+    { name: "Patches",                         wiki: "Patches",                      step: 0 },
+    { name: "Lady Tanith",                     wiki: "Lady+Tanith",                  step: 3 },
   ],
 
   // ── ALEXANDER QUESTLINE ──
   20: [
-    { name: "Alexander the Iron Fist",         wiki: "Iron_Fist_Alexander" },
-    { name: "Starscourge Radahn",              wiki: "Starscourge_Radahn" },
+    { name: "Alexander the Iron Fist",         wiki: "Iron+Fist+Alexander",          step: 0 },
+    { name: "Starscourge Radahn",              wiki: "Starscourge+Radahn",           step: 2 },
   ],
 
   // ── SELLEN'S QUESTLINE ──
   21: [
-    { name: "Sorceress Sellen",                wiki: "Sorceress_Sellen" },
-    { name: "Witch-Hunter Jerren",             wiki: "Witch-Hunter_Jerren" },
-    { name: "Master Azur",                     wiki: "Master_Azur" },
-    { name: "Master Lusat",                    wiki: "Master_Lusat" },
+    { name: "Sorceress Sellen",                wiki: "Sorceress+Sellen",             step: 0 },
+    { name: "Master Azur",                     wiki: "Master+Azur",                  step: 1 },
+    { name: "Master Lusat",                    wiki: "Master+Lusat",                 step: 4 },
+    { name: "Witch-Hunter Jerren",             wiki: "Witch-Hunter+Jerren",          step: 5 },
   ],
 
   // ── YURA'S QUESTLINE ──
   22: [
-    { name: "Hunter Yura",                     wiki: "Bloody_Hunter_Yura" },
-    { name: "Bloody Finger Nerijus",           wiki: "Bloody_Finger_Nerijus" },
+    { name: "Hunter Yura",                     wiki: "Bloody+Hunter+Yura",           step: 0 },
+    { name: "Bloody Finger Nerijus",           wiki: "Bloody+Finger+Nerijus",        step: 1 },
   ],
 
   // ── RYA'S QUESTLINE ──
   23: [
-    { name: "Rya",                             wiki: "Rya" },
-    { name: "Lady Tanith",                     wiki: "Lady_Tanith" },
-    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard,_Lord_of_Blasphemy" },
+    { name: "Rya",                             wiki: "Rya",                          step: 0 },
+    { name: "Lady Tanith",                     wiki: "Lady+Tanith",                  step: 1 },
+    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard+Lord+of+Blasphemy",    step: 1 },
   ],
 
   // ── LATENNA'S QUESTLINE ──
   24: [
-    { name: "Latenna the Albinauric",          wiki: "Latenna" },
-    { name: "Albus",                           wiki: "Albus" },
+    { name: "Albus",                           wiki: "Albus",                        step: 0 },
+    { name: "Latenna the Albinauric",          wiki: "Latenna",                      step: 1 },
   ],
 
   // ── DIALLOS' QUESTLINE ──
   25: [
-    { name: "Diallos",                         wiki: "Diallos" },
-    { name: "Jar-Bairn",                       wiki: "Jar-Bairn" },
-    { name: "Lady Tanith",                     wiki: "Lady_Tanith" },
+    { name: "Diallos",                         wiki: "Diallos",                      step: 0 },
+    { name: "Lady Tanith",                     wiki: "Lady+Tanith",                  step: 2 },
+    { name: "Jar-Bairn",                       wiki: "Jar-Bairn",                    step: 3 },
   ],
 
   // ── HYETTA'S QUESTLINE ──
   26: [
-    { name: "Hyetta",                          wiki: "Hyetta" },
-    { name: "Three Fingers",                   wiki: "Three_Fingers" },
+    { name: "Hyetta",                          wiki: "Hyetta",                       step: 0 },
+    { name: "Three Fingers",                   wiki: "Three+Fingers",                step: 4 },
   ],
 
   // ── IRINA & EDGAR'S QUESTLINE ──
   27: [
-    { name: "Irina",                           wiki: "Irina" },
-    { name: "Edgar",                           wiki: "Edgar" },
-    { name: "Leonine Misbegotten",             wiki: "Leonine_Misbegotten" },
+    { name: "Irina",                           wiki: "Irina",                        step: 0 },
+    { name: "Edgar",                           wiki: "Edgar",                        step: 0 },
+    { name: "Leonine Misbegotten",             wiki: "Leonine+Misbegotten",          step: 1 },
   ],
 
   // ── KENNETH HAIGHT'S QUESTLINE ──
   28: [
-    { name: "Kenneth Haight",                  wiki: "Kenneth_Haight" },
-    { name: "Nepheli Loux",                    wiki: "Nepheli_Loux" },
-    { name: "Godrick the Grafted",             wiki: "Godrick_the_Grafted" },
+    { name: "Kenneth Haight",                  wiki: "Kenneth+Haight",               step: 0 },
+    { name: "Godrick the Grafted",             wiki: "Godrick+the+Grafted",          step: 0 },
+    { name: "Nepheli Loux",                    wiki: "Nepheli+Loux",                 step: 1 },
   ],
 
   // ── BOC THE SEAMSTER'S QUESTLINE ──
   29: [
-    { name: "Boc the Seamster",                wiki: "Boc_the_Seamster" },
-    { name: "Rennala, Queen of the Full Moon", wiki: "Rennala,_Queen_of_the_Full_Moon" },
+    { name: "Boc the Seamster",                wiki: "Boc+the+Seamster",             step: 0 },
+    { name: "Rennala, Queen of the Full Moon", wiki: "Rennala+Queen+of+the+Full+Moon", step: 5 },
   ],
 
   // ── D, HUNTER OF THE DEAD'S QUESTLINE ──
   30: [
-    { name: "D, Hunter of the Dead",           wiki: "D_Hunter_of_the_Dead" },
-    { name: "Fia, the Deathbed Companion",     wiki: "Fia" },
+    { name: "D, Hunter of the Dead",           wiki: "D+Hunter+of+the+Dead",         step: 0 },
+    { name: "Fia, the Deathbed Companion",     wiki: "Fia",                          step: 2 },
   ],
 
   // ── GOWRY & MILLICENT (CAELID ARC) ──
   31: [
-    { name: "Sage Gowry",                      wiki: "Sage_Gowry" },
-    { name: "Millicent",                       wiki: "Millicent" },
-    { name: "Commander O'Neil",                wiki: "Commander_O%27Neil" },
+    { name: "Sage Gowry",                      wiki: "Sage+Gowry",                   step: 0 },
+    { name: "Commander O'Neil",               wiki: "Commander+O%27Neil",            step: 1 },
+    { name: "Millicent",                       wiki: "Millicent",                    step: 2 },
   ],
 
   // ── SELUVIS'S QUESTLINE ──
   32: [
-    { name: "Preceptor Seluvis",               wiki: "Preceptor_Seluvis" },
-    { name: "Nepheli Loux",                    wiki: "Nepheli_Loux" },
-    { name: "Ranni the Witch",                 wiki: "Ranni_the_Witch" },
+    { name: "Preceptor Seluvis",               wiki: "Preceptor+Seluvis",            step: 0 },
+    { name: "Nepheli Loux",                    wiki: "Nepheli+Loux",                 step: 1 },
+    { name: "Ranni the Witch",                 wiki: "Ranni+the+Witch",              step: 3 },
   ],
 
   // ── BERNAHL'S QUESTLINE ──
   33: [
-    { name: "Knight Bernahl",                  wiki: "Knight_Bernahl" },
-    { name: "Lady Tanith",                     wiki: "Lady_Tanith" },
+    { name: "Knight Bernahl",                  wiki: "Knight+Bernahl",               step: 0 },
+    { name: "Lady Tanith",                     wiki: "Lady+Tanith",                  step: 1 },
   ],
 
   // ── GURRANQ (BEAST CLERGYMAN) QUESTLINE ──
   34: [
-    { name: "Gurranq, Beast Clergyman",        wiki: "Gurranq_Beast_Clergyman" },
-    { name: "D, Hunter of the Dead",           wiki: "D_Hunter_of_the_Dead" },
+    { name: "D, Hunter of the Dead",           wiki: "D+Hunter+of+the+Dead",         step: 0 },
+    { name: "Gurranq, Beast Clergyman",        wiki: "Gurranq+Beast+Clergyman",      step: 1 },
   ],
 
   // ── ENIA & GREAT RUNES ──
   35: [
-    { name: "Finger Reader Enia",              wiki: "Finger_Reader_Enia" },
-    { name: "Godrick the Grafted",             wiki: "Godrick_the_Grafted" },
-    { name: "Starscourge Radahn",              wiki: "Starscourge_Radahn" },
-    { name: "Morgott, the Omen King",          wiki: "Morgott,_the_Omen_King" },
-    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard,_Lord_of_Blasphemy" },
-    { name: "Malenia, Blade of Miquella",      wiki: "Malenia,_Blade_of_Miquella" },
+    { name: "Finger Reader Enia",              wiki: "Finger+Reader+Enia",           step: 0 },
+    { name: "Godrick the Grafted",             wiki: "Godrick+the+Grafted",          step: 1 },
+    { name: "Starscourge Radahn",              wiki: "Starscourge+Radahn",           step: 2 },
+    { name: "Morgott, the Omen King",          wiki: "Morgott+the+Omen+King",       step: 3 },
+    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard+Lord+of+Blasphemy",    step: 4 },
+    { name: "Malenia, Blade of Miquella",      wiki: "Malenia+Blade+of+Miquella",   step: 5 },
   ],
 };
 
@@ -2022,9 +2024,18 @@ function renderCharacters() {
 
   let html = '';
   for (const quest of activeQuests) {
-    const npcs = QUEST_NPCS[quest.id];
-    if (!npcs || !npcs.length) continue;
-    const npcCards = npcs.map(npc => {
+    const allNpcs = QUEST_NPCS[quest.id];
+    if (!allNpcs || !allNpcs.length) continue;
+
+    // Only show NPCs whose unlock step has been completed (checked off)
+    const unlockedNpcs = allNpcs.filter(npc => {
+      const unlockStep = quest.steps[npc.step];
+      return unlockStep && unlockStep.done;
+    });
+
+    if (!unlockedNpcs.length) continue;
+
+    const npcCards = unlockedNpcs.map(npc => {
       const key = npc.name;
       const portrait = npcPortraits[key];
       const portraitHtml = portrait ? `<img src="${portrait}" alt="${npc.name}">` : '⚔';
@@ -2038,15 +2049,14 @@ function renderCharacters() {
         <a class="char-wiki-btn" href="${wikiUrl}" target="_blank" rel="noopener">Wiki ↗</a>
       </div>`;
     }).join('');
-    if (npcCards) {
-      html += `<div class="char-quest-group">
-        <div class="char-quest-label">${quest.name}</div>
-        <div class="char-cards">${npcCards}</div>
-      </div>`;
-    }
+
+    html += `<div class="char-quest-group">
+      <div class="char-quest-label">${quest.name}</div>
+      <div class="char-cards">${npcCards}</div>
+    </div>`;
   }
 
-  content.innerHTML = html || '<div class="empty-state">No character data found for your active quests.</div>';
+  content.innerHTML = html || '<div class="empty-state">Check off quest steps to reveal characters you\'ve encountered.</div>';
 }
 
 function triggerNpcPortrait(npcKey) {
