@@ -985,7 +985,10 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
 <div id="tab-characters" class="tab">
   <div class="page-header">
     <div class="page-title">Characters</div>
-    <div class="page-sub">NPCs from your active quests · Click a portrait to upload a photo · Visit their wiki page</div>
+    <div class="page-sub">NPCs from your quests · Click a portrait to upload a photo · Visit their wiki page</div>
+  </div>
+  <div class="toolbar">
+    <input class="er-input" id="char-search" placeholder="Search any character in the game…" oninput="renderCharacters()" autocomplete="off" style="flex:1">
   </div>
   <div class="content" id="characters-content">
     <div class="empty-state">Activate a quest in the Quest Log to see its characters here.</div>
@@ -1660,7 +1663,6 @@ function toggleStep(qid, idx) {
   if (!q) return;
   q.steps[idx].done = !q.steps[idx].done;
   saveData();
-  renderCharacters();
   // Re-render only the steps body in-place, keeping the card open
   const stepsEl = document.getElementById('steps-' + qid);
   if (!stepsEl) { renderQuests(); return; }
@@ -1759,25 +1761,22 @@ function addQuest() {
 const QUEST_NPCS = {
 
   // ── BECOME ELDEN LORD ──
-  // step 0: Speak to Varré | step 1: Get Torrent from Melina | step 2: Defeat two Shardbearers
-  // step 3: Reach Roundtable/Enia | step 5: Godfrey golden shade | step 6: Morgott
-  // step 9: Maliketh | step 10: Sir Gideon | step 11: Hoarah Loux | step 12: Radagon+Elden Beast | step 13: Marika
   1: [
-    { name: "White-Faced Varré",               wiki: "White+Faced+Varre",                        step: 0 },
-    { name: "Melina",                          wiki: "Melina",                                   step: 1 },
-    { name: "Margit, the Fell Omen",           wiki: "Margit+the+Fell+Omen",                    step: 2 },
-    { name: "Godrick the Grafted",             wiki: "Godrick+the+Grafted",                      step: 2 },
-    { name: "Rennala, Queen of the Full Moon", wiki: "Rennala+Queen+of+the+Full+Moon",           step: 2 },
-    { name: "Starscourge Radahn",              wiki: "Starscourge+Radahn",                       step: 2 },
-    { name: "Finger Reader Enia",              wiki: "Finger+Reader+Enia",                       step: 3 },
-    { name: "Godfrey, First Elden Lord",       wiki: "Godfrey+First+Elden+Lord+Golden+Shade", step: 5 },
-    { name: "Morgott, the Omen King",          wiki: "Morgott+the+Omen+King",                   step: 6 },
-    { name: "Maliketh, the Black Blade",       wiki: "Maliketh+the+Black+Blade",                step: 9 },
-    { name: "Sir Gideon Ofnir",                wiki: "Sir+Gideon+Ofnir+the+All-Knowing",        step: 10 },
-    { name: "Hoarah Loux, Warrior",            wiki: "Godfrey+First+Elden+Lord",                step: 11 },
-    { name: "Radagon of the Golden Order",     wiki: "Radagon+of+the+Golden+Order",              step: 12 },
-    { name: "Elden Beast",                     wiki: "Elden+Beast",                              step: 12 },
-    { name: "Fractured Marika",                wiki: "Marika+the+Eternal",                       step: 13 },
+    { name: "White-Faced Varré",               wiki: "White+Faced+Varre",                      step: 0 },
+    { name: "Melina",                          wiki: "Melina",                                 step: 1 },
+    { name: "Margit, the Fell Omen",           wiki: "Margit+the+Fell+Omen",                   step: 2 },
+    { name: "Godrick the Grafted",             wiki: "Godrick+the+Grafted",                    step: 2 },
+    { name: "Rennala, Queen of the Full Moon", wiki: "Rennala+Queen+of+the+Full+Moon",         step: 2 },
+    { name: "Starscourge Radahn",              wiki: "Starscourge+Radahn",                     step: 2 },
+    { name: "Finger Reader Enia",              wiki: "Finger+Reader+Enia",                     step: 3 },
+    { name: "Godfrey, First Elden Lord",       wiki: "Godfrey+First+Elden+Lord+Golden+Shade",  step: 5 },
+    { name: "Morgott, the Omen King",          wiki: "Morgott+the+Omen+King",                  step: 6 },
+    { name: "Maliketh, the Black Blade",       wiki: "Maliketh+the+Black+Blade",               step: 9 },
+    { name: "Sir Gideon Ofnir",                wiki: "Sir+Gideon+Ofnir+the+All-Knowing",       step: 10 },
+    { name: "Hoarah Loux, Warrior",            wiki: "Godfrey+First+Elden+Lord",               step: 11 },
+    { name: "Radagon of the Golden Order",     wiki: "Radagon+of+the+Golden+Order",            step: 12 },
+    { name: "Elden Beast",                     wiki: "Elden+Beast",                            step: 12 },
+    { name: "Fractured Marika",                wiki: "Marika+the+Eternal",                     step: 13 },
   ],
 
   // ── ENDINGS ──
@@ -1845,15 +1844,15 @@ const QUEST_NPCS = {
   // ── VARRE'S QUESTLINE ──
   13: [
     { name: "White-Faced Varré",               wiki: "White+Faced+Varre",            step: 0 },
-    { name: "Mohg, Lord of Blood",             wiki: "Mohg+Lord+of+Blood",          step: 4 },
+    { name: "Mohg, Lord of Blood",             wiki: "Mohg+Lord+of+Blood",           step: 4 },
   ],
 
   // ── MILLICENT'S QUESTLINE ──
   14: [
     { name: "Sage Gowry",                      wiki: "Sage+Gowry",                   step: 0 },
-    { name: "Commander O'Neil",               wiki: "Commander+O%27Neil",            step: 1 },
+    { name: "Commander O'Neil",                wiki: "Commander+O%27Neil",            step: 1 },
     { name: "Millicent",                       wiki: "Millicent",                    step: 2 },
-    { name: "Malenia, Blade of Miquella",      wiki: "Malenia+Blade+of+Miquella",   step: 6 },
+    { name: "Malenia, Blade of Miquella",      wiki: "Malenia+Blade+of+Miquella",    step: 6 },
   ],
 
   // ── NEPHELI LOUX'S QUESTLINE ──
@@ -1881,8 +1880,8 @@ const QUEST_NPCS = {
     { name: "Knight Bernahl",                  wiki: "Knight+Bernahl",               step: 0 },
     { name: "Old Knight Istvan",               wiki: "Old+Knight+Istvan",            step: 2 },
     { name: "Rileigh the Idle",                wiki: "Rileigh+the+Idle",             step: 3 },
-    { name: "Juno Hoslow",                     wiki: "Juno+Hoslow+Knight+of+Blood", step: 4 },
-    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard+Lord+of+Blasphemy",    step: 5 },
+    { name: "Juno Hoslow",                     wiki: "Juno+Hoslow+Knight+of+Blood",  step: 4 },
+    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard+Lord+of+Blasphemy",     step: 5 },
   ],
 
   // ── PATCHES' QUESTLINE ──
@@ -1915,7 +1914,7 @@ const QUEST_NPCS = {
   23: [
     { name: "Rya",                             wiki: "Rya",                          step: 0 },
     { name: "Lady Tanith",                     wiki: "Lady+Tanith",                  step: 1 },
-    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard+Lord+of+Blasphemy",    step: 1 },
+    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard+Lord+of+Blasphemy",     step: 1 },
   ],
 
   // ── LATENNA'S QUESTLINE ──
@@ -1966,7 +1965,7 @@ const QUEST_NPCS = {
   // ── GOWRY & MILLICENT (CAELID ARC) ──
   31: [
     { name: "Sage Gowry",                      wiki: "Sage+Gowry",                   step: 0 },
-    { name: "Commander O'Neil",               wiki: "Commander+O%27Neil",            step: 1 },
+    { name: "Commander O'Neil",                wiki: "Commander+O%27Neil",            step: 1 },
     { name: "Millicent",                       wiki: "Millicent",                    step: 2 },
   ],
 
@@ -1994,9 +1993,9 @@ const QUEST_NPCS = {
     { name: "Finger Reader Enia",              wiki: "Finger+Reader+Enia",           step: 0 },
     { name: "Godrick the Grafted",             wiki: "Godrick+the+Grafted",          step: 1 },
     { name: "Starscourge Radahn",              wiki: "Starscourge+Radahn",           step: 2 },
-    { name: "Morgott, the Omen King",          wiki: "Morgott+the+Omen+King",       step: 3 },
-    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard+Lord+of+Blasphemy",    step: 4 },
-    { name: "Malenia, Blade of Miquella",      wiki: "Malenia+Blade+of+Miquella",   step: 5 },
+    { name: "Morgott, the Omen King",          wiki: "Morgott+the+Omen+King",        step: 3 },
+    { name: "Rykard, Lord of Blasphemy",       wiki: "Rykard+Lord+of+Blasphemy",     step: 4 },
+    { name: "Malenia, Blade of Miquella",      wiki: "Malenia+Blade+of+Miquella",    step: 5 },
   ],
 };
 
@@ -2016,6 +2015,49 @@ function renderCharacters() {
   const content = document.getElementById('characters-content');
   if (!content) return;
 
+  const searchEl = document.getElementById('char-search');
+  const search = searchEl ? searchEl.value.toLowerCase().trim() : '';
+
+  if (search) {
+    // SEARCH MODE: scan every character in the entire game database
+    const seen = new Set();
+    let html = '';
+    let total = 0;
+    for (const [questId, npcs] of Object.entries(QUEST_NPCS)) {
+      const quest = quests.find(q => q.id === parseInt(questId));
+      if (!quest) continue;
+      for (const npc of npcs) {
+        if (!npc.name.toLowerCase().includes(search)) continue;
+        if (seen.has(npc.name)) continue;
+        seen.add(npc.name);
+        const portrait = npcPortraits[npc.name];
+        const portraitHtml = portrait ? `<img src="${portrait}" alt="${npc.name}">` : '\u2694';
+        const wikiUrl = `https://eldenring.wiki.fextralife.com/${npc.wiki}`;
+        const isLocked = !(quest.steps[npc.step] && quest.steps[npc.step].done);
+        html += `<div class="char-card" style="${isLocked ? 'opacity:0.45' : ''}">
+          <div class="char-portrait-wrap"
+            onclick="${isLocked ? '' : `triggerNpcPortrait('${npc.name.replace(/'/g, "\\'")}')`}"
+            title="${isLocked ? 'Not yet encountered in your playthrough' : 'Click to upload portrait'}"
+            style="${isLocked ? 'cursor:default' : ''}">
+            ${portraitHtml}
+          </div>
+          <div class="char-name">${npc.name}</div>
+          <div class="char-quest-tag">${quest.name}</div>
+          ${isLocked
+            ? `<span style="font-size:11px;color:var(--text-dim);font-style:italic;font-family:var(--font-body)">Not yet encountered</span>`
+            : `<a class="char-wiki-btn" href="${wikiUrl}" target="_blank" rel="noopener">Wiki \u2197</a>`
+          }
+        </div>`;
+        total++;
+      }
+    }
+    content.innerHTML = total
+      ? `<div class="char-cards" style="padding:20px 0">${html}</div>`
+      : `<div class="empty-state">No characters found matching "<em>${search}</em>".</div>`;
+    return;
+  }
+
+  // DEFAULT MODE: show only active quests, step-gated
   const activeQuests = quests.filter(q => q.status === 'active');
   if (!activeQuests.length) {
     content.innerHTML = '<div class="empty-state">Activate a quest in the Quest Log to see its characters here.</div>';
@@ -2023,41 +2065,37 @@ function renderCharacters() {
   }
 
   let html = '';
+  let totalShown = 0;
   for (const quest of activeQuests) {
     const allNpcs = QUEST_NPCS[quest.id];
     if (!allNpcs || !allNpcs.length) continue;
-
-    // Only show NPCs whose unlock step has been completed (checked off)
-    const unlockedNpcs = allNpcs.filter(npc => {
-      const unlockStep = quest.steps[npc.step];
-      return unlockStep && unlockStep.done;
-    });
-
-    if (!unlockedNpcs.length) continue;
-
-    const npcCards = unlockedNpcs.map(npc => {
-      const key = npc.name;
-      const portrait = npcPortraits[key];
-      const portraitHtml = portrait ? `<img src="${portrait}" alt="${npc.name}">` : '⚔';
+    const unlocked = allNpcs.filter(npc => quest.steps[npc.step] && quest.steps[npc.step].done);
+    if (!unlocked.length) continue;
+    const npcCards = unlocked.map(npc => {
+      const portrait = npcPortraits[npc.name];
+      const portraitHtml = portrait ? `<img src="${portrait}" alt="${npc.name}">` : '\u2694';
       const wikiUrl = `https://eldenring.wiki.fextralife.com/${npc.wiki}`;
       return `<div class="char-card">
-        <div class="char-portrait-wrap" onclick="triggerNpcPortrait('${key.replace(/'/g,"\\'")}')" title="Click to upload portrait">
+        <div class="char-portrait-wrap" onclick="triggerNpcPortrait('${npc.name.replace(/'/g, "\\'")}')" title="Click to upload portrait">
           ${portraitHtml}
         </div>
         <div class="char-name">${npc.name}</div>
         <div class="char-quest-tag">${quest.name}</div>
-        <a class="char-wiki-btn" href="${wikiUrl}" target="_blank" rel="noopener">Wiki ↗</a>
+        <a class="char-wiki-btn" href="${wikiUrl}" target="_blank" rel="noopener">Wiki \u2197</a>
       </div>`;
     }).join('');
-
+    totalShown += unlocked.length;
     html += `<div class="char-quest-group">
       <div class="char-quest-label">${quest.name}</div>
       <div class="char-cards">${npcCards}</div>
     </div>`;
   }
 
-  content.innerHTML = html || '<div class="empty-state">Check off quest steps to reveal characters you\'ve encountered.</div>';
+  content.innerHTML = totalShown
+    ? html
+    : '<div class="empty-state">Check off quest steps to reveal characters you\'ve encountered.</div>';
 }
+
 
 function triggerNpcPortrait(npcKey) {
   pendingNpcKey = npcKey;
