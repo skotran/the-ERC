@@ -715,8 +715,139 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
   border-bottom: 1px solid var(--border);
   margin-bottom: 8px;
 }
+
+/* ── FADE OVERLAY ── */
+#fade-overlay {
+  position: fixed; inset: 0; background: #000;
+  z-index: 9999; opacity: 1; pointer-events: none;
+  transition: opacity 0.65s ease;
+}
+#fade-overlay.transparent { opacity: 0; }
+#fade-overlay.gone { display: none; }
+
+/* ── CHARACTER SELECT SCREEN ── */
+#char-select-screen {
+  position: fixed; inset: 0;
+  background: var(--dark);
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(139,46,46,0.05) 0%, transparent 60%);
+  z-index: 1000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+#char-select-screen.gone { display: none; }
+
+.cs-title { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.55em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 8px; }
+.cs-heading { font-family: var(--font-display); font-size: 30px; font-weight: 600; color: var(--gold); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
+.cs-divider { color: var(--gold-dim); font-size: 18px; letter-spacing: 6px; margin-bottom: 36px; }
+
+.cs-slot-list { width: 540px; max-width: 94vw; display: flex; flex-direction: column; gap: 3px; margin-bottom: 4px; }
+
+.cs-slot {
+  display: flex; align-items: center; gap: 0;
+  background: var(--dark3); border: 1px solid var(--border);
+  cursor: pointer; transition: border-color 0.2s, background 0.2s;
+}
+.cs-slot:hover { border-color: var(--gold-dim); background: var(--dark4); }
+
+.cs-portrait {
+  width: 70px; height: 70px; flex-shrink: 0;
+  background: var(--dark5); border-right: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-dim); font-size: 26px; overflow: hidden;
+}
+.cs-portrait img { width: 100%; height: 100%; object-fit: cover; }
+
+.cs-info { flex: 1; padding: 10px 16px; min-width: 0; }
+.cs-name { font-family: var(--font-display); font-size: 16px; color: var(--text-bright); letter-spacing: 0.06em; margin-bottom: 3px; }
+.cs-desc { font-size: 14px; color: var(--text-dim); font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cs-quest { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-dim); margin-top: 4px; }
+
+.cs-del { background: none; border: none; color: var(--text-dim); font-size: 16px; cursor: pointer; padding: 8px 14px; transition: color 0.15s; flex-shrink: 0; }
+.cs-del:hover { color: var(--red-light); }
+
+.cs-new-btn {
+  width: 540px; max-width: 94vw; height: 60px; margin-top: 10px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  border: 1px dashed var(--border-gold); background: transparent;
+  color: var(--text-dim); font-family: var(--font-display); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.2s;
+}
+.cs-new-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.04); }
+
+/* ── NEW CHARACTER FORM ── */
+#cs-form {
+  display: none; width: 540px; max-width: 94vw;
+  background: var(--dark4); border: 1px solid var(--border-gold);
+  padding: 20px 22px; margin-bottom: 10px;
+}
+#cs-form.open { display: block; }
+.cs-form-title { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.cs-portrait-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.cs-portrait-preview { width: 70px; height: 70px; background: var(--dark5); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-dim); font-size: 26px; flex-shrink: 0; overflow: hidden; }
+.cs-portrait-preview img { width: 100%; height: 100%; object-fit: cover; }
+.cs-upload-label { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--border-gold); background: var(--dark5); padding: 7px 14px; cursor: pointer; transition: all 0.2s; display: inline-block; }
+.cs-upload-label:hover { background: var(--dark3); border-color: var(--gold-dim); }
+
+/* ── SIDEBAR CHARACTER BOX ── */
+.sb-char-box { padding: 10px 14px; border-bottom: 1px solid var(--border-gold); display: flex; align-items: center; gap: 10px; }
+.sb-char-portrait { width: 38px; height: 38px; background: var(--dark5); border: 1px solid var(--border-gold); display: flex; align-items: center; justify-content: center; font-size: 17px; color: var(--text-dim); flex-shrink: 0; overflow: hidden; }
+.sb-char-portrait img { width: 100%; height: 100%; object-fit: cover; }
+.sb-char-name { font-family: var(--font-display); font-size: 13px; color: var(--gold); letter-spacing: 0.06em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-char-label { font-size: 11px; color: var(--text-dim); font-style: italic; }
+
+/* ── SWITCH CHARACTER AREA ── */
+.sb-switch-box { padding: 8px 12px; border-top: 1px solid var(--border); }
+#switch-popup {
+  display: none; position: fixed; bottom: 130px; left: 12px; width: 240px;
+  background: var(--dark4); border: 1px solid var(--border-gold);
+  box-shadow: 0 6px 30px rgba(0,0,0,0.7); z-index: 500; padding: 12px 14px;
+}
+#switch-popup.open { display: block; }
+.sw-title { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.sw-item { display: flex; align-items: center; gap: 10px; padding: 7px 4px; cursor: pointer; border-radius: 2px; transition: background 0.15s; }
+.sw-item:hover { background: var(--dark5); }
+.sw-portrait { width: 34px; height: 34px; background: var(--dark5); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--text-dim); flex-shrink: 0; overflow: hidden; }
+.sw-portrait img { width: 100%; height: 100%; object-fit: cover; }
+.sw-name { font-family: var(--font-display); font-size: 13px; color: var(--text-bright); letter-spacing: 0.04em; }
+.sw-name.cur { color: var(--gold); }
+
 </style>
 <body>
+<div id="fade-overlay"></div>
+
+<!-- ══════════ CHARACTER SELECT ══════════ -->
+<div id="char-select-screen">
+  <div class="cs-title">Tarnished's Compendium</div>
+  <div class="cs-heading">Choose Your Tarnished</div>
+  <div class="cs-divider">⚜ ✦ ⚜</div>
+
+  <div id="cs-form">
+    <div class="cs-form-title">Create New Character</div>
+    <div class="cs-portrait-row">
+      <div class="cs-portrait-preview" id="cs-preview">⚔</div>
+      <div>
+        <label class="cs-upload-label" for="cs-upload-input">Upload Portrait</label>
+        <input type="file" id="cs-upload-input" accept="image/*" style="display:none" onchange="csHandleUpload(event)">
+        <div style="font-size:13px;color:var(--text-dim);font-style:italic;margin-top:6px">Optional · square image works best</div>
+      </div>
+    </div>
+    <div class="form-row" style="margin-bottom:8px">
+      <input class="er-input" id="cs-name-input" placeholder="Character name…" style="flex:1">
+    </div>
+    <div class="form-row" style="margin-bottom:14px">
+      <input class="er-input" id="cs-desc-input" placeholder="Short description… (e.g. Faith build, NG+2)" style="flex:1">
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" onclick="csSaveNew()">Begin Journey</button>
+      <button class="btn btn-danger" onclick="csCloseForm()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="cs-slot-list" id="cs-slot-list"></div>
+  <button class="cs-new-btn" onclick="csOpenForm()">＋ &nbsp; Create New Character</button>
+</div>
+
 <div id="app">
 
 <!-- SIDEBAR -->
@@ -725,6 +856,13 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
     <div class="logo-title">Tarnished's<br>Compendium</div>
     <div class="logo-sub">Journey through the Lands Between</div>
   </div>
+  <div class="sb-char-box">
+    <div class="sb-char-portrait" id="sb-portrait">⚔</div>
+    <div>
+      <div class="sb-char-name" id="sb-char-name">—</div>
+      <div class="sb-char-label">Active Character</div>
+    </div>
+  </div>
   <div class="rune-divider">⚜ ✦ ⚜</div>
   <nav>
     <button class="nav-btn active" onclick="showTab('quests',this)">Quest Log</button>
@@ -732,11 +870,23 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
     <button class="nav-btn" onclick="showTab('inventory',this)">Items</button>
     <button class="nav-btn" onclick="showTab('bosses',this)">Boss Tracker</button>
   </nav>
+  <div class="sb-switch-box">
+    <button class="btn" style="width:100%;font-size:12px;padding:7px 10px;margin-bottom:0" onclick="swToggle()">⇄ &nbsp; Switch Character</button>
+  </div>
   <div class="sidebar-footer">
     All data saved locally to your browser
     <div style="margin-top:8px">
-      <button class="btn btn-danger" style="font-size: 12px;padding:5px 10px;width:100%" onclick="resetQuests()">Reset quest data</button>
+      <button class="btn btn-danger" style="font-size:12px;padding:5px 10px;width:100%" onclick="resetQuests()">Reset quest data</button>
     </div>
+  </div>
+</div>
+
+<!-- SWITCH POPUP -->
+<div id="switch-popup">
+  <div class="sw-title">Switch Character</div>
+  <div id="sw-list"></div>
+  <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+    <button class="btn" style="width:100%;font-size:12px;padding:6px 10px" onclick="goCharSelect()">Character Select Screen</button>
   </div>
 </div>
 
@@ -958,25 +1108,179 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
 // ─────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────
-const STORAGE_KEY = 'er_companion_v15';
+// CHARACTER SYSTEM — STORAGE
+// ─────────────────────────────────────────
+const CHARS_KEY   = 'erc_chars_v1';
+const DATA_PREFIX = 'erc_data_v1_';
 
-function loadData() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch(e) {}
+let allChars     = [];
+let activeCharId = null;
+let csPendingImg = null;
+
+function csLoadAll() {
+  try { const r = localStorage.getItem(CHARS_KEY); if (r) return JSON.parse(r); } catch(e) {}
+  return [];
+}
+function csSaveAll() {
+  try { localStorage.setItem(CHARS_KEY, JSON.stringify(allChars)); } catch(e) {}
+}
+function csLoadData(id) {
+  try { const r = localStorage.getItem(DATA_PREFIX + id); if (r) return JSON.parse(r); } catch(e) {}
   return null;
 }
-
 function saveData() {
+  if (!activeCharId) return;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ quests, dialogues, inventory, bosses }));
+    localStorage.setItem(DATA_PREFIX + activeCharId, JSON.stringify({ quests, dialogues, inventory, bosses }));
+    const aq = quests.find(q => q.status === 'active');
+    const ch = allChars.find(c => c.id === activeCharId);
+    if (ch) { ch.latestQuest = aq ? aq.name : null; csSaveAll(); }
   } catch(e) {}
 }
 
-let saved = loadData();
+// ── Activate a character (load their data into global vars) ──
+function csActivate(charId) {
+  activeCharId = charId;
+  const saved = csLoadData(charId) || {};
+  quests     = saved.quests     ? JSON.parse(JSON.stringify(saved.quests))     : JSON.parse(JSON.stringify(DEFAULT_QUESTS));
+  dialogues  = saved.dialogues  ? JSON.parse(JSON.stringify(saved.dialogues))  : JSON.parse(JSON.stringify(DEFAULT_DIALOGUES));
+  inventory  = saved.inventory  ? JSON.parse(JSON.stringify(saved.inventory))  : {};
+  bosses     = saved.bosses     ? JSON.parse(JSON.stringify(saved.bosses))     : JSON.parse(JSON.stringify(DEFAULT_BOSSES));
+  const ch = allChars.find(c => c.id === charId);
+  if (ch) {
+    document.getElementById('sb-char-name').textContent = ch.name;
+    const p = document.getElementById('sb-portrait');
+    p.innerHTML = ch.portrait ? `<img src="${ch.portrait}" alt="">` : '⚔';
+  }
+  renderQuests(); updateSpoilerBtn();
+}
 
-let quests = saved?.quests || [
+// ── Character Select UI ──
+function csRenderSlots() {
+  const list = document.getElementById('cs-slot-list');
+  if (!allChars.length) { list.innerHTML = ''; return; }
+  list.innerHTML = allChars.map(ch => {
+    const port = ch.portrait ? `<img src="${ch.portrait}" alt="">` : '⚔';
+    const desc = ch.desc ? `<div class="cs-desc">${ch.desc}</div>` : '';
+    const quest = ch.latestQuest
+      ? `<div class="cs-quest">▸ ${ch.latestQuest}</div>`
+      : `<div class="cs-quest" style="color:var(--border-gold)">No active quest</div>`;
+    return `<div class="cs-slot" onclick="csSelect('${ch.id}')">
+      <div class="cs-portrait">${port}</div>
+      <div class="cs-info">
+        <div class="cs-name">${ch.name}</div>
+        ${desc}${quest}
+      </div>
+      <button class="cs-del" onclick="event.stopPropagation();csDelete('${ch.id}')" title="Delete">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function csOpenForm() { document.getElementById('cs-form').classList.add('open'); document.getElementById('cs-name-input').focus(); }
+function csCloseForm() {
+  document.getElementById('cs-form').classList.remove('open');
+  document.getElementById('cs-name-input').value = '';
+  document.getElementById('cs-desc-input').value = '';
+  document.getElementById('cs-preview').innerHTML = '⚔';
+  csPendingImg = null;
+}
+function csHandleUpload(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    csPendingImg = ev.target.result;
+    document.getElementById('cs-preview').innerHTML = `<img src="${csPendingImg}" alt="">`;
+  };
+  reader.readAsDataURL(file);
+}
+function csSaveNew() {
+  const name = document.getElementById('cs-name-input').value.trim();
+  if (!name) { document.getElementById('cs-name-input').focus(); return; }
+  const id = 'c' + Date.now();
+  allChars.push({ id, name, desc: document.getElementById('cs-desc-input').value.trim(), portrait: csPendingImg || null, latestQuest: null });
+  csSaveAll(); csCloseForm(); csSelect(id);
+}
+function csDelete(id) {
+  if (!confirm('Delete this character? All their progress will be lost.')) return;
+  allChars = allChars.filter(c => c.id !== id);
+  csSaveAll();
+  try { localStorage.removeItem(DATA_PREFIX + id); } catch(e) {}
+  csRenderSlots();
+}
+function csSelect(id) {
+  fadeOut(() => {
+    document.getElementById('char-select-screen').classList.add('gone');
+    document.getElementById('app').style.display = 'flex';
+    csActivate(id);
+    fadeIn();
+  });
+}
+function goCharSelect() {
+  swClose();
+  fadeOut(() => {
+    document.getElementById('app').style.display = 'none';
+    const s = document.getElementById('char-select-screen');
+    s.classList.remove('gone');
+    csRenderSlots();
+    fadeIn();
+  });
+}
+
+// ── Switch Popup ──
+function swToggle() { const p = document.getElementById('switch-popup'); const o = p.classList.toggle('open'); if (o) swRender(); }
+function swClose()  { document.getElementById('switch-popup').classList.remove('open'); }
+function swRender() {
+  document.getElementById('sw-list').innerHTML = allChars.map(ch => {
+    const port = ch.portrait ? `<img src="${ch.portrait}" alt="">` : '⚔';
+    const cur = ch.id === activeCharId;
+    return `<div class="sw-item" onclick="swSwitch('${ch.id}')">
+      <div class="sw-portrait">${port}</div>
+      <div class="sw-name ${cur ? 'cur' : ''}">${ch.name}${cur ? ' ✦' : ''}</div>
+    </div>`;
+  }).join('');
+}
+function swSwitch(id) {
+  if (id === activeCharId) { swClose(); return; }
+  swClose();
+  fadeOut(() => { csActivate(id); fadeIn(); });
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('#switch-popup') && !e.target.closest('.sb-switch-box')) swClose();
+});
+
+// ── Fade transitions ──
+function fadeOut(cb) {
+  const o = document.getElementById('fade-overlay');
+  o.classList.remove('gone','transparent'); o.style.pointerEvents = 'all';
+  setTimeout(cb, 680);
+}
+function fadeIn() {
+  const o = document.getElementById('fade-overlay');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    o.classList.add('transparent'); o.style.pointerEvents = 'none';
+    setTimeout(() => o.classList.add('gone'), 700);
+  }));
+}
+
+// ── Init: show character select on load ──
+allChars = csLoadAll();
+document.getElementById('app').style.display = 'none';
+csRenderSlots();
+// Fade in from black to character select
+const _ov = document.getElementById('fade-overlay');
+_ov.classList.remove('gone');
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  _ov.classList.add('transparent');
+  _ov.style.pointerEvents = 'none';
+  setTimeout(() => _ov.classList.add('gone'), 700);
+}));
+
+// ─────────────────────────────────────────
+// DATA — stored as constants so each character gets a fresh copy
+// ─────────────────────────────────────────
+let quests = [], dialogues = [], inventory = {}, bosses = [];
+
+const DEFAULT_QUESTS = [
 
   // ── MAIN STORY ──
   {id:1,cat:"main",name:"Become Elden Lord",npc:"Melina / The Two Fingers",status:"inactive",steps:[
@@ -1222,7 +1526,7 @@ let quests = saved?.quests || [
   ]},
 ];
 
-let dialogues = saved?.dialogues || [
+const DEFAULT_DIALOGUES = [
 
   // ══════════════════════════════════════════════════════
   // MARGIT, THE FELL OMEN
@@ -2052,15 +2356,9 @@ let dialogues = saved?.dialogues || [
     "O Erdtree, you shall burn. Burn, for the sake of the new Lord. Thank you. For guiding me here. The one who walks alongside flame, Shall one day meet the road of Destined Death. Good-bye. I hope you will become Lord. Lord of each and all.",
   ]},
 
-]
+];
 
-
-
-let inventory = saved?.inventory || {};
-
-
-
-let bosses = saved?.bosses || [
+const DEFAULT_BOSSES = [
   {id:101,name:"Margit, the Fell Omen",region:"Limgrave",type:"Main",defeated:false,attempts:0,runes:12000,drop:"Talisman Pouch",note:"Weak to bleed and holy. Uses a phantom hammer in phase 2. Try Lone Wolf Ashes."},
   {id:102,name:"Godrick the Grafted",region:"Stormveil Castle",type:"Remembrance",defeated:false,attempts:0,runes:20000,drop:"Godrick's Great Rune, Remembrance of the Grafted",note:"Phase 2 he grafts a dragon arm. Stay close and dodge the breath attack sideways."},
   {id:103,name:"Red Wolf of Radagon",region:"Raya Lucaria",type:"Main",defeated:false,attempts:0,runes:14000,drop:"Memory Stone",note:"Very fast. Watch for the book-conjure slash combo. Dodge into attacks."},
@@ -2801,10 +3099,8 @@ function updateSpoilerBtn() {
 }
 
 // ─────────────────────────────────────────
-// INIT
+// INIT — rendering is triggered by csActivate() after character selection
 // ─────────────────────────────────────────
-renderQuests();
-updateSpoilerBtn();
 </script>
 </body>
 </html>
