@@ -856,6 +856,182 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
 .sw-name { font-family: var(--font-display); font-size: 13px; color: var(--text-bright); letter-spacing: 0.04em; }
 .sw-name.cur { color: var(--gold); }
 
+
+/* ══════════ LORE TRACKER ══════════ */
+#lt-connect-btn.lt-connect-active {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.12);
+  color: var(--gold-light);
+}
+
+/* ── Lore Card ── */
+.lt-card {
+  position: absolute;
+  min-width: 160px;
+  min-height: 100px;
+  background: var(--dark3);
+  border: 1px solid var(--border-gold);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  user-select: none;
+  z-index: 10;
+  overflow: visible;
+}
+.lt-card:hover { border-color: var(--gold-dim); z-index: 20; }
+.lt-card.lt-selected-for-connect {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 2px var(--gold-dim), 0 4px 20px rgba(0,0,0,0.5);
+}
+
+/* card type color accents */
+.lt-card[data-type="character"] { border-top: 3px solid var(--blue); }
+.lt-card[data-type="item"]      { border-top: 3px solid var(--gold-dim); }
+.lt-card[data-type="note"]      { border-top: 3px solid var(--green); }
+.lt-card[data-type="location"]  { border-top: 3px solid var(--red); }
+
+/* ── Card Header / drag handle ── */
+.lt-card-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px 6px;
+  cursor: grab;
+  background: var(--dark4);
+  border-radius: 3px 3px 0 0;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.lt-card-header:active { cursor: grabbing; }
+
+.lt-card-type-icon { font-size: 14px; flex-shrink: 0; }
+.lt-card-title-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--text-bright);
+  min-width: 0;
+  cursor: text;
+}
+.lt-card-title-input::placeholder { color: var(--text-dim); font-style: italic; }
+.lt-card-del {
+  background: none; border: none;
+  color: var(--text-dim); cursor: pointer;
+  font-size: 13px; padding: 2px 4px;
+  transition: color 0.15s; flex-shrink: 0;
+}
+.lt-card-del:hover { color: var(--red-light); }
+
+/* ── Card Body ── */
+.lt-card-body {
+  flex: 1;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+}
+
+/* Portrait area */
+.lt-portrait-wrap {
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+}
+.lt-portrait {
+  width: 52px; height: 52px; flex-shrink: 0;
+  background: var(--dark5); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: var(--text-dim); overflow: hidden;
+  cursor: pointer; transition: border-color 0.2s;
+}
+.lt-portrait:hover { border-color: var(--gold-dim); }
+.lt-portrait img { width: 100%; height: 100%; object-fit: cover; }
+.lt-portrait-hint { font-size: 12px; color: var(--text-dim); font-style: italic; line-height: 1.4; }
+
+/* Note textarea */
+.lt-note {
+  width: 100%; flex: 1;
+  background: var(--dark5);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 6px 8px;
+  outline: none;
+  resize: none;
+  min-height: 50px;
+  transition: border-color 0.2s;
+  line-height: 1.5;
+}
+.lt-note:focus { border-color: var(--gold-dim); }
+.lt-note::placeholder { color: var(--text-dim); font-style: italic; }
+
+/* ── Resize handle ── */
+.lt-resize {
+  position: absolute;
+  right: 0; bottom: 0;
+  width: 16px; height: 16px;
+  cursor: se-resize;
+  z-index: 5;
+  display: flex; align-items: center; justify-content: center;
+}
+.lt-resize::after {
+  content: '';
+  display: block;
+  width: 8px; height: 8px;
+  border-right: 2px solid var(--border-gold);
+  border-bottom: 2px solid var(--border-gold);
+  border-radius: 0 0 2px 0;
+}
+
+/* ── Connect port dots ── */
+.lt-port {
+  position: absolute;
+  width: 12px; height: 12px;
+  background: var(--dark4);
+  border: 2px solid var(--border-gold);
+  border-radius: 50%;
+  cursor: crosshair;
+  z-index: 30;
+  transition: background 0.15s, transform 0.15s, border-color 0.15s;
+}
+.lt-port:hover, .lt-port.lt-port-hover {
+  background: var(--gold);
+  border-color: var(--gold-light);
+  transform: scale(1.3);
+}
+.lt-port-t { top: -7px; left: 50%; transform: translateX(-50%); }
+.lt-port-t:hover { transform: translateX(-50%) scale(1.3); }
+.lt-port-b { bottom: -7px; left: 50%; transform: translateX(-50%); }
+.lt-port-b:hover { transform: translateX(-50%) scale(1.3); }
+.lt-port-l { left: -7px; top: 50%; transform: translateY(-50%); }
+.lt-port-l:hover { transform: translateY(-50%) scale(1.3); }
+.lt-port-r { right: -7px; top: 50%; transform: translateY(-50%); }
+.lt-port-r:hover { transform: translateY(-50%) scale(1.3); }
+
+/* ── SVG connection lines ── */
+.lt-line {
+  stroke: var(--gold-dim);
+  stroke-width: 1.5;
+  fill: none;
+  pointer-events: stroke;
+  cursor: pointer;
+  transition: stroke 0.15s, stroke-width 0.15s;
+}
+.lt-line:hover { stroke: var(--gold); stroke-width: 2.5; }
+.lt-line-draft {
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  fill: none;
+  stroke-dasharray: 5 4;
+  pointer-events: none;
+  opacity: 0.7;
+}
 </style>
 <body>
 <div id="fade-overlay"></div>
@@ -915,6 +1091,7 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
   <div class="rune-divider">⚜ ✦ ⚜</div>
   <nav>
     <button class="nav-btn active" onclick="showTab('quests',this)">Quest Log</button>
+    <button class="nav-btn" onclick="showTab('lore',this)">Lore Tracker</button>
     <button class="nav-btn" onclick="showTab('characters',this)">Characters</button>
     <button class="nav-btn" onclick="showTab('inventory',this)">Items</button>
     <button class="nav-btn" onclick="showTab('bosses',this)">Boss Tracker</button>
@@ -1103,6 +1280,36 @@ mark { background: rgba(201,168,76,0.3); color: var(--gold-light); border-radius
       </div>
     </div>
     <div id="boss-list"></div>
+  </div>
+</div>
+
+<!-- ══════════ LORE TRACKER ══════════ -->
+<div id="tab-lore" class="tab">
+  <div class="page-header" style="flex-shrink:0">
+    <div class="page-title">Lore Tracker</div>
+    <div class="page-sub">Build your theory board — drag cards, draw connections, uncover the truth</div>
+  </div>
+  <div class="toolbar" style="flex-shrink:0;gap:6px;flex-wrap:wrap">
+    <button class="btn" onclick="ltAddCard('character')">+ Character</button>
+    <button class="btn" onclick="ltAddCard('item')">+ Item</button>
+    <button class="btn" onclick="ltAddCard('note')">+ Note</button>
+    <button class="btn" onclick="ltAddCard('location')">+ Location</button>
+    <div style="width:1px;background:var(--border);align-self:stretch;margin:0 4px"></div>
+    <button class="btn" id="lt-connect-btn" onclick="ltToggleConnectMode()">🔗 Connect Cards</button>
+    <button class="btn btn-danger" onclick="ltClearConnections()">Clear Lines</button>
+    <div style="margin-left:auto;font-family:var(--font-display);font-size:12px;color:var(--text-dim);letter-spacing:0.08em;align-self:center" id="lt-status-msg">Drag cards freely · Right-click a line to remove it</div>
+  </div>
+  <div id="lt-canvas-wrap" style="flex:1;overflow:hidden;position:relative;background:var(--dark2);">
+    <svg id="lt-svg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0"></svg>
+    <div id="lt-canvas" style="position:absolute;inset:0;overflow:hidden;">
+      <!-- cards injected here -->
+    </div>
+    <div id="lt-empty-hint" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
+      <div style="text-align:center;font-family:var(--font-body);color:var(--text-dim);font-style:italic;font-size:18px;line-height:2">
+        <div style="font-size:32px;margin-bottom:8px;opacity:0.3">🕸</div>
+        Add cards above to begin building your lore web
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1556,6 +1763,7 @@ function showTab(name, btn) {
   if (name === 'characters') renderCharacters();
   if (name === 'items' || name === 'inventory') renderInventory();
   if (name === 'bosses') renderBosses();
+  if (name === 'lore') ltOnShow();
 }
 
 function toggleForm(id) {
@@ -2473,6 +2681,431 @@ function updateSpoilerBtn() {
   if (!btn) return;
   btn.textContent = spoilerFree ? 'Show all steps' : 'Hide future steps';
   btn.classList.toggle('spoiler-on', !spoilerFree);
+}
+
+// ─────────────────────────────────────────
+// LORE TRACKER
+// ─────────────────────────────────────────
+
+const LT_KEY_PREFIX = 'erc_lore_v1_';
+
+// State
+let ltCards       = [];   // [{id, type, x, y, w, h, title, note, portrait}]
+let ltConnections = [];   // [{id, from, to, fromPort, toPort}]
+let ltConnectMode = false;
+let ltConnectFrom = null; // {cardId, port}
+let ltDraftLine   = null;
+let ltNextId      = 1;
+
+// ── Persistence ──────────────────────────
+function ltSaveKey() { return LT_KEY_PREFIX + (activeCharId || 'global'); }
+function ltSave() {
+  try {
+    localStorage.setItem(ltSaveKey(), JSON.stringify({ cards: ltCards, connections: ltConnections, nextId: ltNextId }));
+  } catch(e) {}
+}
+function ltLoad() {
+  try {
+    const r = localStorage.getItem(ltSaveKey());
+    if (r) {
+      const d = JSON.parse(r);
+      ltCards       = d.cards       || [];
+      ltConnections = d.connections || [];
+      ltNextId      = d.nextId      || 1;
+      return;
+    }
+  } catch(e) {}
+  ltCards = []; ltConnections = []; ltNextId = 1;
+}
+
+// ── Called when switching to lore tab ────
+function ltOnShow() {
+  ltLoad();
+  ltRender();
+}
+
+// ── Type icons / labels ──────────────────
+function ltTypeIcon(type) {
+  return { character:'👤', item:'⚔', note:'📜', location:'🗺' }[type] || '📌';
+}
+function ltTypePlaceholder(type) {
+  return { character:'Character name…', item:'Item name…', note:'Note title…', location:'Location name…' }[type] || 'Label…';
+}
+
+// ── Full render ───────────────────────────
+function ltRender() {
+  const canvas = document.getElementById('lt-canvas');
+  const hint   = document.getElementById('lt-empty-hint');
+  if (!canvas) return;
+
+  // Rebuild cards
+  canvas.innerHTML = '';
+  ltCards.forEach(c => canvas.appendChild(ltBuildCardEl(c)));
+
+  // Draw lines
+  ltRedrawLines();
+
+  // Empty hint
+  if (hint) hint.style.display = ltCards.length ? 'none' : 'flex';
+}
+
+// ── Build a card DOM element ──────────────
+function ltBuildCardEl(c) {
+  const el = document.createElement('div');
+  el.className = 'lt-card';
+  el.id = 'ltcard-' + c.id;
+  el.dataset.id = c.id;
+  el.dataset.type = c.type;
+  el.style.left   = c.x + 'px';
+  el.style.top    = c.y + 'px';
+  el.style.width  = (c.w || 220) + 'px';
+  el.style.height = (c.h || 180) + 'px';
+
+  const portrait = c.portrait
+    ? `<img src="${c.portrait}" alt="">`
+    : ltTypeIcon(c.type);
+
+  el.innerHTML = `
+    <div class="lt-card-header" data-drag="${c.id}">
+      <span class="lt-card-type-icon">${ltTypeIcon(c.type)}</span>
+      <input class="lt-card-title-input" placeholder="${ltTypePlaceholder(c.type)}"
+        value="${(c.title||'').replace(/"/g,'&quot;')}"
+        onchange="ltUpdateCard(${c.id},'title',this.value)"
+        onmousedown="event.stopPropagation()">
+      <button class="lt-card-del" onclick="ltDeleteCard(${c.id})" title="Remove card">✕</button>
+    </div>
+    <div class="lt-card-body">
+      <div class="lt-portrait-wrap">
+        <div class="lt-portrait" id="ltport-${c.id}" onclick="ltClickPortrait(${c.id})" title="Click to upload image">
+          ${portrait}
+        </div>
+        <div class="lt-portrait-hint">Click portrait<br>to upload image</div>
+      </div>
+      <textarea class="lt-note" placeholder="Add notes, theories, connections…"
+        onchange="ltUpdateCard(${c.id},'note',this.value)"
+        onmousedown="event.stopPropagation()">${c.note||''}</textarea>
+    </div>
+    <div class="lt-resize" data-resize="${c.id}" title="Drag to resize"></div>
+    <div class="lt-port lt-port-t" data-port="t" data-card="${c.id}"></div>
+    <div class="lt-port lt-port-b" data-port="b" data-card="${c.id}"></div>
+    <div class="lt-port lt-port-l" data-port="l" data-card="${c.id}"></div>
+    <div class="lt-port lt-port-r" data-port="r" data-card="${c.id}"></div>`;
+
+  ltWireDrag(el, c);
+  ltWireResize(el, c);
+  ltWirePorts(el, c);
+
+  return el;
+}
+
+// ── Add a new card ────────────────────────
+function ltAddCard(type) {
+  const canvas = document.getElementById('lt-canvas');
+  const wrap   = document.getElementById('lt-canvas-wrap');
+  const rect   = (wrap || canvas).getBoundingClientRect();
+
+  // Scatter new cards slightly
+  const x = 40 + Math.random() * Math.max(100, rect.width  - 300);
+  const y = 40 + Math.random() * Math.max(100, rect.height - 220);
+
+  const card = { id: ltNextId++, type, x: Math.round(x), y: Math.round(y), w: 220, h: 200, title: '', note: '', portrait: null };
+  ltCards.push(card);
+
+  const el = ltBuildCardEl(card);
+  canvas.appendChild(el);
+
+  const hint = document.getElementById('lt-empty-hint');
+  if (hint) hint.style.display = 'none';
+
+  ltSave();
+
+  // Focus title
+  const ti = el.querySelector('.lt-card-title-input');
+  if (ti) setTimeout(() => ti.focus(), 50);
+}
+
+// ── Update card data field ────────────────
+function ltUpdateCard(id, field, value) {
+  const c = ltCards.find(c => c.id === id);
+  if (c) { c[field] = value; ltSave(); }
+}
+
+// ── Delete card ───────────────────────────
+function ltDeleteCard(id) {
+  ltCards = ltCards.filter(c => c.id !== id);
+  ltConnections = ltConnections.filter(cn => cn.from !== id && cn.to !== id);
+  const el = document.getElementById('ltcard-' + id);
+  if (el) el.remove();
+  ltRedrawLines();
+  ltSave();
+  const hint = document.getElementById('lt-empty-hint');
+  if (hint) hint.style.display = ltCards.length ? 'none' : 'flex';
+}
+
+// ── Portrait upload ───────────────────────
+const ltPortraitInput = (() => {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'image/*'; inp.style.display = 'none';
+  document.body.appendChild(inp);
+  return inp;
+})();
+let ltPortraitTarget = null;
+
+function ltClickPortrait(id) {
+  ltPortraitTarget = id;
+  ltPortraitInput.value = '';
+  ltPortraitInput.click();
+}
+ltPortraitInput.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file || ltPortraitTarget === null) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const id = ltPortraitTarget;
+    ltUpdateCard(id, 'portrait', ev.target.result);
+    const portEl = document.getElementById('ltport-' + id);
+    if (portEl) portEl.innerHTML = `<img src="${ev.target.result}" alt="">`;
+    ltPortraitTarget = null;
+  };
+  reader.readAsDataURL(file);
+});
+
+// ── Drag ─────────────────────────────────
+function ltWireDrag(cardEl, c) {
+  const header = cardEl.querySelector('[data-drag]');
+  if (!header) return;
+
+  let dragging = false, ox = 0, oy = 0;
+
+  header.addEventListener('mousedown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
+    if (ltConnectMode) return;
+    e.preventDefault();
+    dragging = true;
+    const rect = cardEl.getBoundingClientRect();
+    ox = e.clientX - rect.left;
+    oy = e.clientY - rect.top;
+    cardEl.style.zIndex = 100;
+    document.body.style.cursor = 'grabbing';
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const wrap = document.getElementById('lt-canvas-wrap');
+    const wRect = wrap.getBoundingClientRect();
+    let nx = e.clientX - wRect.left - ox;
+    let ny = e.clientY - wRect.top  - oy;
+    // Clamp within canvas
+    nx = Math.max(0, Math.min(nx, wRect.width  - (c.w || 220)));
+    ny = Math.max(0, Math.min(ny, wRect.height - (c.h || 180)));
+    c.x = Math.round(nx); c.y = Math.round(ny);
+    cardEl.style.left = c.x + 'px';
+    cardEl.style.top  = c.y + 'px';
+    ltRedrawLines();
+  });
+
+  document.addEventListener('mouseup', e => {
+    if (!dragging) return;
+    dragging = false;
+    cardEl.style.zIndex = 10;
+    document.body.style.cursor = '';
+    ltSave();
+  });
+}
+
+// ── Resize ───────────────────────────────
+function ltWireResize(cardEl, c) {
+  const handle = cardEl.querySelector('[data-resize]');
+  if (!handle) return;
+
+  let resizing = false, startX = 0, startY = 0, startW = 0, startH = 0;
+
+  handle.addEventListener('mousedown', e => {
+    e.preventDefault(); e.stopPropagation();
+    resizing = true;
+    startX = e.clientX; startY = e.clientY;
+    startW = c.w || 220; startH = c.h || 180;
+    document.body.style.cursor = 'se-resize';
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!resizing) return;
+    const dw = e.clientX - startX;
+    const dh = e.clientY - startY;
+    c.w = Math.max(160, startW + dw);
+    c.h = Math.max(120, startH + dh);
+    cardEl.style.width  = c.w + 'px';
+    cardEl.style.height = c.h + 'px';
+    ltRedrawLines();
+  });
+
+  document.addEventListener('mouseup', e => {
+    if (!resizing) return;
+    resizing = false;
+    document.body.style.cursor = '';
+    ltSave();
+  });
+}
+
+// ── Connect mode / ports ──────────────────
+function ltToggleConnectMode() {
+  ltConnectMode = !ltConnectMode;
+  ltConnectFrom = null;
+  ltRemoveDraftLine();
+
+  const btn = document.getElementById('lt-connect-btn');
+  const msg = document.getElementById('lt-status-msg');
+  if (ltConnectMode) {
+    btn.classList.add('lt-connect-active');
+    btn.textContent = '✕ Cancel Connect';
+    if (msg) msg.textContent = 'Click a port (●) on one card, then a port on another card to draw a line';
+  } else {
+    btn.classList.remove('lt-connect-active');
+    btn.textContent = '🔗 Connect Cards';
+    if (msg) msg.textContent = 'Drag cards freely · Right-click a line to remove it';
+  }
+
+  // Show/hide ports
+  document.querySelectorAll('.lt-port').forEach(p => {
+    p.style.display = ltConnectMode ? 'block' : 'none';
+  });
+}
+
+function ltWirePorts(cardEl, c) {
+  const ports = cardEl.querySelectorAll('.lt-port');
+  ports.forEach(p => {
+    p.style.display = ltConnectMode ? 'block' : 'none';
+
+    p.addEventListener('mousedown', e => {
+      if (!ltConnectMode) return;
+      e.preventDefault(); e.stopPropagation();
+      const portSide = p.dataset.port;
+
+      if (!ltConnectFrom) {
+        // First click — pick source
+        ltConnectFrom = { cardId: c.id, port: portSide };
+        p.classList.add('lt-port-hover');
+        // Start draft line
+        ltStartDraftLine(c.id, portSide);
+      } else {
+        // Second click — create connection
+        if (ltConnectFrom.cardId === c.id) {
+          // Same card — cancel
+          ltConnectFrom = null;
+          ltRemoveDraftLine();
+          document.querySelectorAll('.lt-port').forEach(pp => pp.classList.remove('lt-port-hover'));
+          return;
+        }
+        ltConnections.push({
+          id: ltNextId++,
+          from: ltConnectFrom.cardId,
+          fromPort: ltConnectFrom.port,
+          to: c.id,
+          toPort: portSide
+        });
+        ltConnectFrom = null;
+        ltRemoveDraftLine();
+        document.querySelectorAll('.lt-port').forEach(pp => pp.classList.remove('lt-port-hover'));
+        ltRedrawLines();
+        ltSave();
+      }
+    });
+  });
+}
+
+// ── Draft line while drawing connection ───
+function ltStartDraftLine(cardId, port) {
+  const svg = document.getElementById('lt-svg');
+  if (!svg) return;
+  ltDraftLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  ltDraftLine.setAttribute('class', 'lt-line-draft');
+  svg.appendChild(ltDraftLine);
+
+  function onMove(e) {
+    if (!ltDraftLine) return;
+    const wrap = document.getElementById('lt-canvas-wrap');
+    const wRect = wrap.getBoundingClientRect();
+    const src = ltPortCenter(cardId, port);
+    const tx = e.clientX - wRect.left;
+    const ty = e.clientY - wRect.top;
+    ltDraftLine.setAttribute('d', ltCurve(src.x, src.y, tx, ty));
+  }
+
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', function cleanup() {
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', cleanup);
+  }, { once: true });
+}
+
+function ltRemoveDraftLine() {
+  if (ltDraftLine) { ltDraftLine.remove(); ltDraftLine = null; }
+}
+
+// ── Get center coords of a port ───────────
+function ltPortCenter(cardId, port) {
+  const c = ltCards.find(c => c.id === cardId);
+  if (!c) return {x:0, y:0};
+  const w = c.w || 220, h = c.h || 180;
+  const cx = c.x, cy = c.y;
+  switch(port) {
+    case 't': return { x: cx + w/2, y: cy };
+    case 'b': return { x: cx + w/2, y: cy + h };
+    case 'l': return { x: cx,       y: cy + h/2 };
+    case 'r': return { x: cx + w,   y: cy + h/2 };
+  }
+  return { x: cx + w/2, y: cy + h/2 };
+}
+
+// ── Cubic bezier path between two points ─
+function ltCurve(x1, y1, x2, y2) {
+  const dx = Math.abs(x2 - x1) * 0.5;
+  const dy = Math.abs(y2 - y1) * 0.5;
+  const ctrl = Math.max(60, Math.max(dx, dy));
+  return `M ${x1} ${y1} C ${x1} ${y1 + ctrl}, ${x2} ${y2 - ctrl}, ${x2} ${y2}`;
+}
+
+// ── Redraw all connection lines ───────────
+function ltRedrawLines() {
+  const svg = document.getElementById('lt-svg');
+  if (!svg) return;
+
+  // Remove old lines (keep draft if any)
+  svg.querySelectorAll('.lt-line').forEach(l => l.remove());
+
+  ltConnections.forEach(conn => {
+    const src = ltPortCenter(conn.from, conn.fromPort);
+    const dst = ltPortCenter(conn.to,   conn.toPort);
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('class', 'lt-line');
+    path.setAttribute('d', ltCurve(src.x, src.y, dst.x, dst.y));
+    path.dataset.connId = conn.id;
+
+    // Right-click to delete
+    path.addEventListener('contextmenu', e => {
+      e.preventDefault();
+      ltDeleteConnection(conn.id);
+    });
+
+    svg.appendChild(path);
+  });
+}
+
+// ── Delete a connection by id ─────────────
+function ltDeleteConnection(id) {
+  ltConnections = ltConnections.filter(c => c.id !== id);
+  ltRedrawLines();
+  ltSave();
+}
+
+// ── Clear all connections ─────────────────
+function ltClearConnections() {
+  if (!ltConnections.length) return;
+  if (!confirm('Remove all connection lines?')) return;
+  ltConnections = [];
+  ltRedrawLines();
+  ltSave();
 }
 
 // ─────────────────────────────────────────
